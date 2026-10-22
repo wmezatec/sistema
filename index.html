@@ -1340,8 +1340,17 @@ document.getElementById("b-export").onclick=()=>{const a=document.createElement(
 document.getElementById("b-import").onclick=()=>document.getElementById("f-import").click();
 document.getElementById("f-import").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.clientes)throw 0;if(confirm("Esto reemplaza los datos actuales. ¿Seguir?")){D=norm(x);guardar();render();aviso("Copia restaurada")}}catch(er){aviso("El archivo no es una copia válida")}};r.readAsText(f);e.target.value=""};
 const numPres=n=>PREF+"-"+String(n).padStart(3,"0");
-document.getElementById("b-num").onclick=()=>pedir("Numeración de presupuestos",[{k:"n",l:"Número del próximo presupuesto",t:"number",v:D.cfg.prox}],r=>{
-  const n=parseInt(r.n,10);if(!(n>0))return;D.cfg.prox=n;guardar();aviso(D.pres.some(p=>p.num===numPres(n))?numPres(n)+" ya existe: elegí otro número":"El próximo será "+numPres(n))},"Guardar");
+/* Renumera todos los presupuestos (por fecha) desde el número elegido; los nuevos siguen a partir del último.
+   También actualiza el número donde aparece escrito: historial, actividades, cobros. */
+document.getElementById("b-num").onclick=()=>{
+  const orden=D.pres.slice().sort((x,y)=>x.fecha<y.fecha?-1:x.fecha>y.fecha?1:x.num<y.num?-1:1),ini=orden.length?(parseInt(String(orden[0].num).replace(/\D/g,""),10)||1):D.cfg.prox;
+  pedir("Numeración de presupuestos",[{k:"n",l:"Empezar desde el número",t:"number",v:ini}],r=>{
+    const n=parseInt(r.n,10);if(!(n>0))return;
+    const cambios=orden.map((x,i)=>[x.num,numPres(n+i)]).filter(c=>c[0]!==c[1]);
+    if(cambios.length){let j=JSON.stringify(D);const re=v=>new RegExp(v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?!\\d)","g");
+      cambios.forEach((c,i)=>j=j.replace(re(c[0]),"\u0000"+i+"\u0000"));cambios.forEach((c,i)=>j=j.split("\u0000"+i+"\u0000").join(c[1]));D=norm(JSON.parse(j))}
+    D.cfg.prox=n+orden.length;guardar();render();
+    aviso(orden.length?"Presupuestos "+numPres(n)+" a "+numPres(n+orden.length-1)+". El próximo será "+numPres(D.cfg.prox):"El próximo será "+numPres(D.cfg.prox))},"Renumerar")};
 document.getElementById("b-csv").onclick=()=>{
   const cab=["Nombre","Empresa","Teléfono","Mail","Rubro","Origen","Zona","CUIT","Vino por","Etapa","Último trabajo","Próximo mantenimiento","Saldo pendiente","Facturado","Notas"];
   const q=s=>{s=String(s==null?"":s);return /[",;\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
