@@ -126,6 +126,13 @@ textarea{min-height:76px;resize:vertical}
 .precios input,.precios select{min-height:40px;width:100%}.precios td{vertical-align:middle}
 .hoy-fila .grow{flex:1;min-width:0;text-decoration:none}.hoy-fila .ttl{display:block;font-weight:700}.hoy-fila small{display:block;color:var(--tinta-suave)}
 .hoy-fila .acc{display:flex;gap:6px;flex:none}
+#nav-msj[hidden]{display:none}
+.msj{background:#fff;border-radius:var(--r-tarjeta);box-shadow:0 1px 0 #d9dbd4;padding:14px 16px;border-left:5px solid transparent;display:grid;gap:8px}
+.msj.nuevo{border-left-color:var(--naranja)}
+.msj .de{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.msj .de small{color:var(--tinta-suave)}
+.msj p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.msj .acc{display:flex;gap:6px;flex-wrap:wrap}
 .btn.ico{width:44px;height:44px;min-height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center;flex:none}
 .btn.ico .ic{width:20px;height:20px}.hoy-fila .acc .btn{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
 .n-hoy{display:inline-block;min-width:1.6em;padding:0 .5em;border-radius:99px;background:var(--carbon);color:#fff;font-size:0.8rem;text-align:center;vertical-align:middle}
@@ -199,6 +206,9 @@ table.t a{text-decoration:none;font-weight:700}
 .pts{display:flex;gap:3px;flex-wrap:wrap}
 .pt{width:9px;height:9px;border-radius:50%;display:inline-block}
 .pt.con{background:var(--naranja)}.pt.tra{background:var(--azul)}.pt.man{background:var(--verde)}.pt.cob{background:var(--rojo)}.pt.pre{background:var(--gris)}
+.pt.si{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex:none;font-weight:800;font-size:12px;line-height:1}
+.pt.si svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pts .pt.si{width:18px;height:18px}.pts .pt.si svg{width:11px;height:11px}
 .leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:0.8rem;color:var(--tinta-suave);margin:10px 0}
 .leyenda span{display:inline-flex;align-items:center;gap:5px}
 
@@ -432,6 +442,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 <symbol id="i-wsp" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 2.8 2.7 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.8-1.2-2.2-2.2l.8-1-1-1.9z"/></symbol>
 <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
 <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
 <symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol>
 <symbol id="i-sub" viewBox="0 0 24 24"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 19h14"/></symbol>
@@ -447,6 +458,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 <a class="nav" href="#clientes" data-r="clientes" title="Clientes"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span class="t">Clientes</span><span class="cuenta" id="c-clientes"></span></a>
 <a class="nav" href="#trabajos" data-r="trabajos" title="Trabajos"><svg class="ic" aria-hidden="true"><use href="#i-trab"/></svg><span class="t">Trabajos</span><span class="cuenta" id="c-trab"></span></a>
 <a class="nav" href="#cobros" data-r="cobros" title="Cobros"><svg class="ic" aria-hidden="true"><use href="#i-cobro"/></svg><span class="t">Cobros</span><span class="cuenta" id="c-cobros"></span></a>
+<a class="nav" href="#mensajes" data-r="mensajes" title="Mensajes de la web" id="nav-msj" hidden><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg><span class="t">Mensajes</span><span class="cuenta" id="c-msj"></span></a>
 <a class="nav" href="#calendario" data-r="calendario" title="Agenda"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span class="t">Agenda</span></a>
     <button class="nav bmas" id="b-mas" type="button" aria-expanded="false" aria-controls="mas" title="Más"><svg class="ic" aria-hidden="true"><use href="#i-mas"/></svg><span class="t">Más</span></button>
     <div class="mas" id="mas">
@@ -640,6 +652,9 @@ function eventos(){
   D.fijos.filter(f=>!fijoPagado(f,mesHoy())).forEach(f=>ev.push({f:mesHoy()+"-"+pad(Math.min(28,Math.max(1,num(f.dia)||1))),t:"fij",x:"Pagar "+f.desc+" "+fmt(f.monto),h:"#finanzas"}));
   D.pres.filter(p=>p.estado==="enviado").forEach(p=>ev.push({f:vencePres(p),t:"pre",x:"Vence presupuesto "+p.num+" – "+nomCorto(cli(p.cid)),h:"#presdoc/"+p.id}));
   return ev.filter(e=>e.f).sort((a,b)=>a.f<b.f?-1:1)}
+/* Símbolo de cada tipo de evento en la agenda */
+const SIMB_T={con:"tel",tra:"trab",man:"gear",cob:"$",pre:"pres",fij:"fin"};
+const ptI=k=>`<i class="pt si ${k}" aria-hidden="true">${SIMB_T[k]==="$"?"$":`<svg><use href="#i-${SIMB_T[k]}"/></svg>`}</i>`;
 const TIPOLBL={con:"Contacto",tra:"Trabajo",man:"Mantenimiento",cob:"Cobro",pre:"Presupuesto",fij:"Gasto fijo"};
 
 /* pedir datos en un diálogo */
@@ -730,7 +745,7 @@ function render(){
   set("c-clientes",D.clientes.length);set("c-colab",D.colabs.length);set("c-diag",D.diag.length);set("c-trab",D.trab.filter(t=>t.estado==="agendado").length);
   set("c-pres",D.pres.filter(p=>["borrador","enviado"].includes(p.estado)).length);set("c-cobros",venc||D.cobros.filter(pendiente).length,venc);
   V.classList.toggle("tablero", q.r === "tablero");if(window.barraSup)barraSup(q.r);
-  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);
+  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);
   if(!["calendario"].includes(q.r))window.scrollTo(0,0);
 }
 const vacioInicial=()=>`<div class="vacio"><p><b>Todavía no cargaste nada.</b></p><button class="btn pri" data-a="nuevo">Cargar primer cliente</button> <button class="btn claro" data-a="ejemplo">Ver con datos de ejemplo</button></div>`;
@@ -786,17 +801,17 @@ const segAg=()=>`<div class="seg no-print" role="tablist"><button role="tab" cla
 function vCal(){
   if(VAG.v==="semanas"){const h=hoy();
     V.innerHTML=`<div class="cab"><div><h1>Agenda</h1></div><div class="tools" style="margin:0">${segAg()}<button class="btn pri" data-a="nuevotrab">+ Agendar trabajo</button></div></div>
-    <section class="card barra"><div class="tools" style="justify-content:flex-end;margin-bottom:0"><span class="leyenda" style="margin:0">${Object.keys(TIPOLBL).map(k=>`<span><i class="pt ${k}"></i>${TIPOLBL[k]}</span>`).join("")}</span></div>${agendaVisual(h)}</section>`;return}
+    <section class="card barra"><div class="tools" style="justify-content:flex-end;margin-bottom:0"><span class="leyenda" style="margin:0">${Object.keys(TIPOLBL).map(k=>`<span>${ptI(k)}${TIPOLBL[k]}</span>`).join("")}</span></div>${agendaVisual(h)}</section>`;return}
   const ev=eventos(),h=hoy(),por={};ev.forEach(e=>(por[e.f]=por[e.f]||[]).push(e));
   const prim=new Date(CAL.y,CAL.m,1),ini=(prim.getDay()+6)%7,dias=new Date(CAL.y,CAL.m+1,0).getDate(),celdas=[];
   for(let i=0;i<42;i++){const d=new Date(CAL.y,CAL.m,1-ini+i);celdas.push(d)}
   const sel=por[CAL.sel]||[];
   V.innerHTML=`<div class="cab"><div><h1>Agenda</h1></div>
    <div class="tools" style="margin:0">${segAg()}<button class="btn claro" data-cal="-1" aria-label="Mes anterior">←</button><b style="min-width:150px;text-align:center">${(m=>m.charAt(0).toUpperCase()+m.slice(1))(prim.toLocaleDateString("es-AR",{month:"long",year:"numeric"}))}</b><button class="btn claro" data-cal="1" aria-label="Mes siguiente">→</button><button class="btn claro" data-cal="0">Hoy</button></div></div>
-   <div class="leyenda">${Object.keys(TIPOLBL).map(k=>`<span><i class="pt ${k}"></i>${TIPOLBL[k]}</span>`).join("")}</div>
+   <div class="leyenda">${Object.keys(TIPOLBL).map(k=>`<span>${ptI(k)}${TIPOLBL[k]}</span>`).join("")}</div>
    <div class="cols2"><div class="card"><div class="cal">${["lun","mar","mié","jue","vie","sáb","dom"].map(x=>`<div class="dn">${x}</div>`).join("")}
-   ${celdas.map(d=>{const f=iso(d),es=por[f]||[];return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><b>${d.getDate()}</b><span class="pts">${es.slice(0,6).map(e=>`<i class="pt ${e.t}"></i>`).join("")}</span></button>`}).join("")}</div></div>
-   <section class="card barra"><h2>${fechaL(CAL.sel)}</h2><ul class="lista" style="margin-top:12px">${sel.map(e=>`<li><a class="fila" href="${e.h}"><span class="pt ${e.t}"></span><div class="grow"><span class="ttl">${esc(e.x)}</span><small>${TIPOLBL[e.t]}</small></div></a></li>`).join("")||'<li class="vacio">Sin actividades este día.</li>'}</ul>
+   ${celdas.map(d=>{const f=iso(d),es=por[f]||[];return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><b>${d.getDate()}</b><span class="pts">${es.slice(0,6).map(e=>ptI(e.t)).join("")}</span></button>`}).join("")}</div></div>
+   <section class="card barra"><h2>${fechaL(CAL.sel)}</h2><ul class="lista" style="margin-top:12px">${sel.map(e=>`<li><a class="fila" href="${e.h}">${ptI(e.t)}<div class="grow"><span class="ttl">${esc(e.x)}</span><small>${TIPOLBL[e.t]}</small></div></a></li>`).join("")||'<li class="vacio">Sin actividades este día.</li>'}</ul>
    <div class="tools" style="margin-top:14px"><button class="btn chico pri" data-a="nuevotrab">+ Agendar trabajo</button></div></section></div>`;
 }
 
@@ -865,6 +880,24 @@ function vCliente(id){
 function listaActs(c){const h=hoy();
   return `<ul class="lista">${acts(c).slice().sort((a,b)=>a.f<b.f?-1:1).map(a=>`<li class="fila"><div class="grow"><span class="ttl">${esc(a.tipo)}</span><small class="${a.f<h?"vence":""}">${fecha(a.f)}${a.t?" · "+esc(a.t):""}</small></div><button class="btn chico pri" data-a="act-hecho" data-id="${a.id}">Hecho</button><button class="btn chico claro" data-a="act-editar" data-id="${a.id}">Editar</button></li>`).join("")||'<li class="vacio">Sin actividades.</li>'}</ul>`}
 const claseHist=t=>/^Presupuesto/.test(t)?"pre":/^Trabajo/.test(t)?"tra":/^Cobro/.test(t)?"cob":/^Diagnóstico/.test(t)?"dia":/^Hecho:/.test(t)?"act":"";
+
+/* ---- Mensajes de la página web (tabla aparte en Supabase) ---- */
+let MSJ=null;
+function cargarMsj(){if(!SB)return;
+  SB.from("mensajes").select("*").order("creado",{ascending:false}).limit(300).then(({data,error})=>{
+    const n=document.getElementById("nav-msj");if(error){n.hidden=true;return}
+    MSJ=data||[];n.hidden=false;const k=MSJ.filter(m=>!m.leido).length,c=document.getElementById("c-msj");c.textContent=k||"";c.classList.toggle("alerta",!!k);
+    if(ruta().r==="mensajes")vMensajes()})}
+function vMensajes(){
+  if(!SB){location.hash="#panel";return}
+  if(!MSJ){V.innerHTML='<div class="cab"><div><h1>Mensajes</h1></div></div><p>Cargando…</p>';cargarMsj();return}
+  const ico=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+  V.innerHTML=`<div class="cab"><div><h1>Mensajes</h1><p>De la página web</p></div></div>
+  <div class="pila">${MSJ.map(m=>{const w=wa(m.telefono,"Hola "+String(m.nombre).split(" ")[0]+", te escribo por la consulta que dejaste en la web.");
+    return `<article class="msj${m.leido?"":" nuevo"}"><div class="de"><b>${esc(m.nombre)}${m.empresa?" · "+esc(m.empresa):""}</b><small>${fecha(m.creado.slice(0,10))} · ${esc(m.tipo||"")}</small></div><p>${esc(m.mensaje)}</p><small>${esc(m.telefono)}</small>
+    <div class="acc">${w?`<a class="btn chico ico" href="${w}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:""}<a class="btn chico claro ico" href="tel:${esc(String(m.telefono).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a><button class="btn chico pri" data-a="msj-cliente" data-id="${m.id}">Crear cliente</button><button class="btn chico claro" data-a="msj-leido" data-id="${m.id}">${m.leido?"Marcar no leído":"Marcar leído"}</button><button class="btn chico peligro" data-a="msj-borrar" data-id="${m.id}">Borrar</button></div></article>`}).join("")||'<div class="vacio">Sin mensajes.</div>'}</div>`;
+}
+function marcarMsj(m,v){m.leido=v;SB.from("mensajes").update({leido:v}).eq("id",m.id).then(({error})=>{if(error)aviso("No se pudo guardar");cargarMsj()})}
 
 /* ---- Lista de precios ---- */
 const UNIDADES=["unidad","hora","metro","servicio"];
@@ -1249,6 +1282,11 @@ function acc(a,id){
       r.t=r.t.trim();if(!r.f)r.f=h;if(x)Object.assign(x,r);else acts(c0).push({id:uid(),tipo:r.tipo,f:r.f,t:r.t});guardar();render()},x?"Guardar":"Agregar")}
   else if(a==="act-hecho"){const [c0,x]=buscarAct(id);if(!c0)return;c0.acts=c0.acts.filter(y=>y!==x);log(c0,"Hecho: "+actTxt(x));guardar();render()}
   else if(a==="precio-nuevo"){pedir("Agregar a la lista",[{k:"n",l:"Qué",w:1,ph:"Ej. Hora de oficial electricista"},{k:"u",l:"Unidad",t:"select",o:UNIDADES,v:"unidad"},{k:"p",l:"Precio ($)",v:""}],r=>{if(!r.n.trim())return;D.precios.push({id:uid(),n:r.n.trim(),u:r.u,p:r.p});guardar();render()},"Agregar")}
+  else if(a==="msj-leido"){const m=(MSJ||[]).find(x=>String(x.id)===id);if(m){marcarMsj(m,!m.leido);vMensajes()}}
+  else if(a==="msj-borrar"){const m=(MSJ||[]).find(x=>String(x.id)===id);if(m&&confirm("¿Borrar este mensaje?"))SB.from("mensajes").delete().eq("id",m.id).then(({error})=>{if(error)aviso("No se pudo borrar");cargarMsj()})}
+  else if(a==="msj-cliente"){const m=(MSJ||[]).find(x=>String(x.id)===id);if(!m)return;abrirCliente();document.getElementById("k-grid").classList.remove("corto");
+    fc.nombre.value=m.nombre||"";fc.empresa.value=m.empresa||"";fc.tel.value=m.telefono||"";fc.origen.value="Web";fc.notas.value=(m.tipo?m.tipo+": ":"")+(m.mensaje||"");
+    fc.origen._pinta&&fc.origen._pinta();if(!m.leido)marcarMsj(m,true)}
   else if(a==="precio-borrar"){D.precios=D.precios.filter(x=>x.id!==id);guardar();render()}
   else if(a==="pres-delista"){const p=pre(id);if(!D.precios.length){aviso("Primero cargá precios en Precios");return}
     const L=D.precios.slice().sort((x,y)=>x.n.localeCompare(y.n)),o=L.map(x=>x.n+" · "+fmt(num(x.p))+" / "+x.u);
@@ -1388,7 +1426,7 @@ function entrarNube(){
     if(dentro)return;dentro=true;
     SB.from("datos").select("contenido").eq("id",1).maybeSingle().then(({data,error})=>{
       if(error||!data){dentro=false;pedir("La cuenta "+s.user.email+" no tiene acceso.",true);return}
-      L.hidden=true;D=norm(data.contenido);estado("ok","Guardado");arrancar()});
+      L.hidden=true;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();setInterval(cargarMsj,120000)});
   });
 }
 /* Panel lateral: contraer y submenú de configuración */
