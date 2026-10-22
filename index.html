@@ -118,6 +118,17 @@ textarea{min-height:76px;resize:vertical}
 .cifra b{display:block;font-size:1.9rem;line-height:1.05;font-weight:800;font-variation-settings:"wdth" 70;color:var(--papel)}
 .cifra span{font-size:0.8rem;color:#cfd1c8}
 .cifra.rojo b{background:none;color:#ff7a6b}
+.hoy-cab{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap;margin-bottom:6px}.hoy-cab h1{margin:0}
+.hoy-f{color:var(--tinta-suave);font-size:1.05rem;font-weight:600}.hoy-bt{margin-left:auto;display:flex;gap:6px;align-self:center}
+.hoy-g{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave);margin:18px 0 6px;display:flex;align-items:center;gap:8px}
+.hoy-g span{background:#d9dbd3;color:var(--tinta);border-radius:99px;padding:0 .55em;font-size:.75rem}.hoy-g.atr span{background:var(--rojo);color:#fff}.hoy-g.hoy span{background:var(--naranja)}
+.hoy-l{list-style:none;margin:0;padding:0;background:#fff;border-radius:16px;box-shadow:0 1px 0 #d9dbd4;overflow:hidden}
+.hf{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 12px}.hf+.hf{border-top:1px solid #eeeee9}
+.hf>a{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;color:inherit}
+.hf .pt.si{width:30px;height:30px;font-size:15px}.hf .pt.si svg{width:16px;height:16px}
+.hf .tx{min-width:0;flex:1}.hf .ttl{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hf small{display:block;color:var(--tinta-suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hf .acc{display:flex;gap:6px;flex:none}.hf .btn.ico{width:40px;height:40px;min-height:40px}.hf .btn.ico b{font-size:1.05rem}
 .hoy-fila{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border-radius:14px;box-shadow:0 1px 0 #d9dbd4;border-left:5px solid transparent}
 .hoy-fila.urg{border-left-color:var(--rojo)}
 .linea{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid #dcded6;display:grid;gap:10px}
@@ -597,7 +608,7 @@ const RUBROS=["Frigorífico","Planta de alimentos","Logística / depósito","Met
 const ORIGENES=["Web","Instagram","WhatsApp","Recomendación","Llamada","Evento","Otro"];
 const ESTADOS=[{id:"ok",n:"Bien"},{id:"mes",n:"Este mes"},{id:"urg",n:"Urgente"},{id:"nm",n:"No medido"}];
 const COLOR={ok:"var(--verde)",mes:"var(--ambar)",urg:"var(--rojo)",nm:"var(--gris)"};
-const TIPOS_TRAB=["Reparar o cambiar algo","Instalar o poner en marcha una máquina","Falla de una máquina","Domiciliario","Diagnóstico de tablero","Mantenimiento","Otro"];
+const TIPOS_TRAB=["Reparación","Instalación","Falla de máquina","Domiciliario","Diagnóstico de tablero","Mantenimiento","Otro"];
 const MEDIOS=["Transferencia","Efectivo","Mercado Pago","Cheque","Otro"];
 const EST_PRES={borrador:"Borrador",enviado:"Enviado",aceptado:"Aceptado",rechazado:"Rechazado"};
 /* Lista de control: base de trabajo (inspección visual, conexiones, protecciones, puesta a tierra, motores, documentación). Ajustar al método de Walter. */
@@ -643,7 +654,8 @@ function guardarYa(){
 addEventListener("beforeunload",()=>{if(!tG)return;clearTimeout(tG);
   if(SB)subir(true).catch(()=>{});
   else if(API&&navigator.sendBeacon)navigator.sendBeacon("/api/datos",new Blob([JSON.stringify(D)],{type:"application/json"}))});
-function arrancar(){sinEjemplos();addEventListener("hashchange",render);render();avisosIni()}
+const TIPO_VIEJO={"Reparar o cambiar algo":"Reparación","Instalar o poner en marcha una máquina":"Instalación","Falla de una máquina":"Falla de máquina"};
+function arrancar(){sinEjemplos();D.trab.forEach(t=>{if(TIPO_VIEJO[t.tipo])t.tipo=TIPO_VIEJO[t.tipo]});addEventListener("hashchange",render);render();avisosIni()}
 /* Borra una vez los datos de ejemplo que venían cargados */
 function sinEjemplos(){if(D.cfg.sinEj)return;const cids=new Set(D.clientes.filter(c=>c.ej).map(c=>c.id));
   D.clientes=D.clientes.filter(c=>!c.ej);["diag","pres","cobros","trab","tableros"].forEach(k=>D[k]=(D[k]||[]).filter(x=>!x.ej&&!cids.has(x.cid)));
@@ -828,32 +840,34 @@ function vPanel(){
   const ico=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
   const tel=(c,txt)=>{const u=c&&wa(c.tel,txt);return (u?`<a class="btn chico ico" href="${u}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:"")+(c&&c.tel?`<a class="btn chico claro ico" href="tel:${esc(String(c.tel).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a>`:"")};
   const cuando=f=>{const n=difDias(f,h);return n<=0?"hoy":n===1?"ayer":"hace "+n+" días"};
-  const fila=(cls,t,sub,href,btns)=>`<li class="hoy-fila ${cls}"><a class="grow" href="${href}"><span class="ttl">${t}</span><small>${sub}</small></a><div class="acc">${btns}</div></li>`;
-  const L=[],visto=new Set();
+  const G={atr:[],hoy:[],pend:[]},usd=(a,id)=>`<button class="btn chico pri ico" data-a="${a}" data-id="${id}" title="Cobrar" aria-label="Cobrar"><b>$</b></button>`;
+  const fila=(g,k,c,sub,href,btns)=>G[g].push(`<li class="hf"><a href="${href}">${ptI(k)}<span class="tx"><span class="ttl">${esc(nomCorto(c))}</span><small>${sub}</small></span></a><div class="acc">${btns||""}</div></li>`);
+  const visto=new Set();
   vencidos.sort((a,b)=>a.vence<b.vence?-1:1).forEach(c=>{const cl=cli(c.cid);
-    L.push(fila("urg",`Cobrar ${fmt(c.monto)} a ${esc(nomCorto(cl))}`,`${esc(c.concepto)} · venció ${cuando(c.vence)}`,"#cliente/"+c.cid,`<button class="btn chico pri" data-a="cobrar" data-id="${c.id}">Cobrar</button><button class="btn chico" data-a="recordar" data-id="${c.id}">Recordar</button>`))});
-  D.trab.filter(t=>t.estado==="hecho"&&num(t.monto)&&!t.cobrado&&!t.pid&&!D.cobros.some(c=>c.tid===t.id)).forEach(t=>{const cl=cli(t.cid);
-    L.push(fila("urg",`Cobrar ${fmt(t.monto)} a ${esc(nomCorto(cl))}`,esc(t.tipo+(t.desc?": "+t.desc:"")),"#ot/"+t.id,`<button class="btn chico pri" data-a="cobro-trab" data-id="${t.id}">Cobrar</button>`))});
-  D.trab.filter(t=>t.estado==="agendado"&&t.fecha<=h).sort((a,b)=>a.fecha<b.fecha?-1:1).forEach(t=>{const cl=cli(t.cid);
-    L.push(fila(t.fecha<h?"urg":"",`${t.fecha<h?"Trabajo atrasado":"Hoy"}: ${esc(t.tipo)} en ${esc(nomCorto(cl))}`,esc([t.sitio,t.fecha<h?"era "+fecha(t.fecha):""].filter(Boolean).join(" · "))||"&nbsp;","#ot/"+t.id,`<button class="btn chico pri" data-a="trabhecho" data-id="${t.id}">Marcar hecho</button>`))});
+    fila("atr","cob",cl,`Cobrar ${fmt(c.monto)} · venció ${cuando(c.vence)}`,"#cliente/"+c.cid,`<button class="btn chico claro ico" data-a="recordar" data-id="${c.id}" title="Recordar por WhatsApp" aria-label="Recordar por WhatsApp">${ico("wsp")}</button>`+usd("cobrar",c.id))});
+  porCobrar.filter(c=>c.vence===h).forEach(c=>fila("hoy","cob",cli(c.cid),`Cobrar ${fmt(c.monto)}`+(c.concepto?" · "+esc(c.concepto):""),"#cliente/"+c.cid,usd("cobrar",c.id)));
+  D.trab.filter(t=>t.estado==="hecho"&&num(t.monto)&&!t.cobrado&&!t.pid&&!D.cobros.some(c=>c.tid===t.id)).forEach(t=>
+    fila("hoy","cob",cli(t.cid),`Cobrar ${fmt(t.monto)} · ${esc(t.ot||t.tipo)}`,"#ot/"+t.id,usd("cobro-trab",t.id)));
+  D.trab.filter(t=>t.estado==="agendado"&&t.fecha<=h).sort((a,b)=>(a.fecha+(a.hora||""))<(b.fecha+(b.hora||""))?-1:1).forEach(t=>
+    fila(t.fecha<h?"atr":"hoy",t.tipo==="Mantenimiento"?"man":"tra",cli(t.cid),[t.hora,t.desc||t.tipo,t.fecha<h?"era "+fecha(t.fecha):""].filter(Boolean).map(esc).join(" · "),"#ot/"+t.id,
+      `<button class="btn chico pri ico" data-a="trabhecho" data-id="${t.id}" title="Marcar hecho" aria-label="Marcar hecho">${ico("ok")}</button>`));
   D.clientes.flatMap(c=>acts(c).filter(a=>a.f<=h).map(a=>[c,a])).sort((x,y)=>x[1].f<y[1].f?-1:1).forEach(([c,a])=>{visto.add(c.id);
-    L.push(fila(a.f<h?"urg":"",`${esc(a.tipo)}: ${esc(nomCorto(c))}`,esc(a.t||"")+(a.f<h?(a.t?" · ":"")+"debía ser "+cuando(a.f):""),"#cliente/"+c.id,tel(c)+`<button class="btn chico pri ico" data-a="act-hecho" data-id="${a.id}" title="Hecho" aria-label="Hecho">${ico("ok")}</button>`))});
-  D.clientes.filter(c=>c.etapa==="nueva"&&!visto.has(c.id)).forEach(c=>{visto.add(c.id);
-    L.push(fila("",`Atender la consulta de ${esc(nomCorto(c))}`,esc([c.rubro,c.zona].filter(Boolean).join(" · "))||"Consulta nueva","#cliente/"+c.id,tel(c)||`<a class="btn chico" href="#cliente/${c.id}">Abrir</a>`))});
+    fila(a.f<h?"atr":"hoy","con",c,esc(a.tipo)+(a.t?" · "+esc(a.t):"")+(a.f<h?" · "+cuando(a.f):""),"#cliente/"+c.id,tel(c)+`<button class="btn chico pri ico" data-a="act-hecho" data-id="${a.id}" title="Hecho" aria-label="Hecho">${ico("ok")}</button>`)});
+  D.clientes.filter(c=>c.etapa==="nueva"&&!visto.has(c.id)).forEach(c=>{visto.add(c.id);fila("pend","con",c,"Consulta nueva","#cliente/"+c.id,tel(c))});
   D.pres.filter(p=>p.estado==="enviado"&&difDias(p.fechaEnv||p.fecha,h)>=3).forEach(p=>{const cl=cli(p.cid);
-    L.push(fila("",`Presupuesto ${esc(p.num)} sin respuesta: ${esc(nomCorto(cl))}`,`enviado ${cuando(p.fechaEnv||p.fecha)} · vence ${fecha(vencePres(p))}`,"#presdoc/"+p.id,tel(cl,`Hola ${pn(cl)}, ¿pudiste ver el presupuesto ${p.num}?`)||`<a class="btn chico" href="#presdoc/${p.id}">Abrir</a>`))});
-  D.clientes.filter(c=>mantVencido(c.id)&&!visto.has(c.id)).forEach(c=>{
-    L.push(fila("",`Coordinar mantenimiento de ${esc(nomCorto(c))}`,"Pasó la fecha del próximo mantenimiento","#cliente/"+c.id,tel(c)||`<a class="btn chico" href="#cliente/${c.id}">Abrir</a>`))});
+    fila("pend","pre",cl,`Presupuesto ${esc(p.num)} sin respuesta · enviado ${cuando(p.fechaEnv||p.fecha)}`,"#presdoc/"+p.id,tel(cl,`Hola ${pn(cl)}, ¿pudiste ver el presupuesto ${p.num}?`))});
+  D.clientes.filter(c=>mantVencido(c.id)&&!visto.has(c.id)).forEach(c=>fila("pend","man",c,"Mantenimiento vencido","#cliente/"+c.id,tel(c)));
   const cifras=[];
   if(porCobrar.length)cifras.push(`<a class="cifra${vencidos.length?" rojo":""}" href="#cobros"><b>${fmt(porCobrar.reduce((a,c)=>a+num(c.monto),0))}</b><span>por cobrar${vencidos.length?" · "+vencidos.length+" vencido"+(vencidos.length>1?"s":""):""}</span></a>`);
   if(abiertos.length)cifras.push(`<a class="cifra" href="#presupuestos"><b>${fmt(abiertos.reduce((a,p)=>a+montoPres(p),0))}</b><span>${abiertos.length} presupuesto${abiertos.length>1?"s":""} abierto${abiertos.length>1?"s":""}</span></a>`);
   if(cobMes)cifras.push(`<a class="cifra" href="#finanzas"><b>${fmt(cobMes)}</b><span>cobrado este mes</span></a>`);
-  const max=ESE()&&!HOYALL?5:L.length;
-  V.innerHTML=`<div class="cab"><div><h1>Hoy</h1><p>${fechaL(h)}</p></div></div>
-  <div class="hoy-acc solo-esencial no-print"><button class="btn pri" data-a="anotar">+ Anotar trabajo</button><button class="btn" data-a="nuevocobro">Cobrar</button></div>
+  const total=G.atr.length+G.hoy.length+G.pend.length;let quedan=ESE()&&!HOYALL?6:total;
+  const sec=(g,n)=>{const l=G[g].slice(0,Math.max(0,quedan));quedan-=l.length;return l.length?`<h2 class="hoy-g ${g}">${n}<span>${G[g].length}</span></h2><ul class="hoy-l">${l.join("")}</ul>`:""};
+  const fl=new Date().toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"}).replace(",","");
+  V.innerHTML=`<div class="hoy-cab"><h1>Hoy</h1><span class="hoy-f">${fl}</span><div class="hoy-bt no-print"><button class="btn chico pri" data-a="anotar">+ Trabajo</button><button class="btn chico claro" data-a="nuevocobro">Cobro</button></div></div>
   ${D.clientes.length?"":vacioInicial()}
-  ${D.clientes.length?`<section class="card barra" style="margin-bottom:18px"><h2>Para hacer${L.length?` <span class="n-hoy">${L.length}</span>`:""}</h2><ul class="lista" style="margin-top:12px">${L.slice(0,max).join("")||'<li class="vacio">Sin pendientes por hoy.</li>'}${L.length>max?`<li class="vacio"><button class="btn chico claro" data-hoyall="1">Ver todo (${L.length})</button></li>`:""}</ul></section>`:""}
-  ${cifras.length?`<div class="cifras chicas solo-completa">${cifras.join("")}</div>`:""}`;
+  ${D.clientes.length?(total?sec("atr","Atrasado")+sec("hoy","Hoy")+sec("pend","Pendiente")+(quedan<0||total>(ESE()&&!HOYALL?6:total)?`<p style="margin-top:10px"><button class="btn chico claro" data-hoyall="1">Ver todo (${total})</button></p>`:""):'<div class="vacio">Sin pendientes por hoy.</div>'):""}
+  ${cifras.length?`<div class="cifras chicas solo-completa" style="margin-top:18px">${cifras.join("")}</div>`:""}`;
 }
 
 /* ---- Calendario ---- */
@@ -999,7 +1013,7 @@ function otVoz(raw,t,monto,f){const pa=cortarNom(segVoz(raw.replace(/^.*?(?:orde
   acc("anotar");const pon=(k,v)=>{const e=document.getElementById("g_"+k);if(e&&v!=null&&v!==""){e.value=v;e._pinta&&e._pinta()}};
   if(c)pon("cli",nom(c));else{pon("cli","— Cliente nuevo —");pon("nuevo",capV(emp||ct))}
   pon("desc",desc);if(f)pon("fecha",f+"T09:00");if(monto)pon("monto",monto);
-  pon("tipo",/mantenimiento/.test(t)?"Mantenimiento":/falla/.test(t)?"Falla de una máquina":/instal/.test(t)?"Instalar o poner en marcha una máquina":"")}
+  pon("tipo",/mantenimiento/.test(t)?"Mantenimiento":/falla/.test(t)?"Falla de máquina":/instal/.test(t)?"Instalación":"")}
 function interpretarVoz(raw){const t=" "+sinAc(raw).replace(/(?<!\d)[,;]|[,;](?!\d)/g," ")+" ",c=cliVoz(t),monto=montoVoz(t),f=fechaVoz(t),has=re=>re.test(t);
   const pon=(k,v)=>{const e=document.getElementById("g_"+k);if(e&&v!=null&&v!==""){e.value=v;e._pinta&&e._pinta()}};
   if(has(/^\s*(nueva |nuevo )?(orden de trabajo|orden|o\s?t|trabajo)\b/)||has(/\b(orden de trabajo|nueva orden|nueva o\s?t)\b/)){otVoz(raw,t,monto,f);return}
@@ -1019,7 +1033,7 @@ function interpretarVoz(raw){const t=" "+sinAc(raw).replace(/(?<!\d)[,;]|[,;](?!
   const ta=[["Mandar presupuesto",/\b(mandar|enviar|pasar)(le)? (el |un )?presupuesto\b/],["Llamar",/\b(llamar|llamarlo|llamarla|llamalo|llamala)\b/],["WhatsApp",/\b(whatsapp|escribir|escribirle)\b/],["Visitar",/\b(visitar|visita|pasar por)\b/]].find(x=>x[1].test(t));
   if(c&&(ta||has(/\b(recordame|recordar|acordarme)\b/))){acc("act-nueva",c.id);pon("tipo",ta?ta[0]:"Otro");pon("f",f||addDias(hoy(),1));pon("t",descVoz(raw,c));return}
   if(has(/\b(trabajo|arreglar|arreglo|instalar|instalacion|reparar|cambiar|revisar|anotar|anota|mantenimiento|falla|orden)\b/)){acc("anotar");if(c)pon("cli",nom(c));pon("desc",descVoz(raw,c));if(f)pon("fecha",f+"T09:00");if(monto)pon("monto",monto);
-    pon("tipo",has(/mantenimiento/)?"Mantenimiento":has(/falla/)?"Falla de una máquina":has(/instal/)?"Instalar o poner en marcha una máquina":"");return}
+    pon("tipo",has(/mantenimiento/)?"Mantenimiento":has(/falla/)?"Falla de máquina":has(/instal/)?"Instalación":"");return}
   if(c){pedir("Nota para "+nomCorto(c),[{k:"t",l:"Nota",t:"area",w:1,v:descVoz(raw,c)||raw}],r=>{if(!r.t.trim())return;log(c,r.t.trim());guardar();render()},"Anotar");return}
   aviso("No entendí: "+raw)}
 (function(){const bs=[document.getElementById("b-voz"),document.getElementById("b-voz2")].filter(Boolean);
