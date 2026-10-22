@@ -142,6 +142,9 @@ textarea{min-height:76px;resize:vertical}
 .vsel-mas .vsel{margin:0;background:rgba(255,255,255,.12)}.vsel-mas .seg button{color:#c9cac4}.vsel-mas .seg button.on{background:#fff;color:var(--tinta)}
 @media (min-width:901px){.colapsado .vsel-mas{display:none}}
 tr[data-go],li[data-go]{cursor:pointer}
+.voz-fab{display:none}
+@media (max-width:900px){.voz-fab{display:flex;position:fixed;right:84px;bottom:calc(80px + env(safe-area-inset-bottom));width:56px;height:56px;border:0;border-radius:50%;background:var(--carbon);color:#fff;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:22;cursor:pointer}
+  .voz-fab .ic{width:26px;height:26px}.voz-fab.on{background:var(--naranja);color:var(--tinta)}}
 .busca .busca-mic{position:absolute;right:5px;left:auto;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:var(--tinta);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
 .busca .busca-mic .ic{position:static;transform:none;color:inherit}.busca-mic[hidden]{display:none!important}
 .busca input#q-global{padding-right:50px}
@@ -547,6 +550,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
         <button class="busca-mic" id="b-voz" type="button" title="Hablar" aria-label="Hablar" hidden><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
         <div class="q-res" id="q-res" role="listbox" hidden></div>
       </div>
+      <button class="voz-fab" id="b-voz2" type="button" title="Hablar" aria-label="Hablar"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
       <button class="mas-crear" id="b-crear" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-crear" aria-label="Crear"><svg class="ic" aria-hidden="true"><use href="#i-mas2"/></svg><span class="t">Crear</span></button>
       <div class="menu-crear" id="menu-crear" role="menu" hidden>
         <button type="button" role="menuitem" data-a="anotar">Anotar trabajo</button>
@@ -968,12 +972,30 @@ function cliVoz(t){let mejor=null,pm=0;
   return mejor}
 const DROPV=new Set("gaste gasto pague compre gastamos pagamos cobre cobramos pago pagaron transfirio transfirieron debe deben cobrarle cobrar tengo hay llamar llamalo llamala whatsapp escribirle visitar recordame recordar acordarme anotar anota agendar pesos peso mil lucas luca millon millones hoy manana pasado".split(" ").concat(DIAS_V,MESES_V));
 const PREPV=new Set("de en a para por el la los las del al que y le me nos con un una".split(" "));
-function descVoz(raw,c){const cw=new Set(c?sinAc([c.empresa,c.nombre].join(" ")).split(/[^a-z0-9]+/).filter(x=>x.length>2):[]);
+function descVoz(raw,c){raw=String(raw).replace(/\b(?:para |este |el |la )?(?:pasado ma[nñ]ana|ma[nñ]ana|hoy|lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\b/gi," ").replace(/\b(?:para )?el \d{1,2}(?: de [a-záéíóú]+)?\b/gi," ").replace(/\b(?:sale|cuesta|precio)\b/gi," ");const cw=new Set(c?sinAc([c.empresa,c.nombre].join(" ")).split(/[^a-z0-9]+/).filter(x=>x.length>2):[]);
   const w=raw.split(/\s+/).filter(x=>{const k=sinAc(x).replace(/[^a-z0-9$.,]/g,"").replace(/[.,]+$/,"");return k&&!DROPV.has(k)&&!cw.has(k)&&!/^\$?[\d.,]+$/.test(k)});
   const lim=x=>sinAc(x).replace(/[^a-z]/g,"");while(w.length&&PREPV.has(lim(w[0])))w.shift();while(w.length&&PREPV.has(lim(w[w.length-1])))w.pop();
   const s=w.join(" ").replace(/[,.]+$/,"");return s?s.charAt(0).toUpperCase()+s.slice(1):""}
+let VOZ={ct:"",tel:""};
+const CORTE_V="empresa|cliente|contacto|tel[eé]fono|celular|descripci[oó]n|detalle|hay que|para (?:el|ma[nñ]ana|hoy|pasado)|precio|sale|cuesta";
+function segVoz(raw,clave){const m=raw.match(new RegExp("(?:^|\\s)(?:"+clave+")\\s+(.+?)(?=\\s*[,.;]|\\s+(?:"+CORTE_V+")(?:\\s|$)|$)","i"));return m?m[1].trim():""}
+const capV=x=>x.split(/\s+/).map((w,i)=>i&&/^(y|e|de|del|la|las|los|el)$/i.test(w)?w.toLowerCase():w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
+function otVoz(raw,t,monto,f){const emp=segVoz(raw,"empresa"),ct=segVoz(raw,"cliente|contacto"),ds=segVoz(raw,"descripci[oó]n|detalle");
+  const c=(emp&&cliVoz(" "+sinAc(emp)+" "))||(ct&&cliVoz(" "+sinAc(ct)+" "))||cliVoz(t);
+  const tel=(raw.replace(/(\d)[\s.-]+(?=\d)/g,"$1").match(/\d{8,}/)||[""])[0];
+  let resto=raw.replace(/^\s*(nueva |nuevo )?(orden de trabajo|orden|o\.?\s?t\.?|trabajo)\b[\s,.:]*/i,"");
+  [emp,ct].filter(Boolean).forEach(x=>{resto=resto.replace(new RegExp("(empresa|cliente|contacto)\\s+"+x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i")," ")});
+  resto=resto.replace(/(tel[eé]fono|celular)\s*[\d\s.-]+/i," ").replace(/(descripci[oó]n|detalle)\s*/i," ");
+  const desc=ds?ds.charAt(0).toUpperCase()+ds.slice(1):descVoz(resto,c),rt=" "+sinAc(resto)+" ",mm=rt.match(/\b(?:sale|cuesta|precio|cobrar|por)\s+(\$?\s*[\d.,]+\s*(?:mil|lucas?|millon(?:es)?)?)/);
+  monto=mm?montoVoz(" "+mm[1]+" "):/\$|\bmil\b|\blucas?\b|millon/.test(rt)?montoVoz(rt):0;
+  VOZ={ct:c?"":(emp?capV(ct):""),tel:c?"":tel};
+  acc("anotar");const pon=(k,v)=>{const e=document.getElementById("g_"+k);if(e&&v!=null&&v!==""){e.value=v;e._pinta&&e._pinta()}};
+  if(c)pon("cli",nom(c));else{pon("cli","— Cliente nuevo —");pon("nuevo",capV(emp||ct))}
+  pon("desc",desc);if(f)pon("fecha",f+"T09:00");if(monto)pon("monto",monto);
+  pon("tipo",/mantenimiento/.test(t)?"Mantenimiento":/falla/.test(t)?"Falla de una máquina":/instal/.test(t)?"Instalar o poner en marcha una máquina":"")}
 function interpretarVoz(raw){const t=" "+sinAc(raw).replace(/(?<!\d)[,;]|[,;](?!\d)/g," ")+" ",c=cliVoz(t),monto=montoVoz(t),f=fechaVoz(t),has=re=>re.test(t);
   const pon=(k,v)=>{const e=document.getElementById("g_"+k);if(e&&v!=null&&v!==""){e.value=v;e._pinta&&e._pinta()}};
+  if(has(/^\s*(nueva |nuevo )?(orden de trabajo|orden|o\s?t|trabajo)\b/)||has(/\b(orden de trabajo|nueva orden|nueva o\s?t)\b/)){otVoz(raw,t,monto,f);return}
   if(has(/\b(cliente nuevo|nuevo cliente|agrega\w* (un )?cliente|alta de cliente)\b/)){
     const tel=(raw.replace(/(\d)[\s.-]+(?=\d)/g,"$1").match(/\d{8,}/)||[""])[0];
     const n=raw.replace(/^.*?(cliente nuevo|nuevo cliente|agreg\S* (un )?cliente|alta de cliente)/i,"").replace(/(tel[eé]fono|celular|n[uú]mero|whatsapp)[\s\S]*$/i,"").replace(/\d[\d\s.-]*/g,"").replace(/^[\s,.:]*(que se llama|se llama|llamad[oa]|de nombre)?\s*/i,"").replace(/[\s,.]+$/,"");
@@ -989,18 +1011,22 @@ function interpretarVoz(raw){const t=" "+sinAc(raw).replace(/(?<!\d)[,;]|[,;](?!
       D.cobros.push({id:uid(),cid:c.id,pid:null,concepto:r.concepto,monto:num(r.monto),vence:r.vence||hoy(),pagado:"",medio:"",comp:""});log(c,"Cobro previsto: "+fmt(num(r.monto))+" para el "+fecha(r.vence||hoy()));guardar();render()},"Guardar");return}
   const ta=[["Mandar presupuesto",/\b(mandar|enviar|pasar)(le)? (el |un )?presupuesto\b/],["Llamar",/\b(llamar|llamarlo|llamarla|llamalo|llamala)\b/],["WhatsApp",/\b(whatsapp|escribir|escribirle)\b/],["Visitar",/\b(visitar|visita|pasar por)\b/]].find(x=>x[1].test(t));
   if(c&&(ta||has(/\b(recordame|recordar|acordarme)\b/))){acc("act-nueva",c.id);pon("tipo",ta?ta[0]:"Otro");pon("f",f||addDias(hoy(),1));pon("t",descVoz(raw,c));return}
-  if(has(/\b(trabajo|arreglar|arreglo|instalar|instalacion|reparar|cambiar|revisar|anotar|anota|mantenimiento|falla|orden)\b/)){acc("anotar");if(c)pon("cli",nom(c));pon("desc",descVoz(raw,c));if(f)pon("fecha",f);if(monto)pon("monto",monto);
+  if(has(/\b(trabajo|arreglar|arreglo|instalar|instalacion|reparar|cambiar|revisar|anotar|anota|mantenimiento|falla|orden)\b/)){acc("anotar");if(c)pon("cli",nom(c));pon("desc",descVoz(raw,c));if(f)pon("fecha",f+"T09:00");if(monto)pon("monto",monto);
     pon("tipo",has(/mantenimiento/)?"Mantenimiento":has(/falla/)?"Falla de una máquina":has(/instal/)?"Instalar o poner en marcha una máquina":"");return}
   if(c){pedir("Nota para "+nomCorto(c),[{k:"t",l:"Nota",t:"area",w:1,v:descVoz(raw,c)||raw}],r=>{if(!r.t.trim())return;log(c,r.t.trim());guardar();render()},"Anotar");return}
   aviso("No entendí: "+raw)}
-(function(){const b=document.getElementById("b-voz");if(!REC||!b)return;b.hidden=false;
-  const ov=document.getElementById("voz"),tx=document.getElementById("voz-t");let r=null,fin="",cancel=false;
-  const cerrar=()=>{ov.hidden=true;b.classList.remove("on")};
-  b.onclick=()=>{if(r){r.stop();return}fin="";cancel=false;r=new REC();r.lang="es-AR";r.interimResults=true;r.continuous=false;
-    r.onresult=e=>{let it="";fin="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript;else it+=e.results[i][0].transcript}tx.textContent=(fin+it)||"Escuchando…"};
-    r.onerror=e=>{if(e.error!=="no-speech"&&e.error!=="aborted")aviso("No se pudo usar el micrófono")};
-    r.onend=()=>{r=null;cerrar();if(!cancel&&fin.trim())interpretarVoz(fin.trim())};
-    tx.textContent="Escuchando…";ov.hidden=false;b.classList.add("on");r.start()};
+(function(){const bs=[document.getElementById("b-voz"),document.getElementById("b-voz2")].filter(Boolean);
+  const ov=document.getElementById("voz"),tx=document.getElementById("voz-t");let r=null,fin="",cancel=false,tm=null;
+  const marca=v=>bs.forEach(b=>b.classList.toggle("on",v));
+  const cerrar=()=>{ov.hidden=true;marca(false);clearTimeout(tm)};
+  const escuchar=()=>{if(!REC){aviso("Este navegador no permite usar el micrófono. Abrí el sistema en Chrome");return}
+    if(r){r.stop();return}fin="";cancel=false;r=new REC();r.lang="es-AR";r.interimResults=true;r.continuous=true;
+    const silencio=()=>{clearTimeout(tm);tm=setTimeout(()=>{if(r)r.stop()},3000)};
+    r.onresult=e=>{let it="";fin="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=" "+e.results[i][0].transcript;else it+=" "+e.results[i][0].transcript}fin=fin.replace(/\s+/g," ").trim();tx.textContent=(fin+" "+it).trim()||"Escuchando…";silencio()};
+    r.onerror=e=>{if(e.error==="not-allowed")aviso("Chrome no tiene permiso para usar el micrófono");else if(e.error!=="no-speech"&&e.error!=="aborted")aviso("No se pudo usar el micrófono")};
+    r.onend=()=>{r=null;cerrar();if(!cancel&&fin)interpretarVoz(fin)};
+    tx.textContent="Escuchando…";ov.hidden=false;marca(true);silencio();try{r.start()}catch(x){r=null;cerrar()}};
+  bs.forEach(b=>{b.hidden=false;b.onclick=escuchar});
   document.getElementById("voz-x").onclick=()=>{cancel=true;if(r)r.abort();cerrar()};
   document.getElementById("voz-ok").onclick=()=>{if(r)r.stop()};
 })();
@@ -1597,12 +1623,12 @@ function acc(a,id){
   else if(a==="borrardiag"){if(confirm("¿Borrar este diagnóstico?")){const d=dia(id);D.diag=D.diag.filter(x=>x.id!==id);guardar();location.hash="#cliente/"+d.cid}}
   else if(a==="nuevopres"){if(!D.clientes.length){aviso("Primero cargá un cliente");return}nuevoPres(id)}
   else if(a==="pres-desde-diag"){nuevoPres(null,id)}
-  else if(a==="anotar"){
+  else if(a==="anotar"){const vz=VOZ;VOZ={ct:"",tel:""};
     const ops=["— Cliente nuevo —"].concat(D.clientes.slice().sort((x,y)=>nom(x).localeCompare(nom(y))).map(nom));
     pedir("Anotar trabajo",[{k:"cli",l:"Cliente",t:"select",o:ops,v:ops[1]||ops[0]},{k:"nuevo",l:"Cliente nuevo",w:1},{k:"desc",l:"Descripción",t:"area",w:1},{k:"tipo",l:"Tipo",t:"select",o:TIPOS_TRAB,v:TIPOS_TRAB[0]},{k:"fecha",l:"Fecha y hora",t:"datetime-local",v:h+"T09:00"},{k:"monto",l:"Precio",ph:"$"}],r=>{
       let c;
       if(r.cli===ops[0]){if(!r.nuevo.trim()){aviso("Falta el nombre del cliente");return}
-        c={id:uid(),nombre:"",empresa:r.nuevo.trim(),tel:"",mail:"",rubro:"Otro",origen:"WhatsApp",zona:"",cuit:"",colab:"",etapa:"nueva",prox:"",proxm:"",notas:"",hist:[]};log(c,"Cliente creado");D.clientes.push(c)}
+        c={id:uid(),nombre:vz.ct,empresa:r.nuevo.trim(),tel:vz.tel,mail:"",rubro:"Otro",origen:"WhatsApp",zona:"",cuit:"",colab:"",etapa:"nueva",prox:"",proxm:"",notas:"",hist:[]};log(c,"Cliente creado");D.clientes.push(c)}
       else c=D.clientes.find(x=>nom(x)===r.cli);
       const t={id:uid(),ot:ot3(),cid:c.id,fecha:fyh(r.fecha).f||h,hora:fyh(r.fecha).h,tipo:r.tipo,sitio:r.sitio,desc:r.desc,horas:"",estado:"agendado",prox:"",monto:num(r.monto)||"",fotos:[],pasos:{pedido:sello()}};
       D.trab.push(t);log(c,"Trabajo anotado: "+r.tipo+(r.desc?" – "+r.desc:""));
