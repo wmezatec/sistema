@@ -945,10 +945,15 @@ const claseHist=t=>/^Presupuesto/.test(t)?"pre":/^Trabajo/.test(t)?"tra":/^Cobro
 
 /* ---- Dictado por voz (Chrome, celular) ---- */
 const REC=window.SpeechRecognition||window.webkitSpeechRecognition;
+function textoVoz(res){const segs=[],n=x=>sinAc(x).replace(/[^a-z0-9]+/g," ").trim();
+  for(let i=0;i<res.length;i++){const x=res[i][0].transcript.trim();if(!x)continue;const u=segs[segs.length-1];
+    if(u!==undefined&&(n(x).startsWith(n(u))||n(u).startsWith(n(x))))segs[segs.length-1]=x.length>=u.length?x:u;else segs.push(x)}
+  return segs.join(" ")}
 function micEn(el){if(el._mic)return;el._mic=1;const b=document.createElement("button");b.type="button";b.className="btn chico claro ico mic";b.title="Dictar";b.setAttribute("aria-label","Dictar");
   b.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg>';if(el.tagName==="TEXTAREA")el.parentNode.classList.add("con-mic");el.after(b);let r=null;
   b.onclick=()=>{if(r){r.stop();return}r=new REC();r.lang="es-AR";r.continuous=true;
-    r.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();el.value+=(el.value&&!/\s$/.test(el.value)?" ":"")+t;el.dispatchEvent(new Event("input",{bubbles:true}))}};
+    const base=el.value+(el.value&&!/\s$/.test(el.value)?" ":"");
+    r.onresult=e=>{el.value=base+textoVoz(e.results);el.dispatchEvent(new Event("input",{bubbles:true}))};
     r.onerror=()=>aviso("No se pudo usar el micrófono");r.onend=()=>{r=null;b.classList.remove("on")};b.classList.add("on");r.start()}}
 if(REC)new MutationObserver(()=>document.querySelectorAll("dialog textarea,#x-nota,.ot-det textarea,.cli-det textarea").forEach(micEn)).observe(document.body,{childList:true,subtree:true});
 
@@ -978,13 +983,15 @@ function descVoz(raw,c){raw=String(raw).replace(/\b(?:para |este |el |la )?(?:pa
   const s=w.join(" ").replace(/[,.]+$/,"");return s?s.charAt(0).toUpperCase()+s.slice(1):""}
 let VOZ={ct:"",tel:""};
 const CORTE_V="empresa|cliente|contacto|tel[eé]fono|celular|descripci[oó]n|detalle|hay que|para (?:el|ma[nñ]ana|hoy|pasado)|precio|sale|cuesta";
+/* El nombre termina donde empieza lo que hay que hacer: "para López y López cambiar la térmica" */
+const cortarNom=x=>{const w=x.split(/\s+/),k=w.findIndex((p,i)=>i&&(/^[a-záéíóúñ]{2,}(?:ar|er|ir)$/.test(p)||/^(que|hay|porque|por)$/i.test(p)));return (k>0?w.slice(0,k):w).join(" ")};
 function segVoz(raw,clave){const m=raw.match(new RegExp("(?:^|\\s)(?:"+clave+")\\s+(.+?)(?=\\s*[,.;]|\\s+(?:"+CORTE_V+")(?:\\s|$)|$)","i"));return m?m[1].trim():""}
 const capV=x=>x.split(/\s+/).map((w,i)=>i&&/^(y|e|de|del|la|las|los|el)$/i.test(w)?w.toLowerCase():w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
-function otVoz(raw,t,monto,f){const emp=segVoz(raw,"empresa"),ct=segVoz(raw,"cliente|contacto"),ds=segVoz(raw,"descripci[oó]n|detalle");
+function otVoz(raw,t,monto,f){const pa=cortarNom(segVoz(raw.replace(/^.*?(?:orden de trabajo|orden|o\.?\s?t\.?|trabajo)\b/i,""),"para")),emp=cortarNom(segVoz(raw,"empresa"))||(/^(el|la|ma[nñ]ana|hoy|pasado|lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|\d)/i.test(pa)?"":pa),ct=cortarNom(segVoz(raw,"cliente|contacto")),ds=segVoz(raw,"descripci[oó]n|detalle");
   const c=(emp&&cliVoz(" "+sinAc(emp)+" "))||(ct&&cliVoz(" "+sinAc(ct)+" "))||cliVoz(t);
   const tel=(raw.replace(/(\d)[\s.-]+(?=\d)/g,"$1").match(/\d{8,}/)||[""])[0];
   let resto=raw.replace(/^\s*(nueva |nuevo )?(orden de trabajo|orden|o\.?\s?t\.?|trabajo)\b[\s,.:]*/i,"");
-  [emp,ct].filter(Boolean).forEach(x=>{resto=resto.replace(new RegExp("(empresa|cliente|contacto)\\s+"+x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i")," ")});
+  [emp,ct].filter(Boolean).forEach(x=>{resto=resto.replace(new RegExp("(empresa|cliente|contacto|para)\\s+"+x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i")," ")});
   resto=resto.replace(/(tel[eé]fono|celular)\s*[\d\s.-]+/i," ").replace(/(descripci[oó]n|detalle)\s*/i," ");
   const desc=ds?ds.charAt(0).toUpperCase()+ds.slice(1):descVoz(resto,c),rt=" "+sinAc(resto)+" ",mm=rt.match(/\b(?:sale|cuesta|precio|cobrar|por)\s+(\$?\s*[\d.,]+\s*(?:mil|lucas?|millon(?:es)?)?)/);
   monto=mm?montoVoz(" "+mm[1]+" "):/\$|\bmil\b|\blucas?\b|millon/.test(rt)?montoVoz(rt):0;
@@ -1022,7 +1029,7 @@ function interpretarVoz(raw){const t=" "+sinAc(raw).replace(/(?<!\d)[,;]|[,;](?!
   const escuchar=()=>{if(!REC){aviso("Este navegador no permite usar el micrófono. Abrí el sistema en Chrome");return}
     if(r){r.stop();return}fin="";cancel=false;r=new REC();r.lang="es-AR";r.interimResults=true;r.continuous=true;
     const silencio=()=>{clearTimeout(tm);tm=setTimeout(()=>{if(r)r.stop()},3000)};
-    r.onresult=e=>{let it="";fin="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=" "+e.results[i][0].transcript;else it+=" "+e.results[i][0].transcript}fin=fin.replace(/\s+/g," ").trim();tx.textContent=(fin+" "+it).trim()||"Escuchando…";silencio()};
+    r.onresult=e=>{fin=textoVoz(e.results);tx.textContent=fin||"Escuchando…";silencio()};
     r.onerror=e=>{if(e.error==="not-allowed")aviso("Chrome no tiene permiso para usar el micrófono");else if(e.error!=="no-speech"&&e.error!=="aborted")aviso("No se pudo usar el micrófono")};
     r.onend=()=>{r=null;cerrar();if(!cancel&&fin)interpretarVoz(fin)};
     tx.textContent="Escuchando…";ov.hidden=false;marca(true);silencio();try{r.start()}catch(x){r=null;cerrar()}};
