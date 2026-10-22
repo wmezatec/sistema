@@ -9,24 +9,19 @@ Notas del 22/10/2026.
 - Micrófono para dictar en las notas y en los campos de texto largos.
 - Editar clientes: botón "Editar" en la ficha del cliente.
 
-## Por hacer
-### Orden de trabajo (O.T.) con trazabilidad
-Cada pedido de un cliente abre una O.T. que sigue estos pasos:
-1. Pedido del cliente
-2. Se abre la O.T.
-3. Visita de obra
-4. Presupuesto
-5. Remito
-6. Cobro
-7. Cierre de la O.T.
-8. Encuesta de conformidad
+- Orden de trabajo con pasos: pedido, visita de obra, presupuesto, trabajo y remito, cobro y cierre. Archivos (fotos y videos) guardados en Supabase Storage.
+- Micrófono en la barra de búsqueda que entiende frases: cliente nuevo, gastos, cobros, deudas, trabajos, llamadas y notas.
+- Avisos de Chrome para cobros, actividades y trabajos del día (mientras el sistema está abierto o en segundo plano).
 
-La O.T. guarda fotos, videos y la descripción del presupuesto.
+## Por hacer
 
 ### Encuesta de conformidad
 - Entre 3 y 5 preguntas.
 - Cada pregunta con 5 opciones: muy satisfecho, satisfecho, neutral, poco satisfecho, nada satisfecho.
-- Se le manda al cliente por WhatsApp al cerrar la O.T. y la respuesta vuelve al sistema.
+- Se le manda al cliente por WhatsApp al cerrar la O.T. y la respuesta vuelve al sistema. Es el último paso de la O.T.
+
+### Avisos con el sistema cerrado
+- Hoy los avisos salen cuando el sistema está abierto. Para que lleguen con Chrome cerrado hace falta un envío desde el servidor (Supabase Edge Function con Web Push y una tarea diaria).
 
 ### Guía de precios
 - Cargar precios guía de mano de obra (Electroinstalador o AIERIC) en la lista de precios.
