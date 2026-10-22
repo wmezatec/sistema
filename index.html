@@ -265,7 +265,7 @@ table.t a{text-decoration:none;font-weight:700}
 .pt.con{background:var(--naranja)}.pt.tra{background:var(--azul)}.pt.man{background:var(--verde)}.pt.cob{background:var(--rojo)}.pt.pre{background:var(--gris)}
 .pt.si{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex:none;font-weight:800;font-size:12px;line-height:1}
 .pt.si svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.pts .pt.si{width:18px;height:18px}.pts .pt.si svg{width:11px;height:11px}
+.pts .pt.si{width:22px;height:22px;cursor:pointer}.pts .pt.si svg{width:11px;height:11px}
 .leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:0.8rem;color:var(--tinta-suave);margin:10px 0}
 .leyenda span{display:inline-flex;align-items:center;gap:5px}
 
@@ -431,7 +431,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
   .cal button.dia{min-height:66px;padding:5px 4px;border-radius:10px}
   .cal{gap:3px}.cal button.dia b{font-size:1rem}
   .cal-card{padding:8px 4px;margin:0 -10px}
-  .cal .pts{gap:2px}.cal .pts .pt.si{width:16px;height:16px;font-size:10px}.cal .pts .pt.si svg{width:10px;height:10px}
+  .cal .pts{gap:2px}.cal .pts .pt.si{width:20px;height:20px}.cal .pts .pt.si svg{width:12px;height:12px}
   .cal-card .leyenda{display:grid;grid-template-columns:repeat(3,auto);gap:8px 10px;font-size:.75rem;justify-content:space-around}
 }
 /* Celular: cada fila de tabla se ve como tarjeta, sin scroll horizontal */
@@ -505,6 +505,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
 <symbol id="i-clip" viewBox="0 0 24 24"><path d="M20 11.5l-8.2 8.2a5 5 0 0 1-7-7L13 4.5a3.3 3.3 0 0 1 4.7 4.7l-8.2 8.2a1.7 1.7 0 0 1-2.4-2.4L14.6 7.5"/></symbol>
 <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-peso" viewBox="0 0 24 24"><path d="M12 2.5v19"/><path d="M16.8 7.6C16.2 6 14.4 5 12.1 5 9.4 5 7.4 6.4 7.4 8.5c0 4.8 9.8 2.7 9.8 7.3 0 2.1-2.1 3.4-5.1 3.4-2.5 0-4.4-1.1-5-2.7"/></symbol>
 <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 <symbol id="i-msg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
@@ -727,7 +728,7 @@ function eventos(){
   D.pres.filter(p=>p.estado==="enviado").forEach(p=>ev.push({f:vencePres(p),t:"pre",x:"Vence presupuesto "+p.num+" – "+nomCorto(cli(p.cid)),h:"#presdoc/"+p.id}));
   return ev.filter(e=>e.f).sort((a,b)=>a.f<b.f?-1:1)}
 /* Símbolo de cada tipo de evento en la agenda */
-const SIMB_T={con:"tel",tra:"trab",man:"gear",cob:"$",pre:"pres",fij:"fin"};
+const SIMB_T={con:"tel",tra:"trab",man:"gear",cob:"peso",pre:"pres",fij:"fin"};
 const ptI=k=>`<i class="pt si ${k}" aria-hidden="true">${SIMB_T[k]==="$"?"$":`<svg><use href="#i-${SIMB_T[k]}"/></svg>`}</i>`;
 const TIPOLBL={con:"Contacto",tra:"Trabajo",man:"Mantenimiento",cob:"Cobro",pre:"Presupuesto",fij:"Gasto fijo"};
 
@@ -840,7 +841,7 @@ function vPanel(){
   const ico=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
   const tel=(c,txt)=>{const u=c&&wa(c.tel,txt);return (u?`<a class="btn chico ico" href="${u}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:"")+(c&&c.tel?`<a class="btn chico claro ico" href="tel:${esc(String(c.tel).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a>`:"")};
   const cuando=f=>{const n=difDias(f,h);return n<=0?"hoy":n===1?"ayer":"hace "+n+" días"};
-  const G={atr:[],hoy:[],pend:[]},usd=(a,id)=>`<button class="btn chico pri ico" data-a="${a}" data-id="${id}" title="Cobrar" aria-label="Cobrar"><b>$</b></button>`;
+  const G={atr:[],hoy:[],pend:[]},usd=(a,id)=>`<button class="btn chico pri ico" data-a="${a}" data-id="${id}" title="Cobrar" aria-label="Cobrar">${ico("peso")}</button>`;
   const fila=(g,k,c,sub,href,btns)=>G[g].push(`<li class="hf"><a href="${href}">${ptI(k)}<span class="tx"><span class="ttl">${esc(nomCorto(c))}</span><small>${sub}</small></span></a><div class="acc">${btns||""}</div></li>`);
   const visto=new Set();
   vencidos.sort((a,b)=>a.vence<b.vence?-1:1).forEach(c=>{const cl=cli(c.cid);
@@ -880,7 +881,7 @@ function vCal(){
   const sel=por[CAL.sel]||[],mt=prim.toLocaleDateString("es-AR",{month:"long",year:"numeric"}).replace(" de "," ");
   V.innerHTML=`<div class="cal-cab no-print"><button class="btn claro ico" data-cal="-1" aria-label="Mes anterior">←</button><h1>${mt.charAt(0).toUpperCase()+mt.slice(1)}</h1><button class="btn claro ico" data-cal="1" aria-label="Mes siguiente">→</button><button class="btn claro" data-cal="0">Hoy</button></div>
    <div class="cols2"><div class="card cal-card"><div class="cal">${["lun","mar","mié","jue","vie","sáb","dom"].map(x=>`<div class="dn">${x}</div>`).join("")}
-   ${celdas.map(d=>{const f=iso(d),es=por[f]||[];return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><b>${d.getDate()}</b><span class="pts">${es.slice(0,6).map(e=>ptI(e.t)).join("")}</span></button>`}).join("")}</div>
+   ${celdas.map(d=>{const f=iso(d),es=por[f]||[];return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><b>${d.getDate()}</b><span class="pts">${es.slice(0,6).map(e=>ptI(e.t).replace('<i class="pt',`<i data-evh="${esc(e.h)}" title="${esc(TIPOLBL[e.t]+": "+e.x)}" class="pt`)).join("")}</span></button>`}).join("")}</div>
    <div class="leyenda">${Object.keys(TIPOLBL).map(k=>`<span>${ptI(k)}${TIPOLBL[k]}</span>`).join("")}</div></div>
    <section class="card barra"><h2>${fechaL(CAL.sel)}</h2><ul class="lista" style="margin-top:12px">${sel.map(e=>`<li><a class="fila" href="${e.h}">${ptI(e.t)}<div class="grow"><span class="ttl">${esc(e.x)}</span><small>${TIPOLBL[e.t]}</small></div></a></li>`).join("")||'<li class="vacio">Sin actividades este día.</li>'}</ul>
    <div class="tools" style="margin-top:14px"><button class="btn chico pri" data-a="cal-agregar">+ Agregar</button></div></section></div>`;
@@ -1568,7 +1569,7 @@ document.addEventListener("click",e=>{const vs=e.target.closest("[data-vista]");
   const ag=e.target.closest("[data-ag]");if(ag){VAG.v=ag.dataset.ag;vCal();return}const cv=e.target.closest("[data-cv]");if(cv){VCLI.v=cv.dataset.cv;vClientes();return}const g=e.target.closest("[data-go]");if(g&&!e.target.closest("a,button")){location.hash=g.dataset.go;return}
   const b=e.target.closest("[data-a]");if(b&&b.tagName!=="INPUT"){acc(b.dataset.a,b.dataset.id)}
   const cb=e.target.closest("[data-cal]");if(cb){const n=+cb.dataset.cal;if(n===0){const t=new Date();CAL={y:t.getFullYear(),m:t.getMonth(),sel:hoy()}}else{let m=CAL.m+n,y=CAL.y;if(m<0){m=11;y--}if(m>11){m=0;y++}CAL.m=m;CAL.y=y}vCal()}
-  const dd=e.target.closest("[data-dia]");if(dd){const f=dd.dataset.dia,ab=CAL.sel===f||!eventos().some(x=>x.f===f);CAL.sel=f;vCal();if(ab)acc("cal-agregar")}});
+  const evh=e.target.closest("[data-evh]");if(evh){location.hash=evh.dataset.evh;return}const dd=e.target.closest("[data-dia]");if(dd){CAL.sel=dd.dataset.dia;vCal();acc("cal-agregar")}});
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.mover)mover(t.dataset.mover,t.value);
   if(t.dataset&&t.dataset.tf&&t.files&&t.files[0]){const tr=D.trab.find(x=>x.id===t.dataset.tf),r=new FileReader();
     r.onload=()=>{const im=new Image();im.onload=()=>{const m=1000,sc=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);tr.fotos=tr.fotos||[];tr.fotos.push(c.toDataURL("image/jpeg",.6));guardar();render()};im.src=r.result};r.readAsDataURL(t.files[0])}});
