@@ -33,7 +33,7 @@
 .login-caja .sec{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
 body{margin:0;background:var(--chapa);color:var(--tinta);font-family:"Archivo",system-ui,sans-serif;font-size:1rem;line-height:1.45}
 h1,h2,h3{margin:0;font-weight:800;line-height:1.1;font-variation-settings:"wdth" 85;letter-spacing:-.01em}
-h1{font-size:1.9rem}h2{font-size:1.25rem}h3{font-size:1rem}
+h1{font-size:1.65rem}h2{font-size:1.25rem}h3{font-size:1rem}
 p{margin:0 0 .6em}a{color:inherit}button{font:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--naranja);outline-offset:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -78,14 +78,23 @@ html{scrollbar-color:var(--naranja) var(--carbon)}
 .colapsado .lado .cuenta{display:none}
 .colapsado .lado .cuenta.alerta{display:block;position:absolute;top:5px;right:9px;width:11px;height:11px;padding:0;font-size:0}
 .colapsado .guardado{justify-content:center;padding:10px 0}.colapsado .guardado span{display:none}
+.dlg-cfg{width:min(560px,96vw);padding:0}.dlg-cfg form{padding:18px 18px 22px}
+.cfg-cab{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.cfg-cab h2{margin:0}
+.cfg-s{padding:14px 0;border-top:1px solid #e1e2dc}.cfg-s:first-of-type{border-top:0}
+.cfg-s h4{margin:0 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave)}
+.cfg-add{display:flex;gap:8px;margin-top:10px}.cfg-add input{flex:1;min-width:0}
+.cfg-nota{margin:8px 0 0;font-size:.85rem;color:var(--tinta-suave)}
+.cfg-bt{display:grid;gap:4px;margin-top:8px}
+.cfg-bt button{display:flex;align-items:center;gap:10px;width:100%;padding:.65em .8em;border:0;border-radius:12px;background:#fff;color:var(--tinta);font:inherit;font-weight:600;text-align:left;cursor:pointer;box-shadow:0 1px 0 #d9dbd4}
+.cfg-bt button:hover{background:#f0f0ea}.cfg-bt .ic{width:18px;height:18px}.cfg-bt [hidden]{display:none}
 .menu-cfg{position:fixed;z-index:30;min-width:230px;background:var(--carbon);color:#fff;border-radius:18px;padding:8px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6)}
 .menu-cfg[hidden]{display:none}
 .menu-cfg button{display:flex;align-items:center;gap:10px;width:100%;padding:.6em .9em;border:0;border-radius:12px;background:none;color:#e4e4de;font-weight:600;text-align:left;font-size:1rem}
 .menu-cfg button:hover{background:rgba(255,255,255,.1);color:#fff}
 .menu-cfg .ic{width:18px;height:18px}
 .menu-cfg h4{margin:4px 10px 6px;font-size:0.8rem;text-transform:uppercase;letter-spacing:.06em;color:#a9aba2}
-main{padding:26px clamp(16px,3vw,40px) 60px;min-width:0}
-.cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+main{padding:12px clamp(10px,1.6vw,26px) 48px;min-width:0}
+.cab{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 16px;flex-wrap:wrap;margin-bottom:12px}
 .cab p{color:var(--tinta-suave);margin:6px 0 0}
 
 .btn{display:inline-flex;align-items:center;gap:.5em;padding:.6em 1.15em;border:0;border-radius:var(--r-boton);font-weight:700;text-decoration:none;background:linear-gradient(135deg,#4a4a4a,#2c2c2c);color:#fff;box-shadow:3px 3px 7px -2px rgba(0,0,0,.35);font-size:1rem}
@@ -136,7 +145,7 @@ textarea{min-height:76px;resize:vertical}
 .seg.tabs4{display:flex;flex-wrap:nowrap;width:100%;margin-bottom:14px}.seg.tabs4 button{flex:1 1 0;min-width:0;padding:.45em .3em;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cab-ic{display:flex;gap:6px;align-items:center}
 .md-bar{display:flex;gap:4px;margin:0 0 6px}.md-bar button{min-width:36px;height:32px;border:0;border-radius:8px;background:#e7e8e2;color:var(--tinta);font:inherit;font-size:.9rem;cursor:pointer;padding:0 8px}
-.md-bar button:hover{background:#d9dbd3}.md-in p{margin:0}.md-in ul,.md-in ol{margin:0;padding-left:1.2em}
+.md-bar button:hover{background:#d9dbd3}.md-in p{margin:0}td small.src{display:inline-block;margin-top:3px;font-size:.7rem;font-weight:700;color:var(--tinta-suave);letter-spacing:.04em}.ot-notas textarea{min-height:90px;width:100%}.md-in ul,.md-in ol{margin:0;padding-left:1.2em}
 .hf .acc{display:flex;gap:6px;flex:none}.hf .btn.ico{width:40px;height:40px;min-height:40px}.hf .btn.ico b{font-size:1.05rem}
 .hoy-fila{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border-radius:14px;box-shadow:0 1px 0 #d9dbd4;border-left:5px solid transparent}
 .hoy-fila.urg{border-left-color:var(--rojo)}
@@ -405,7 +414,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 .menu-crear[hidden],.mas-crear[hidden]{display:none}
 .menu-crear button{display:block;width:100%;text-align:left;padding:.7em .9em;min-height:44px;border:0;border-radius:12px;background:none;color:#e4e4de;font-weight:600;font-size:1rem}
 .menu-crear button:hover{background:rgba(255,255,255,.1);color:#fff}
-.app>.col>main{padding-top:18px}
+.app>.col>main{padding-top:8px}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--carbon);color:#fff;padding:.7em 1.3em;border-radius:99px;font-weight:600;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.4)}
 .bloque-msg{display:grid;gap:8px}
 .bloque-msg textarea{min-height:120px;font-size:0.9rem}
@@ -443,7 +452,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
   .kan{grid-template-columns:repeat(6,230px)}
   .cal button.dia{min-height:66px;padding:5px 4px;border-radius:10px}
   .cal{gap:3px}.cal button.dia b{font-size:1rem}
-  .cal-card{padding:8px 4px;margin:0 -10px}
+  .cal-card{padding:6px 2px;margin:0 -4px}
   .cal .pts{gap:2px}.cal .pts .pt.si{width:20px;height:20px}.cal .pts .pt.si svg{width:12px;height:12px}
   .cal-card .leyenda{display:grid;grid-template-columns:repeat(3,auto);gap:8px 10px;font-size:.75rem;justify-content:space-around}
 }
@@ -484,6 +493,12 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
   body{background:#fff}.lado,.no-print,.toast{display:none!important}
   .app{display:block}main{padding:0}
   .doc{box-shadow:none;padding:0;max-width:none}
+}
+@media (max-width:900px){
+  main{padding-left:6px;padding-right:6px}.barra-sup{padding:6px 6px 0}
+  .card{padding:10px;border-width:0;border-radius:14px}.card.barra{border-top-width:0}
+  dialog{padding:16px;width:min(640px,97vw)}.dlg-cfg{padding:0}.dlg-cfg form{padding:14px}
+  h1{font-size:1.45rem}.cab p{margin-top:2px}
 }
 </style>
 </head>
@@ -558,17 +573,23 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
     </div>
   </aside>
   <div class="voz" id="voz" hidden><div class="voz-c"><span class="voz-i"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></span><p id="voz-t" aria-live="polite">Escuchando…</p><div class="voz-b"><button type="button" class="btn claro" id="voz-x">Cancelar</button><button type="button" class="btn pri" id="voz-ok">Listo</button></div></div></div>
-  <div class="menu-cfg" id="menu-cfg" role="menu" hidden>
-    <h4>Copias y datos</h4>
-    <button type="button" role="menuitem" id="b-export"><svg class="ic" aria-hidden="true"><use href="#i-desc"/></svg>Descargar copia (.json)</button>
-    <button type="button" role="menuitem" id="b-import"><svg class="ic" aria-hidden="true"><use href="#i-sub"/></svg>Restaurar copia</button>
-    <button type="button" role="menuitem" id="b-num"><svg class="ic" aria-hidden="true"><use href="#i-pres"/></svg>Numeración de presupuestos</button>
-    <button type="button" role="menuitem" id="b-csv"><svg class="ic" aria-hidden="true"><use href="#i-xls"/></svg>Cartera a Excel (.csv)</button>
-    <button type="button" role="menuitem" id="b-ej"><svg class="ic" aria-hidden="true"><use href="#i-borrar"/></svg>Borrar datos de ejemplo</button>
-    <button type="button" role="menuitem" id="b-avisos"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg>Activar avisos</button>
-    <button type="button" role="menuitem" id="b-salir" hidden><svg class="ic" aria-hidden="true"><use href="#i-salir"/></svg>Cerrar sesión</button>
+  <dialog id="menu-cfg" class="dlg-cfg"><form method="dialog">
+    <div class="cfg-cab"><h2>Configuración</h2><button class="btn chico claro ico" value="x" aria-label="Cerrar">×</button></div>
+    <section class="cfg-s"><h4>Mi usuario</h4><div class="grid"><div><label for="cf-nombre">Nombre</label><input id="cf-nombre" autocomplete="name"></div><div><label for="cf-mail">Correo</label><input id="cf-mail" readonly></div></div></section>
+    <section class="cfg-s" id="cf-usu-s"><h4>Usuarios con acceso</h4><ul class="lista" id="cf-usu"></ul>
+      <div class="cfg-add"><label class="sr" for="cf-nuevo">Correo nuevo</label><input id="cf-nuevo" type="email" placeholder="correo@gmail.com" autocomplete="off"><button type="button" class="btn pri" id="cf-agregar">Agregar</button></div>
+      <p class="cfg-nota">Si la app de Google sigue en modo prueba, sumá también el correo como usuario de prueba en Google Cloud.</p></section>
+    <section class="cfg-s"><h4>Presupuestos</h4><div class="grid"><div><label for="cf-comb">Combustible y traslado ($)</label><input id="cf-comb" inputmode="numeric"></div></div>
+      <div class="cfg-bt"><button type="button" id="b-num"><svg class="ic" aria-hidden="true"><use href="#i-pres"/></svg>Numeración de presupuestos</button></div></section>
+    <section class="cfg-s"><h4>Avisos</h4><div class="cfg-bt"><button type="button" id="b-avisos"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg>Activar avisos</button></div></section>
+    <section class="cfg-s"><h4>Copias y datos</h4><div class="cfg-bt">
+      <button type="button" id="b-export"><svg class="ic" aria-hidden="true"><use href="#i-desc"/></svg>Descargar copia (.json)</button>
+      <button type="button" id="b-import"><svg class="ic" aria-hidden="true"><use href="#i-sub"/></svg>Restaurar copia</button>
+      <button type="button" id="b-csv"><svg class="ic" aria-hidden="true"><use href="#i-xls"/></svg>Cartera a Excel (.csv)</button>
+      <button type="button" id="b-ej"><svg class="ic" aria-hidden="true"><use href="#i-borrar"/></svg>Borrar datos de ejemplo</button></div></section>
+    <div class="cfg-bt"><button type="button" id="b-salir" hidden><svg class="ic" aria-hidden="true"><use href="#i-salir"/></svg>Cerrar sesión</button></div>
     <input type="file" id="f-import" accept="application/json" class="sr">
-  </div>
+  </form></dialog>
   <div class="col">
     <div class="barra-sup no-print" id="barra-sup">
       <div class="busca">
@@ -671,7 +692,7 @@ addEventListener("beforeunload",()=>{if(!tG)return;clearTimeout(tG);
   if(SB)subir(true).catch(()=>{});
   else if(API&&navigator.sendBeacon)navigator.sendBeacon("/api/datos",new Blob([JSON.stringify(D)],{type:"application/json"}))});
 const TIPO_VIEJO={"Reparar o cambiar algo":"Reparación","Instalar o poner en marcha una máquina":"Instalación","Falla de una máquina":"Falla de máquina"};
-function arrancar(){sinEjemplos();D.trab.forEach(t=>{if(TIPO_VIEJO[t.tipo])t.tipo=TIPO_VIEJO[t.tipo]});addEventListener("hashchange",render);render();avisosIni()}
+function arrancar(){sinEjemplos();if(!SB&&D.cfg.nombre)USR=D.cfg.nombre;D.trab.forEach(t=>{if(TIPO_VIEJO[t.tipo])t.tipo=TIPO_VIEJO[t.tipo]});addEventListener("hashchange",render);render();avisosIni()}
 /* Borra una vez los datos de ejemplo que venían cargados */
 function sinEjemplos(){if(D.cfg.sinEj)return;const cids=new Set(D.clientes.filter(c=>c.ej).map(c=>c.id));
   D.clientes=D.clientes.filter(c=>!c.ej);["diag","pres","cobros","trab","tableros"].forEach(k=>D[k]=(D[k]||[]).filter(x=>!x.ej&&!cids.has(x.cid)));
@@ -997,7 +1018,7 @@ function mdBar(ta){if(ta._md)return;ta._md=1;const b=document.createElement("div
     if(x[3]){const sel=v.slice(a,z)||x[1].toLowerCase();ta.value=v.slice(0,a)+x[2]+sel+x[3]+v.slice(z);ta.setSelectionRange(a+x[2].length,a+x[2].length+sel.length)}
     else{const ini=v.lastIndexOf("\n",a-1)+1;ta.value=v.slice(0,ini)+x[2]+v.slice(ini);ta.setSelectionRange(a+x[2].length,z+x[2].length)}
     ta.focus();ta.dispatchEvent(new Event("input",{bubbles:true}));ta.dispatchEvent(new Event("change",{bubbles:true}))}}
-new MutationObserver(()=>{if(REC)document.querySelectorAll("dialog textarea,#x-nota,.ot-det textarea,.cli-det textarea").forEach(micEn);document.querySelectorAll("dialog textarea,.ot-det textarea,.cli-det textarea").forEach(mdBar)}).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>{if(REC)document.querySelectorAll("dialog textarea,#x-nota,.ot-det textarea,.cli-det textarea,.ot-notas textarea").forEach(micEn);document.querySelectorAll("dialog textarea,.ot-det textarea,.cli-det textarea,.ot-notas textarea").forEach(mdBar)}).observe(document.body,{childList:true,subtree:true});
 
 /* ---- Hablarle al sistema: "cliente nuevo Juan Pérez", "gasté 20 mil de nafta", "cobré 50 mil de Frigorífico" ---- */
 const sinAc=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -1091,7 +1112,7 @@ function revisarAvisos(){if(!("Notification" in window)||Notification.permission
   for(const k in vis)if(vis[k]!==h)delete vis[k];
   const nuevos=L.filter(x=>!vis[x.id]).slice(0,6);if(!nuevos.length)return;
   const reg=navigator.serviceWorker?navigator.serviceWorker.getRegistration():Promise.resolve(null);
-  reg.then(r=>nuevos.forEach(x=>{vis[x.id]=h;const o={body:x.b,tag:x.id,icon:"logo/icono-192.png",badge:"logo/icono-192.png",data:{ir:x.u}};try{r?r.showNotification(x.t,o):new Notification(x.t,o)}catch(e){}}))
+  reg.then(r=>nuevos.forEach(x=>{vis[x.id]=h;const o={body:x.b,tag:x.id,icon:"logo/icono-192.png",badge:"logo/aviso-insignia.png",data:{ir:x.u}};try{r?r.showNotification(x.t,o):new Notification(x.t,o)}catch(e){}}))
     .then(()=>{try{localStorage.setItem("wmtec_avisos",JSON.stringify(vis))}catch(e){}})}
 function avisosIni(){const b=document.getElementById("b-avisos");if(!("Notification" in window)){b.hidden=true;return}
   const pinta=()=>{b.lastChild.textContent=Notification.permission==="granted"?"Avisos activados":"Activar avisos"};pinta();
@@ -1100,6 +1121,27 @@ function avisosIni(){const b=document.getElementById("b-avisos");if(!("Notificat
 
 /* Número en "Más": cobros vencidos y mensajes sin leer */
 function cuentaMas(){const h=hoy(),n=D.cobros.filter(c=>pendiente(c)&&c.vence<h).length+(MSJ?MSJ.filter(m=>!m.leido).length:0),e=document.getElementById("c-mas");if(e){e.textContent=n||"";e.classList.toggle("alerta",!!n)}}
+
+/* ---- Configuración: mi usuario y usuarios con acceso (tabla "permitidos") ---- */
+let USUARIOS=null,MIMAIL="";
+function abrirCfg(){const d=document.getElementById("menu-cfg"),$=id=>document.getElementById(id);
+  $("cf-nombre").value=USR;$("cf-mail").value=MIMAIL||"";$("cf-mail").parentNode.hidden=!MIMAIL;$("cf-comb").value=D.cfg.comb==null?20000:D.cfg.comb;
+  $("cf-usu-s").hidden=!SB;pintarUsu();if(!d.open)d.showModal()}
+function pintarUsu(){const ul=document.getElementById("cf-usu");if(!SB||!ul)return;
+  if(!USUARIOS){ul.innerHTML='<li class="vacio">Cargando…</li>';cargarUsu();return}
+  ul.innerHTML=USUARIOS.map(u=>`<li class="fila"><div class="grow"><span class="ttl">${esc(u.nombre||u.email.split("@")[0])}</span><small>${esc(u.email)}</small></div>${u.email===MIMAIL?'<span class="etq">Vos</span>':`<button type="button" class="btn chico peligro" data-usu-q="${esc(u.email)}">Quitar</button>`}</li>`).join("")}
+function cargarUsu(){if(!SB)return;SB.from("permitidos").select("*").order("email").then(({data,error})=>{
+  if(error){const ul=document.getElementById("cf-usu");if(ul)ul.innerHTML='<li class="vacio">Para administrar usuarios hay que correr usuarios.sql en Supabase.</li>';return}
+  USUARIOS=data||[];const yo=USUARIOS.find(u=>u.email===MIMAIL);if(yo&&yo.nombre)USR=yo.nombre;pintarUsu()})}
+document.getElementById("cf-nombre").onchange=e=>{const v=e.target.value.trim().slice(0,60);if(!v)return;USR=v;
+  if(SB)SB.from("permitidos").update({nombre:v}).eq("email",MIMAIL).then(({error})=>{if(error)aviso("No se pudo guardar el nombre");else{aviso("Nombre guardado");USUARIOS=null;pintarUsu()}});
+  else{D.cfg.nombre=v;guardar()}};
+document.getElementById("cf-comb").onchange=e=>{D.cfg.comb=num(e.target.value);guardar()};
+document.getElementById("cf-agregar").onclick=()=>{const i=document.getElementById("cf-nuevo"),m=i.value.trim().toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){aviso("Ese correo no es válido");i.focus();return}
+  SB.from("permitidos").insert({email:m}).then(({error})=>{if(error){aviso(/duplicate/i.test(error.message)?"Ese correo ya tiene acceso":"No se pudo agregar");return}i.value="";aviso("Usuario agregado");USUARIOS=null;pintarUsu()})};
+document.getElementById("cf-usu").onclick=e=>{const b=e.target.closest("[data-usu-q]");if(!b)return;const m=b.dataset.usuQ;
+  if(!confirm("¿Quitarle el acceso a "+m+"?"))return;SB.from("permitidos").delete().eq("email",m).then(({error})=>{if(error){aviso("No se pudo quitar");return}aviso("Acceso quitado");USUARIOS=null;pintarUsu()})};
 
 /* ---- Mensajes de la página web (tabla aparte en Supabase) ---- */
 function cargarMsj(){if(!SB)return;
@@ -1119,12 +1161,36 @@ function vMensajes(){
 function marcarMsj(m,v){m.leido=v;SB.from("mensajes").update({leido:v}).eq("id",m.id).then(({error})=>{if(error)aviso("No se pudo guardar");cargarMsj()})}
 
 /* ---- Lista de precios ---- */
-const UNIDADES=["unidad","hora","metro","servicio"];
-const PLURAL={unidad:"unidades",hora:"horas",metro:"metros",servicio:"servicios"};
+const UNIDADES=["unidad","boca","hora","metro","día","servicio"];
+const PLURAL={unidad:"unidades",boca:"bocas",hora:"horas",metro:"metros","día":"días",servicio:"servicios"};
+/* Costos sugeridos de mano de obra AAIERIC (CABA y GBA), septiembre 2026 — aaieric.org.ar */
+const GUIA={src:"AAIERIC",f:"septiembre 2026",l:[
+ ["Visita: inspección, diagnóstico y presupuesto","unidad",56393],["Urgencia de noche, domingo o feriado (mínimo)","unidad",135198],["Emergencia lun. a sáb. 8 a 20 h","unidad",112590],
+ ["Boca completa","boca",112590],["Service o instalación (mínimo)","servicio",112590],["Hora de trabajo","hora",56393],
+ ["Canalización en losa con caño metálico","boca",57000],["Canalización en loseta con caño metálico","boca",59848],
+ ["Amurado de cañería en ladrillo común","boca",64775],["Amurado de cañería en ladrillo hueco","boca",63236],
+ ["Amurado de cañería en ladrillo común","metro",15481],["Amurado de cañería en ladrillo hueco","metro",15179],
+ ["Cañería a la vista (metal, PVC, cablecanal)","boca",51774],["Pase de viga o columna","boca",60119],
+ ["Cableado obra nueva (canalización propia)","boca",27703],["Cableado obra nueva (canalización de otro)","boca",38574],
+ ["Recableado con artefactos","boca",57844],["Recableado sin artefactos","boca",38574],
+ ["Conexión de punto, toma simple o portalámpara","boca",20106],["Conexión de toma doble","boca",25466],["Conexión de punto combinación","boca",21641],
+ ["Tablero principal monofásico (1 ID, 1 TM y PAT)","unidad",332597],["Tablero principal trifásico (1 ID, 1 TM y PAT)","unidad",450399],["Puesta a tierra sola","unidad",168822],
+ ["Módulo bipolar adicional (ID o ITM)","unidad",81775],["ID tetrapolar","unidad",140781],["ITM tetrapolar","unidad",140781],["ITM tripolar","unidad",118769],
+ ["Tablero seccional hasta 8 polos","unidad",236385],["Tablero seccional de 8 a 36 polos","unidad",945654],["Tablero seccional de 36 a 54 polos","unidad",1418416],
+ ["Aplique simple","unidad",30855],["Spot LED","unidad",30855],["Colgante liviano 3 luces","unidad",61711],["Colgante liviano 5 luces","unidad",81750],
+ ["Colgante: adicional por efecto","unidad",20106],["Colgante pesado (mínimo)","unidad",107967],
+ ["Equipo de tubo LED simple 7 a 36 W","unidad",61711],["Equipo de tubo LED doble 7 a 36 W","unidad",75965],["Equipo de tubo LED 45 W","unidad",77170],["Equipo de tubo LED doble 45 W","unidad",95763],
+ ["Ventilador de techo","unidad",112590],["Ventilador de techo con luz","unidad",140781],
+ ["Gabinete 1 medidor monofásico","unidad",236385],["Gabinete 2 medidores monofásicos","unidad",337820],["PAT de servicio (jabalina y caja)","unidad",168822],
+ ["Pilar completo (gabinete, TP, caño y PAT)","unidad",928767],["Caño de acometida (amurado y conexión)","unidad",236385],
+ ["Contactor","unidad",140781],["Sensor (sin cableado)","unidad",123850],
+ ["Bandeja portacables hasta 150 mm (hasta 3 m de alto)","metro",13668],["Bandeja portacables 200 a 300 mm (hasta 3 m de alto)","metro",20490],
+ ["Protocolo de puesta a tierra","unidad",660471],["Grupo electrógeno hasta 3,5 kVA","unidad",281522],
+ ["Jornal oficial especializado (8 h)","día",51413],["Jornal oficial electricista (8 h)","día",43979],["Jornal medio oficial (8 h)","día",40641],["Jornal ayudante (8 h)","día",37409]]};
 function vPrecios(){
   const L=D.precios.slice().sort((a,b)=>a.n.localeCompare(b.n));
-  V.innerHTML=`<div class="cab"><div><h1>Lista de precios</h1></div><button class="btn pri" data-a="precio-nuevo">+ Agregar</button></div>
-  <div class="tabla-w precios"><table class="t"><thead><tr><th>Qué</th><th>Unidad</th><th class="num">Precio</th><th></th></tr></thead><tbody>${L.map(x=>`<tr><td><label class="sr" for="pn${x.id}">Nombre</label><input id="pn${x.id}" data-pr="${x.id}" data-k="n" value="${esc(x.n)}"></td><td><label class="sr" for="pu${x.id}">Unidad</label><select id="pu${x.id}" data-pr="${x.id}" data-k="u">${opts(UNIDADES,x.u)}</select></td><td class="num"><label class="sr" for="pp${x.id}">Precio</label><input id="pp${x.id}" data-pr="${x.id}" data-k="p" inputmode="numeric" value="${esc(x.p)}" style="text-align:right"></td><td><button class="btn chico peligro" data-a="precio-borrar" data-id="${x.id}">Quitar</button></td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Sin precios cargados.</div></td></tr>`}</tbody></table></div>`;
+  V.innerHTML=`<div class="cab"><div><h1>Lista de precios</h1></div><div class="tools" style="margin:0"><button class="btn claro chico" data-a="precio-guia">Cargar guía AAIERIC</button><button class="btn claro chico" data-a="precio-ajuste">Ajustar %</button><button class="btn pri chico" data-a="precio-nuevo">+ Agregar</button></div></div>
+  <div class="tabla-w precios"><table class="t"><thead><tr><th>Qué</th><th>Unidad</th><th class="num">Precio</th><th></th></tr></thead><tbody>${L.map(x=>`<tr><td><label class="sr" for="pn${x.id}">Nombre</label><input id="pn${x.id}" data-pr="${x.id}" data-k="n" value="${esc(x.n)}">${x.src?`<small class="src">${esc(x.src)}</small>`:""}</td><td><label class="sr" for="pu${x.id}">Unidad</label><select id="pu${x.id}" data-pr="${x.id}" data-k="u">${opts(UNIDADES,x.u)}</select></td><td class="num"><label class="sr" for="pp${x.id}">Precio</label><input id="pp${x.id}" data-pr="${x.id}" data-k="p" inputmode="numeric" value="${esc(x.p)}" style="text-align:right"></td><td><button class="btn chico peligro" data-a="precio-borrar" data-id="${x.id}">Quitar</button></td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Sin precios cargados.</div></td></tr>`}</tbody></table></div>`;
   V.oninput=e=>{const t=e.target;if(ruta().r!=="precios"||!t.dataset.pr)return;const x=D.precios.find(y=>y.id===t.dataset.pr);if(x){x[t.dataset.k]=t.value;guardar()}};
   V.onchange=null;
 }
@@ -1398,11 +1464,16 @@ function vOT(id){const t=D.trab.find(x=>x.id===id);if(!t){location.hash="#trabaj
     <div class="md" id="o-md"${t.desc?"":" hidden"}>${md(t.desc)}</div><div id="o-edw"${t.desc?" hidden":""}><textarea id="o-desc" data-ot="desc">${esc(t.desc||"")}</textarea></div></div></div>
    <div class="arch-cab"><h3>Archivos${ar.length?` <span class="etq">${ar.length}</span>`:""}</h3></div>
    <div class="arch-g">${ar.map(tile).join("")}<label class="arch add" title="Agregar fotos o videos"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><input type="file" accept="image/*,video/*" multiple data-ota="${t.id}" class="sr"></label></div>
-   <div class="tools" style="margin-top:14px"><button class="btn chico peligro" data-a="borrartrab" data-id="${t.id}">Borrar O.T.</button></div></section>`;
+</section>
+  <section class="sec" style="margin-top:18px"><div class="sec-cab"><h2>Notas</h2></div><div class="ot-notas"><label class="sr" for="o-nota">Nota nueva</label><textarea id="o-nota" placeholder="Nota"></textarea><div class="tools" style="margin:6px 0 0;justify-content:flex-end"><button type="button" class="btn chico pri" id="o-nota-ok">Anotar</button></div></div>
+   <ul class="lista" style="margin-top:10px">${(t.notas||[]).map(n=>`<li class="fila"><div class="grow"><small>${esc([n.u,fecha(n.f)+(n.h?" "+n.h:"")].filter(Boolean).join(" · "))}</small><div class="md-in">${md(n.t)}</div></div><button type="button" class="btn chico claro ico" data-a="ot-nota-borrar" data-id="${t.id}|${n.id}" title="Borrar nota" aria-label="Borrar nota">×</button></li>`).join("")||'<li class="vacio">Sin notas.</li>'}</ul></section>
+  <div class="tools" style="margin-top:6px"><button class="btn chico peligro" data-a="borrartrab" data-id="${t.id}">Borrar O.T.</button></div>`;
   V.querySelectorAll("[data-ot]").forEach(i=>i.onchange=()=>{const k=i.dataset.ot;if(k==="fh"){const x=fyh(i.value);if(x.f)t.fecha=x.f;t.hora=x.h}else t[k]=k==="monto"?(num(i.value)||""):i.value;guardar();if(k==="cid"||k==="tipo")render()});
   const mb=V.querySelector("#o-mdb"),mv=V.querySelector("#o-md"),me=V.querySelector("#o-edw"),ta=V.querySelector("#o-desc");
   mb.onclick=()=>{const ver=me.hidden;if(!ver){mv.innerHTML=md(ta.value);mv.hidden=!ta.value.trim();me.hidden=!mv.hidden}else{me.hidden=false;mv.hidden=true;ta.focus()}mb.textContent=me.hidden?"Editar":"Ver"};
   mv.ondblclick=()=>mb.click();
+  V.querySelector("#o-nota-ok").onclick=()=>{const v=V.querySelector("#o-nota").value.trim();if(!v)return;const d=new Date();
+    (t.notas=t.notas||[]).unshift(Object.assign({id:uid(),t:v,h:pad(d.getHours())+":"+pad(d.getMinutes())},sello()));guardar();render()};
   firmarArch()}
 const URLS={};
 function firmarArch(){if(!SB)return;const els=[...V.querySelectorAll("[data-path]")],ya=p=>URLS[p]&&Date.now()-URLS[p].t<5*36e5;
@@ -1625,6 +1696,7 @@ function acc(a,id){
   else if(a==="enc-mandar"||a==="enc-copiar"){const t=D.trab.find(x=>x.id===id),c=cli(t.cid),e=encDe(t,true),url=linkEnc(e.token);
     if(a==="enc-mandar"){const u=wa(c&&c.tel,"Hola "+pn(c)+", gracias por confiar en WM TEC. ¿Nos ayudás con 5 preguntas cortas sobre el trabajo? Te lleva un minuto: "+url);if(u){window.open(u,"_blank","noopener");render();return}aviso("Falta el teléfono del cliente. Copié el link")}
     (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>{if(a==="enc-copiar")aviso("Link copiado")},()=>prompt("Link de la encuesta",url));render()}
+  else if(a==="ot-nota-borrar"){const [tid,k]=id.split("|"),t=D.trab.find(x=>x.id===tid);if(!t||!confirm("¿Borrar esta nota?"))return;t.notas=(t.notas||[]).filter(n=>n.id!==k);guardar();render()}
   else if(a==="ot-visita"){const t=D.trab.find(x=>x.id===id);(t.pasos=t.pasos||{}).visita=sello();log(cli(t.cid),"Visita de obra: "+(t.ot||t.tipo));guardar();render()}
   else if(a==="ot-nopres"){const t=D.trab.find(x=>x.id===id);(t.pasos=t.pasos||{}).pres=sello();guardar();render()}
   else if(a==="ot-sipres"){const t=D.trab.find(x=>x.id===id);delete t.pasos.pres;nuevoPres(t.cid,t.did||null,t.id)}
@@ -1639,6 +1711,10 @@ function acc(a,id){
       if(r.que==="Trabajo"){const t={id:uid(),ot:ot3(),cid:c.id,fecha:f,tipo:TIPOS_TRAB[0],sitio:"",desc:r.t.trim(),horas:"",estado:"agendado",prox:"",monto:"",fotos:[],pasos:{pedido:sello()}};
         D.trab.push(t);log(c,"Trabajo agendado: "+t.tipo+" ("+fecha(f)+")");if(c.etapa==="nueva"){log(c,"Etapa: "+etapaN("nueva")+" → "+etapaN("visita"));c.etapa="visita"}guardar();render();preguntarCobro(t)}
       else{acts(c).push({id:uid(),tipo:r.que,f,t:r.t.trim()});guardar();render()}},"Agregar")}
+  else if(a==="precio-guia"){let nu=0,ac=0;GUIA.l.forEach(([n,u,pr])=>{const x=D.precios.find(y=>y.src===GUIA.src&&y.n===n&&y.u===u);if(x){x.p=String(pr);ac++}else{D.precios.push({id:uid(),n,u,p:String(pr),src:GUIA.src});nu++}});
+    guardar();render();aviso("Guía AAIERIC "+GUIA.f+": "+nu+" nuevos, "+ac+" actualizados")}
+  else if(a==="precio-ajuste"){pedir("Ajustar precios",[{k:"pc",l:"Porcentaje (+ o −)",v:"10"},{k:"cu",l:"Cuáles",t:"select",o:["Todos","Solo la guía AAIERIC"],v:"Todos"}],r=>{const pc=parseFloat(String(r.pc).replace(",","."));if(!pc)return;
+    let n=0;D.precios.forEach(x=>{if(r.cu==="Todos"||x.src===GUIA.src){x.p=String(Math.round(num(x.p)*(1+pc/100)));n++}});guardar();render();aviso(n+" precios ajustados")},"Ajustar")}
   else if(a==="precio-borrar"){D.precios=D.precios.filter(x=>x.id!==id);guardar();render()}
   else if(a==="pres-delista"){const p=pre(id);if(!D.precios.length){aviso("Primero cargá precios en Precios");return}
     const L=D.precios.slice().sort((x,y)=>x.n.localeCompare(y.n)),o=L.map(x=>x.n+" · "+fmt(num(x.p))+" / "+x.u);
@@ -1778,8 +1854,8 @@ function entrarNube(){
     if(dentro)return;dentro=true;
     SB.from("datos").select("contenido").eq("id",1).maybeSingle().then(({data,error})=>{
       if(error||!data){dentro=false;pedir("La cuenta "+s.user.email+" no tiene acceso.",true);return}
-      const um=s.user.user_metadata||{};USR=String(um.full_name||um.name||s.user.email.split("@")[0]).split(" ")[0];
-      L.hidden=true;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();cargarEnc();setInterval(()=>{cargarMsj();cargarEnc()},120000)});
+      const um=s.user.user_metadata||{};USR=String(um.full_name||um.name||s.user.email.split("@")[0]).split(" ")[0];MIMAIL=String(s.user.email||"").toLowerCase();
+      L.hidden=true;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();cargarEnc();cargarUsu();setInterval(()=>{cargarMsj();cargarEnc()},120000)});
   });
 }
 /* Panel lateral: contraer y submenú de configuración */
@@ -1793,16 +1869,8 @@ function entrarNube(){
   bm.onclick=e=>{e.stopPropagation();const a=!mm.classList.contains("abierto");abrirMas(a);try{if(innerWidth>900)localStorage.setItem("wmtec_mas",a?"1":"0")}catch(x){}};
   mm.addEventListener("click",e=>{if(innerWidth<=900&&e.target.closest("a.nav"))abrirMas(false)});
   const cfgs=[document.getElementById("b-cfg"),document.getElementById("b-cfg2")],menu=document.getElementById("menu-cfg");
-  let cfg=cfgs[0];
-  const cerrar=()=>{menu.hidden=true;cfgs.forEach(b=>b.setAttribute("aria-expanded","false"))};
-  cfgs.forEach(b=>b.onclick=e=>{e.stopPropagation();cfg=b;if(!menu.hidden){cerrar();return}
-    menu.hidden=false;b.setAttribute("aria-expanded","true");
-    const r=b.getBoundingClientRect(),w=menu.offsetWidth;
-    menu.style.left=Math.max(8,Math.min(r.right+8,innerWidth-w-8))+"px";
-    menu.style.bottom=Math.max(8,innerHeight-r.bottom)+"px";menu.style.top="auto"});
-  document.addEventListener("click",e=>{if(!menu.hidden&&!menu.contains(e.target))cerrar();if(innerWidth<=900&&!mm.contains(e.target))abrirMas(false)});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!menu.hidden){cerrar();cfg.focus()}});
-  menu.addEventListener("click",e=>{if(e.target.closest("button"))cerrar()});
+  cfgs.forEach(b=>b.onclick=e=>{e.stopPropagation();if(innerWidth<=900)abrirMas(false);abrirCfg()});
+  document.addEventListener("click",e=>{if(innerWidth<=900&&!mm.contains(e.target)&&!menu.contains(e.target))abrirMas(false)});
 })();
 /* Buscador global y botón Crear */
 (function(){
