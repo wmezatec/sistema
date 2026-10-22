@@ -377,6 +377,21 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
   table.t td[colspan]{display:block;text-align:left}
   table.t td input,table.t td select{flex:1;min-width:0}
 }
+/* Listas desplegables con el estilo de la página web */
+.sel{position:relative;min-width:0}
+.sel-nat{position:absolute!important;opacity:0;pointer-events:none;width:1px!important;height:1px;padding:0!important;overflow:hidden}
+.sel-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:inherit;padding:.55em .8em;border:0;cursor:pointer;background:#e7e8e2;box-shadow:var(--sombra-campo);border-radius:var(--r-campo);color:var(--tinta);min-height:44px}
+.sel-btn span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sel-btn::after{content:"";flex:none;width:9px;height:9px;border-right:3px solid var(--naranja-osc);border-bottom:3px solid var(--naranja-osc);transform:translateY(-3px) rotate(45deg);transition:transform .2s ease}
+.sel-btn[aria-expanded=true]{background:#fff;box-shadow:var(--sombra-campo),inset 0 0 0 2px var(--naranja)}
+.sel-btn[aria-expanded=true]::after{transform:translateY(2px) rotate(-135deg)}
+.sel-btn:focus-visible{outline:none;box-shadow:var(--sombra-campo),inset 0 0 0 2px var(--naranja)}
+.tj .sel{margin-top:6px}.tj .sel-btn{padding:.25em .6em;font-size:.8rem;min-height:34px}
+.sel-lista{position:fixed;z-index:1000;margin:0;padding:8px;list-style:none;background:var(--carbon);border-radius:var(--r-tarjeta);box-shadow:0 22px 40px -12px rgba(0,0,0,.55);max-height:300px;overflow-y:auto;scrollbar-color:var(--naranja) transparent;scrollbar-width:thin}
+.sel-lista[hidden]{display:none}
+.sel-lista li{padding:.6em 1em;border-radius:var(--r-boton);color:#e4e4de;font-weight:600;font-size:.95rem;cursor:pointer}
+.sel-lista li:hover,.sel-lista li.activa{background:rgba(255,255,255,.09);color:#fff}
+.sel-lista li[aria-selected=true]{background:var(--degradado);color:var(--carbon)}
 @media print{
   body{background:#fff}.lado,.no-print,.toast{display:none!important}
   .app{display:block}main{padding:0}
@@ -409,6 +424,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 <symbol id="i-tab" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 7h8M8 11h3M13 11h3M8 15h3M13 15h3"/></symbol>
 <symbol id="i-salir" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></symbol>
 <symbol id="i-precio" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+<symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
 <symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol>
 <symbol id="i-sub" viewBox="0 0 24 24"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 19h14"/></symbol>
@@ -433,6 +449,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
       <a class="nav solo-completa" href="#finanzas" data-r="finanzas" title="Finanzas"><svg class="ic" aria-hidden="true"><use href="#i-fin"/></svg><span class="t">Finanzas</span></a>
       <a class="nav solo-completa" href="#tableros" data-r="tableros" title="Tableros"><svg class="ic" aria-hidden="true"><use href="#i-tab"/></svg><span class="t">Tableros</span></a>
       <a class="nav solo-completa" href="#colaboradores" data-r="colaboradores" title="Colaboradores"><svg class="ic" aria-hidden="true"><use href="#i-colab"/></svg><span class="t">Colaboradores</span><span class="cuenta" id="c-colab"></span></a>
+      <a class="nav" href="https://wmezatec.github.io/" target="_blank" rel="noopener" title="Página web"><svg class="ic" aria-hidden="true"><use href="#i-web"/></svg><span class="t">Página web</span></a>
       <button class="nav cfg solo-cel" id="b-cfg2" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-cfg" title="Configuración"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span class="t">Configuración</span></button>
     </div>
     <div class="pie">
@@ -444,6 +461,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
     <h4>Copias y datos</h4>
     <button type="button" role="menuitem" id="b-export"><svg class="ic" aria-hidden="true"><use href="#i-desc"/></svg>Descargar copia (.json)</button>
     <button type="button" role="menuitem" id="b-import"><svg class="ic" aria-hidden="true"><use href="#i-sub"/></svg>Restaurar copia</button>
+    <button type="button" role="menuitem" id="b-num"><svg class="ic" aria-hidden="true"><use href="#i-pres"/></svg>Numeración de presupuestos</button>
     <button type="button" role="menuitem" id="b-csv"><svg class="ic" aria-hidden="true"><use href="#i-xls"/></svg>Cartera a Excel (.csv)</button>
     <button type="button" role="menuitem" id="b-ej"><svg class="ic" aria-hidden="true"><use href="#i-borrar"/></svg>Borrar datos de ejemplo</button>
     <button type="button" role="menuitem" id="b-salir" hidden><svg class="ic" aria-hidden="true"><use href="#i-salir"/></svg>Cerrar sesión</button>
@@ -936,7 +954,7 @@ function nuevoPres(cid,diagId,tid){
 function vPresS(p){
   const c=cli(p.cid),f=n=>fmt(n);
   V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos">← Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn peligro chico" data-a="borrarpres" data-id="${p.id}">Borrar</button></div></div>
-  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
+  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Qué se hace y cuánto sale</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" placeholder="Por instalación de…">${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" placeholder="$" value="${esc(r.m)}"></div>${p.items.length>1?`<button class="btn chico peligro" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón">Quitar</button>`:""}</div>`).join("")}</div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addren" data-id="${p.id}">+ Agregar renglón</button><button class="btn chico claro" data-a="pres-delista" data-id="${p.id}">+ Desde la lista de precios</button></div>
    <div class="tot-ed"><div><label for="p-desc">Descuento (%)</label><input id="p-desc" data-p="desc" inputmode="numeric" value="${esc(p.desc||0)}"></div><div class="res"><span>Subtotal <b id="t-sub"></b></span><span id="t-dd">Descuento <b id="t-desc"></b></span><span class="gr">Total <b id="t-tot"></b></span></div></div></section>
@@ -947,7 +965,7 @@ function vPresS(p){
   V.oninput=e=>{const t=e.target;if(ruta().r!=="pres")return;
     if(t.dataset.p)p[t.dataset.p]=t.value;else if(t.dataset.ri!==undefined)p.items[t.dataset.ri][t.dataset.rk]=t.value;
     p.total=totPres(p);guardar();tot()};
-  V.onchange=e=>{if(e.target.dataset.p==="cid"||e.target.dataset.p==="estado")render()};
+  V.onchange=e=>{if(["cid","estado","num"].includes(e.target.dataset.p))render()};
 }
 function vPres(id){
   const p=pre(id);if(!p){location.hash="#presupuestos";return}
@@ -1321,6 +1339,9 @@ function acc(a,id){
 document.getElementById("b-export").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,1)],{type:"application/json"}));a.download="copia-clientes-"+hoy()+".json";a.click()};
 document.getElementById("b-import").onclick=()=>document.getElementById("f-import").click();
 document.getElementById("f-import").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.clientes)throw 0;if(confirm("Esto reemplaza los datos actuales. ¿Seguir?")){D=norm(x);guardar();render();aviso("Copia restaurada")}}catch(er){aviso("El archivo no es una copia válida")}};r.readAsText(f);e.target.value=""};
+const numPres=n=>PREF+"-"+String(n).padStart(3,"0");
+document.getElementById("b-num").onclick=()=>pedir("Numeración de presupuestos",[{k:"n",l:"Número del próximo presupuesto",t:"number",v:D.cfg.prox}],r=>{
+  const n=parseInt(r.n,10);if(!(n>0))return;D.cfg.prox=n;guardar();aviso(D.pres.some(p=>p.num===numPres(n))?numPres(n)+" ya existe: elegí otro número":"El próximo será "+numPres(n))},"Guardar");
 document.getElementById("b-csv").onclick=()=>{
   const cab=["Nombre","Empresa","Teléfono","Mail","Rubro","Origen","Zona","CUIT","Vino por","Etapa","Último trabajo","Próximo mantenimiento","Saldo pendiente","Facturado","Notas"];
   const q=s=>{s=String(s==null?"":s);return /[",;\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
@@ -1411,6 +1432,42 @@ function entrarNube(){
 /* Rótulos de columna en cada celda, para la vista de tarjetas en el celular */
 new MutationObserver(()=>V.querySelectorAll("table.t").forEach(t=>{const h=[...t.querySelectorAll("thead th")].map(x=>x.textContent.trim());
   t.querySelectorAll("tbody tr").forEach(r=>{let i=0;for(const td of r.children){if(h[i]&&!td.dataset.l)td.dataset.l=h[i];td.classList.toggle("vac",!td.querySelector("input,select,button,a")&&/^[\s—-]*$/.test(td.textContent));i+=td.colSpan||1}})})).observe(V,{childList:true,subtree:true});
+/* Listas desplegables de marca: el <select> real queda oculto y sigue siendo el que manda */
+function selMarca(s){
+  if(s.dataset.marca||s.multiple||s.closest(".sel"))return;s.dataset.marca="1";
+  const w=document.createElement("div"),b=document.createElement("button"),sp=document.createElement("span"),ul=document.createElement("ul");
+  w.className="sel";s.parentNode.insertBefore(w,s);w.appendChild(s);s.classList.add("sel-nat");s.tabIndex=-1;
+  b.type="button";b.className="sel-btn";b.setAttribute("aria-haspopup","listbox");b.setAttribute("aria-expanded","false");b.appendChild(sp);
+  const lab=s.id&&document.querySelector(`label[for="${s.id}"]`);b.setAttribute("aria-label",lab?lab.textContent:s.getAttribute("aria-label")||"");
+  if(lab)lab.addEventListener("click",e=>{e.preventDefault();b.focus()});
+  ul.className="sel-lista";ul.setAttribute("role","listbox");ul.hidden=true;w.append(b,ul);
+  let act=-1;
+  s._pinta=()=>{const t=s.selectedIndex>=0?s.options[s.selectedIndex].text:"";if(sp.textContent!==t)sp.textContent=t};s._pinta();
+  s.addEventListener("change",s._pinta);
+  const marcar=i=>{act=i;[...ul.children].forEach((li,k)=>li.classList.toggle("activa",k===i));const li=ul.children[i];li&&li.scrollIntoView({block:"nearest"})};
+  const cerrar=()=>{if(ul.hidden)return;ul.hidden=true;b.setAttribute("aria-expanded","false");removeEventListener("pointerdown",fuera,true);removeEventListener("scroll",cerrarScroll,true);removeEventListener("resize",cerrar)};
+  const fuera=e=>{if(!w.contains(e.target))cerrar()};
+  const cerrarScroll=e=>{if(e.target!==ul)cerrar()};
+  const elegir=i=>{if(i>=0&&s.selectedIndex!==i){s.selectedIndex=i;s.dispatchEvent(new Event("input",{bubbles:true}));s.dispatchEvent(new Event("change",{bubbles:true}))}s._pinta();cerrar();b.focus()};
+  const abrir=()=>{
+    ul.innerHTML="";[...s.options].forEach((o,i)=>{const li=document.createElement("li");li.setAttribute("role","option");li.textContent=o.text;if(i===s.selectedIndex)li.setAttribute("aria-selected","true");li.onclick=()=>elegir(i);ul.appendChild(li)});
+    const r=b.getBoundingClientRect(),abajo=innerHeight-r.bottom,arriba=abajo<240&&r.top>abajo;
+    ul.style.left=Math.max(8,Math.min(r.left,innerWidth-Math.max(r.width,200)-8))+"px";ul.style.width=Math.max(r.width,200)+"px";
+    ul.style.top=arriba?"auto":r.bottom+8+"px";ul.style.bottom=arriba?innerHeight-r.top+8+"px":"auto";
+    ul.style.maxHeight=Math.min(300,(arriba?r.top:abajo)-16)+"px";
+    ul.hidden=false;b.setAttribute("aria-expanded","true");marcar(s.selectedIndex);
+    addEventListener("pointerdown",fuera,true);addEventListener("scroll",cerrarScroll,true);addEventListener("resize",cerrar)};
+  b.onclick=()=>ul.hidden?abrir():cerrar();
+  b.onkeydown=e=>{const n=s.options.length;
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(ul.hidden)abrir();else marcar(Math.max(0,Math.min(n-1,act+(e.key==="ArrowDown"?1:-1))))}
+    else if((e.key==="Enter"||e.key===" ")&&!ul.hidden){e.preventDefault();elegir(act)}
+    else if(e.key==="Escape"||e.key==="Tab")cerrar()};
+}
+const marcarSelects=r=>{r.querySelectorAll("select").forEach(x=>{if(x.dataset.marca)x._pinta&&x._pinta();else selMarca(x)})};
+new MutationObserver(()=>marcarSelects(document.body)).observe(document.body,{childList:true,subtree:true});
+/* Los diálogos cargan valores por código antes de abrirse: repintar al abrir */
+const _showModal=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){marcarSelects(this);return _showModal.apply(this,arguments)};
+marcarSelects(document.body);
 iniciar();
 </script>
 </body>
