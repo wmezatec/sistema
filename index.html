@@ -125,7 +125,9 @@ textarea{min-height:76px;resize:vertical}
 .linea small{flex:none;min-width:78px;color:var(--tinta-suave)}.linea .grow{flex:1;min-width:0;overflow-wrap:anywhere}
 .precios input,.precios select{min-height:40px;width:100%}.precios td{vertical-align:middle}
 .hoy-fila .grow{flex:1;min-width:0;text-decoration:none}.hoy-fila .ttl{display:block;font-weight:700}.hoy-fila small{display:block;color:var(--tinta-suave)}
-.hoy-fila .acc{display:flex;gap:6px;flex:none}.hoy-fila .acc .btn{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+.hoy-fila .acc{display:flex;gap:6px;flex:none}
+.btn.ico{width:44px;height:44px;min-height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.btn.ico .ic{width:20px;height:20px}.hoy-fila .acc .btn{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
 .n-hoy{display:inline-block;min-width:1.6em;padding:0 .5em;border-radius:99px;background:var(--carbon);color:#fff;font-size:0.8rem;text-align:center;vertical-align:middle}
 .cifras.chicas{margin-bottom:18px}
 .lista{list-style:none;margin:0;padding:0;display:grid;gap:7px}
@@ -425,6 +427,9 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 <symbol id="i-salir" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></symbol>
 <symbol id="i-precio" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
 <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+<symbol id="i-wsp" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 2.8 2.7 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.8-1.2-2.2-2.2l.8-1-1-1.9z"/></symbol>
+<symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
 <symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol>
 <symbol id="i-sub" viewBox="0 0 24 24"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 19h14"/></symbol>
@@ -741,7 +746,8 @@ function vPanel(){
   const abiertos=D.pres.filter(p=>["borrador","enviado"].includes(p.estado));
   const porCobrar=D.cobros.filter(pendiente),vencidos=porCobrar.filter(c=>c.vence<h);
   const mes=h.slice(0,7),cobMes=D.cobros.filter(c=>c.pagado&&c.pagado.slice(0,7)===mes).reduce((a,c)=>a+num(c.monto),0);
-  const tel=(c,txt)=>{const u=c&&wa(c.tel,txt);return (u?`<a class="btn chico" href="${u}" target="_blank" rel="noopener">WhatsApp</a>`:"")+(c&&c.tel?`<a class="btn chico claro" href="tel:${esc(String(c.tel).replace(/[^\d+]/g,""))}">Llamar</a>`:"")};
+  const ico=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+  const tel=(c,txt)=>{const u=c&&wa(c.tel,txt);return (u?`<a class="btn chico ico" href="${u}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:"")+(c&&c.tel?`<a class="btn chico claro ico" href="tel:${esc(String(c.tel).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a>`:"")};
   const cuando=f=>{const n=difDias(f,h);return n<=0?"hoy":n===1?"ayer":"hace "+n+" días"};
   const fila=(cls,t,sub,href,btns)=>`<li class="hoy-fila ${cls}"><a class="grow" href="${href}"><span class="ttl">${t}</span><small>${sub}</small></a><div class="acc">${btns}</div></li>`;
   const L=[],visto=new Set();
@@ -752,7 +758,7 @@ function vPanel(){
   D.trab.filter(t=>t.estado==="agendado"&&t.fecha<=h).sort((a,b)=>a.fecha<b.fecha?-1:1).forEach(t=>{const cl=cli(t.cid);
     L.push(fila(t.fecha<h?"urg":"",`${t.fecha<h?"Trabajo atrasado":"Hoy"}: ${esc(t.tipo)} en ${esc(nomCorto(cl))}`,esc([t.sitio,t.fecha<h?"era "+fecha(t.fecha):""].filter(Boolean).join(" · "))||"&nbsp;","#cliente/"+t.cid,`<button class="btn chico pri" data-a="trabhecho" data-id="${t.id}">Marcar hecho</button>`))});
   D.clientes.flatMap(c=>acts(c).filter(a=>a.f<=h).map(a=>[c,a])).sort((x,y)=>x[1].f<y[1].f?-1:1).forEach(([c,a])=>{visto.add(c.id);
-    L.push(fila(a.f<h?"urg":"",`${esc(a.tipo)}: ${esc(nomCorto(c))}`,esc(a.t||"")+(a.f<h?(a.t?" · ":"")+"debía ser "+cuando(a.f):""),"#cliente/"+c.id,tel(c)+`<button class="btn chico pri" data-a="act-hecho" data-id="${a.id}">Hecho</button>`))});
+    L.push(fila(a.f<h?"urg":"",`${esc(a.tipo)}: ${esc(nomCorto(c))}`,esc(a.t||"")+(a.f<h?(a.t?" · ":"")+"debía ser "+cuando(a.f):""),"#cliente/"+c.id,tel(c)+`<button class="btn chico pri ico" data-a="act-hecho" data-id="${a.id}" title="Hecho" aria-label="Hecho">${ico("ok")}</button>`))});
   D.clientes.filter(c=>c.etapa==="nueva"&&!visto.has(c.id)).forEach(c=>{visto.add(c.id);
     L.push(fila("",`Atender la consulta de ${esc(nomCorto(c))}`,esc([c.rubro,c.zona].filter(Boolean).join(" · "))||"Consulta nueva","#cliente/"+c.id,tel(c)||`<a class="btn chico" href="#cliente/${c.id}">Abrir</a>`))});
   D.pres.filter(p=>p.estado==="enviado"&&difDias(p.fechaEnv||p.fecha,h)>=3).forEach(p=>{const cl=cli(p.cid);
