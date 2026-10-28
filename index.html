@@ -52,7 +52,7 @@ html{scrollbar-color:var(--naranja) var(--carbon)}
 .colapsar:hover{background:rgba(255,255,255,.18);color:#fff}
 .colapsar svg{width:16px;height:16px;transition:transform .2s}
 .ic{width:21px;height:21px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.lado .nav{position:relative;display:flex;align-items:center;gap:12px;padding:.6em .85em;border-radius:var(--r-boton);text-decoration:none;color:#d0d0d0;font-weight:600;border:0;background:none;width:100%;text-align:left;font-size:1rem;white-space:nowrap}
+.lado .nav{position:relative;display:flex;align-items:center;gap:12px;padding:.4em .85em;border-radius:var(--r-boton);text-decoration:none;color:#d0d0d0;font-weight:600;border:0;background:none;width:100%;text-align:left;font-size:1rem;white-space:nowrap}
 .lado .nav:hover{background:rgba(255,255,255,.07);color:#fff}
 .lado .nav.on{background:rgba(255,255,255,.14);color:#fff;box-shadow:inset 4px 0 0 var(--naranja)}
 .lado .mas{display:none;flex-direction:column;gap:4px}.lado .mas.abierto{display:flex}
@@ -429,7 +429,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 .barra-ctx h1{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;margin:0;white-space:nowrap;color:var(--tinta)}
 .barra-ctx p{margin:0;font-size:.9rem;color:var(--tinta-suave)}
 .barra-ctx p>a{display:inline-flex;align-items:center;height:44px;padding:0 1.1em;border-radius:999px;background:var(--degradado);color:var(--carbon);text-decoration:none;font-weight:700;font-size:.95rem;white-space:nowrap}
-.barra-ctx .tools{margin:0!important;gap:8px}
+.barra-ctx .tools{margin:0 0 0 20px!important;gap:8px}
 .barra-sup .busca{flex:0 1 300px;max-width:300px;margin-left:auto}
 /* Búsqueda, volver y Crear: todos de 44 px de alto */
 .barra-sup .busca input,.busca input{height:44px;padding-top:0;padding-bottom:0}
@@ -563,6 +563,11 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   dialog{padding:16px;width:min(640px,97vw)}.dlg-cfg{padding:0}.dlg-cfg form{padding:14px}
   h1{font-size:1.45rem}.cab p{margin-top:2px}
 }
+/* Clima en la celda de la agenda: íconos de línea a la derecha */
+.dia-top{display:flex;align-items:center;gap:4px;width:100%}
+.dia .clima{margin-left:auto;display:inline-flex;align-items:center;gap:2px;font-size:.62rem;font-weight:600;color:var(--tinta-suave);white-space:nowrap;line-height:1}
+.dia .clima b{font-weight:700;font-size:.54rem}
+.dia .clima svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -626,6 +631,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
       <a class="nav solo-completa" href="#finanzas" data-r="finanzas" title="Finanzas"><svg class="ic" aria-hidden="true"><use href="#i-fin"/></svg><span class="t">Finanzas</span></a>
       <a class="nav solo-completa" href="#tableros" data-r="tableros" title="Tableros"><svg class="ic" aria-hidden="true"><use href="#i-tab"/></svg><span class="t">Tableros</span></a>
       <a class="nav solo-completa" href="#colaboradores" data-r="colaboradores" title="Colaboradores"><svg class="ic" aria-hidden="true"><use href="#i-colab"/></svg><span class="t">Colaboradores</span><span class="cuenta" id="c-colab"></span></a>
+      <a class="nav solo-completa" href="#feedback" data-r="feedback" title="Feedback"><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg><span class="t">Feedback</span></a>
       <button class="nav cfg solo-cel" id="b-cfg2" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-cfg" title="Configuración"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span class="t">Configuración</span></button>
     </div>
     <div class="pie">
@@ -979,7 +985,7 @@ function render(){
   set("c-clientes",D.clientes.length);set("c-colab",D.colabs.length);set("c-diag",D.diag.length);set("c-trab",D.trab.filter(t=>t.estado==="agendado").length);
   set("c-pres",D.pres.filter(p=>["borrador","enviado"].includes(p.estado)).length);set("c-cobros",venc||D.cobros.filter(pendiente).length,venc);cuentaMas();
   V.classList.toggle("tablero", q.r === "tablero");if(window.barraSup)barraSup(q.r);
-  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();
+  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();
   if(!["calendario"].includes(q.r))window.scrollTo(0,0);
 }
 const vacioInicial=()=>`<div class="vacio"><p><b>Todavía no cargaste nada.</b></p><button class="btn pri" data-a="nuevo">Cargar primer cliente</button> <button class="btn claro" data-a="ejemplo">Ver con datos de ejemplo</button></div>`;
@@ -1033,8 +1039,23 @@ function vPanel(){
 /* ---- Calendario ---- */
 let CAL={y:new Date().getFullYear(),m:new Date().getMonth(),sel:hoy()};
 let VAG={v:"mes"};
+/* Clima de Mar del Plata para la agenda (Open-Meteo, sin clave; pronóstico de 16 días) */
+let CLIMA=null,CLIMA_T=0;
+function cargarClima(){if(CLIMA_T&&Date.now()-CLIMA_T<3*3600e3)return;CLIMA_T=Date.now();
+  fetch("https://api.open-meteo.com/v1/forecast?latitude=-38.0&longitude=-57.55&daily=weather_code,precipitation_probability_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=16")
+    .then(r=>r.json()).then(j=>{const m={},d=j.daily||{};(d.time||[]).forEach((x,i)=>{m[x]={c:d.weather_code[i],p:d.precipitation_probability_max[i]}});CLIMA=m;if(ruta().r==="calendario")vCal()})
+    .catch(()=>{CLIMA={}})}
+const CLIMA_ICO={sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  parcial:'<circle cx="8" cy="8" r="3"/><path d="M8 2v1M2.5 8H3.5M4.4 4.4l.7.7M11.6 4.4l-.7.7"/><path d="M9 20h8.5a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.2A3.8 3.8 0 0 0 9 20z"/>',
+  nube:'<path d="M7 18h10.5a4 4 0 0 0 0-8 6 6 0 0 0-11.6 1.6A3.4 3.4 0 0 0 7 18z"/>',
+  niebla:'<path d="M3 9h18M5 13h14M3 17h18"/>',
+  lluvia:'<path d="M7 14h10.5a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.2A3.4 3.4 0 0 0 7 14z"/><path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/>',
+  tormenta:'<path d="M7 14h10.5a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.2A3.4 3.4 0 0 0 7 14z"/><path d="M12.5 14l-2 3.5h2.5l-1.5 3.5"/>',
+  nieve:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>'};
+const icoClima=c=>{const k=c===0?"sol":c<=2?"parcial":c===3?"nube":(c===45||c===48)?"niebla":c>=95?"tormenta":(c>=71&&c<=77)?"nieve":"lluvia";return `<svg viewBox="0 0 24 24" aria-hidden="true">${CLIMA_ICO[k]}</svg>`};
+const claCel=f=>{const c=CLIMA&&CLIMA[f];if(!c||c.c==null)return "";return `<span class="clima" title="Probabilidad de lluvia y clima">${icoClima(c.c)}${c.p==null?"":"<b>"+c.p+"%</b>"}</span>`};
 function vCal(){
-  const bc=document.getElementById("barra-ctx");bc.hidden=false;bc.innerHTML='<span class="ctx-tit"><b>Agenda</b></span>';
+  const bc=document.getElementById("barra-ctx");bc.hidden=false;bc.innerHTML='<span class="ctx-tit"><b>Agenda</b></span>';cargarClima();
   const ev=eventos(),h=hoy(),por={};ev.forEach(e=>(por[e.f]=por[e.f]||[]).push(e));
   const prim=new Date(CAL.y,CAL.m,1),ini=(prim.getDay()+6)%7,celdas=[];
   for(let i=0;i<42;i++){const d=new Date(CAL.y,CAL.m,1-ini+i);celdas.push(d)}
@@ -1042,7 +1063,7 @@ function vCal(){
   for(let y=CAL.y-1;y<=CAL.y+1;y++)for(let i=0;i<12;i++)opsMes.push(`<option value="${y}-${i}"${y===CAL.y&&i===CAL.m?" selected":""}>${MESES_V[i].charAt(0).toUpperCase()+MESES_V[i].slice(1)} ${y}</option>`);
   V.innerHTML=`<div class="cols2"><div class="card cal-card"><div class="cal-cab no-print"><button class="btn pri ico" data-cal="-1" aria-label="Mes anterior"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><select class="cal-mes" id="cal-mes" aria-label="Elegir mes">${opsMes.join("")}</select><button class="btn pri ico" data-cal="1" aria-label="Mes siguiente"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button><button class="btn claro" data-cal="0">Hoy</button></div>
    <div class="cal">${["lun","mar","mié","jue","vie","sáb","dom"].map(x=>`<div class="dn">${x}</div>`).join("")}
-   ${celdas.map(d=>{const f=iso(d),es=por[f]||[];return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><b>${d.getDate()}</b><span class="pts">${es.slice(0,6).map(e=>ptI(e.t).replace('<i class="pt',`<i data-evh="${esc(e.h)}" title="${esc(TIPOLBL[e.t]+": "+e.x)}" class="pt`)).join("")}</span></button>`}).join("")}</div>
+   ${celdas.map(d=>{const f=iso(d),es=por[f]||[],cl=claCel(f);return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><span class="dia-top"><b>${d.getDate()}</b>${cl}</span><span class="pts">${es.slice(0,6).map(e=>ptI(e.t).replace('<i class="pt',`<i data-evh="${esc(e.h)}" title="${esc(TIPOLBL[e.t]+": "+e.x)}" class="pt`)).join("")}</span></button>`}).join("")}</div>
    <div class="leyenda">${Object.keys(TIPOLBL).map(k=>`<span>${ptI(k)}${TIPOLBL[k]}</span>`).join("")}</div></div>
    <section class="card barra"><h2>${fechaL(CAL.sel)}</h2><ul class="lista" style="margin-top:12px">${sel.map(e=>`<li><a class="fila" href="${e.h}">${ptI(e.t)}<div class="grow"><span class="ttl">${esc(e.x)}</span><small>${TIPOLBL[e.t]}</small></div></a></li>`).join("")||'<li class="vacio">Sin actividades este día.</li>'}</ul>
    <div class="tools" style="margin-top:14px"><button class="btn pri" data-a="cal-agregar" style="height:44px;min-height:44px">+ Agregar</button></div></section></div>`;
@@ -1331,6 +1352,14 @@ function vPrecios(){
 }
 
 /* ---- Colaboradores ---- */
+function vFeedback(){
+  const F=(D.feedback||[]).slice().sort((a,b)=>a.f<b.f?1:-1);
+  V.innerHTML=`<div class="cab"><div><h1>Feedback</h1></div></div>
+  <section class="card barra"><h2>Nuevo feedback</h2>
+   <div class="ancho" style="margin-top:12px"><label for="fb-t">Feedback sobre el sistema</label><textarea id="fb-t" data-md placeholder="Qué anda bien, qué cambiar, qué falta"></textarea></div>
+   <div class="tools" style="margin-top:12px"><button class="btn pri" data-a="fb-add">+ Agregar feedback</button></div></section>
+  <section class="card barra" style="margin-top:18px"><h2>Historial <span class="etq">${F.length}</span></h2>${F.map(x=>`<div class="fila"><div class="grow"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><div class="md-in">${md(x.t)}</div></div><button class="btn chico peligro" data-a="fb-del" data-id="${x.id}">Quitar</button></div>`).join("")||'<p class="vacio">Sin feedback todavía.</p>'}</section>`;
+}
 function vColabs(){
   V.innerHTML=`<div class="cab"><div><h1>Colaboradores</h1></div><button class="btn pri" data-a="nuevocolab">+ Nuevo colaborador</button></div>
   <div class="tabla-w"><table class="t"><thead><tr><th>Colaborador</th><th>Rol</th><th>Contacto</th><th class="num">Clientes</th><th class="num">Facturado</th></tr></thead><tbody>${D.colabs.map(x=>{const cs=D.clientes.filter(c=>c.colab===x.id);return `<tr><td><a href="#colab/${x.id}">${esc(x.nombre)}</a><br><small>${esc(x.empresa||"")}</small></td><td>${esc(x.rol||"")}</td><td>${esc(x.tel||"—")}${x.mail?"<br><small>"+esc(x.mail)+"</small>":""}</td><td class="num">${cs.length}</td><td class="num">${fmt(cs.reduce((a,c)=>a+facturado(c.id),0))}</td></tr>`}).join("")||`<tr><td colspan="5"><div class="vacio">Todavía no hay colaboradores. Cargá a quien te trae trabajo (un arquitecto, un administrador, una empresa).</div></td></tr>`}</tbody></table></div>`;
@@ -1878,6 +1907,8 @@ function acc(a,id){
   else if(a==="precio-ajuste"){pedir("Ajustar precios",[{k:"pc",l:"Porcentaje (+ o −)",v:"10"},{k:"cu",l:"Cuáles",t:"select",o:["Todos","Solo la guía AAIERIC"],v:"Todos"}],r=>{const pc=parseFloat(String(r.pc).replace(",","."));if(!pc)return;
     let n=0;D.precios.forEach(x=>{if(r.cu==="Todos"||x.src===GUIA.src){x.p=String(Math.round(num(x.p)*(1+pc/100)));n++}});guardar();render();aviso(n+" precios ajustados")},"Ajustar")}
   else if(a==="precio-borrar"){D.precios=D.precios.filter(x=>x.id!==id);guardar();render()}
+  else if(a==="fb-add"){const t=document.getElementById("fb-t").value.trim();if(!t){aviso("Escribí el feedback");return}(D.feedback=D.feedback||[]).push({id:uid(),f:h,t,u:USR||""});guardar();render()}
+  else if(a==="fb-del"){if(!confirm("¿Quitar este feedback?"))return;D.feedback=(D.feedback||[]).filter(x=>x.id!==id);guardar();render()}
   else if(a==="pres-delista"){const p=pre(id);if(!D.precios.length){aviso("Primero cargá precios en Precios");return}
     const L=D.precios.slice().sort((x,y)=>x.n.localeCompare(y.n)),o=L.map(x=>x.n+" · "+fmt(num(x.p))+" / "+x.u);
     pedir("Agregar desde la lista",[{k:"i",l:"Qué",t:"select",o,v:o[0],w:1},{k:"c",l:"Cantidad",v:"1"}],r=>{const x=L[o.indexOf(r.i)],q=parseFloat(String(r.c).replace(",","."))||1;
