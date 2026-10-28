@@ -2051,7 +2051,8 @@ function entrarNube(){
     TOKEN=s?s.access_token:null;
     if(!s){if(dentro)location.replace(location.pathname);else pedir("Gestión de clientes");return}
     if(dentro)return;dentro=true;
-    SB.from("datos").select("contenido,version").eq("id",1).maybeSingle().then(({data,error})=>{
+    const cargarDatos=()=>SB.from("datos").select("contenido,version").eq("id",1).maybeSingle().then(r=>r.error?SB.from("datos").select("contenido").eq("id",1).maybeSingle():r);
+    cargarDatos().then(({data,error})=>{
       if(error||!data){dentro=false;pedir("La cuenta "+s.user.email+" no tiene acceso.",true);return}
       const um=s.user.user_metadata||{};USR=String(um.full_name||um.name||s.user.email.split("@")[0]).split(" ")[0];MIMAIL=String(s.user.email||"").toLowerCase();
       L.hidden=true;DATOS_V=data.version;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();cargarEnc();cargarUsu();setInterval(()=>{cargarMsj();cargarEnc()},120000)});
