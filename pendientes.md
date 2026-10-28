@@ -12,6 +12,11 @@ Notas del 22/10/2026.
 - Micrófono en la barra de búsqueda que entiende frases: cliente nuevo, gastos, cobros, deudas, trabajos, llamadas y notas.
 - Encuesta de conformidad (5 preguntas) como último paso de la O.T.: link público por WhatsApp, respuestas guardadas en Supabase.
 - Avisos de Chrome para cobros, actividades y trabajos del día (mientras el sistema está abierto o en segundo plano).
+- Guía de precios AAIERIC de mano de obra cargada en la lista de precios.
+- Campanita de Notificaciones en el menú, con todos los avisos juntos.
+- Feedback del sistema (pestaña debajo de Colaboradores).
+- Clima de Mar del Plata en la agenda.
+- Guardado con control de versión en Supabase (requiere la columna version, ver cambios.md).
 
 ## Por hacer
 
@@ -19,7 +24,6 @@ Notas del 22/10/2026.
 - Hoy los avisos salen cuando el sistema está abierto. Para que lleguen con Chrome cerrado hace falta un envío desde el servidor (Supabase Edge Function con Web Push y una tarea diaria).
 
 ### Guía de precios
-- Cargar precios guía de mano de obra (Electroinstalador o AIERIC) en la lista de precios.
 
 ### Usuarios
 - Ya hay un usuario por cuenta de Google. Falta mostrar el autor también en actividades y mensajes.
