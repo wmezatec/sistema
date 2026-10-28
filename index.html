@@ -768,13 +768,15 @@ document.addEventListener("keydown",e=>{if(!(e.ctrlKey||e.metaKey))return;const 
   if(k==="z"&&!e.shiftKey){e.preventDefault();deshacer()}
   else if(k==="y"||(k==="z"&&e.shiftKey)){e.preventDefault();rehacer()}});
 /* En la nube: una sola fila (id 1) con todo el contenido; las copias diarias las arma la base */
-const subir=keep=>fetch(CF.url+"/rest/v1/datos?id=eq.1",{method:"PATCH",keepalive:!!keep,headers:{apikey:CF.key,Authorization:"Bearer "+TOKEN,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({contenido:D})})
-  .then(r=>r.ok?r.json():Promise.reject()).then(f=>{if(!f.length)throw 0});
+/* Control de versión: la base sube "version" en cada cambio. Si otro lugar guardó antes, no se pisa nada */
+let DATOS_V=null;
+const subir=keep=>fetch(CF.url+"/rest/v1/datos?id=eq.1"+(DATOS_V!=null?"&version=eq."+DATOS_V:""),{method:"PATCH",keepalive:!!keep,headers:{apikey:CF.key,Authorization:"Bearer "+TOKEN,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({contenido:D})})
+  .then(r=>r.ok?r.json():Promise.reject()).then(f=>{if(!f.length){const e=new Error("conflicto");e.conflicto=1;throw e}DATOS_V=f[0].version});
 function guardarYa(){
   tG=null;
   (SB?subir():fetch("/api/datos",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(D)}).then(r=>{if(!r.ok)throw 0}))
    .then(()=>estado("ok","Guardado"))
-   .catch(()=>estado("mal","Sin guardar"))}
+   .catch(e=>{if(e&&e.conflicto){estado("mal","Conflicto: recargá");aviso("Hay cambios más nuevos guardados desde otro lugar. Recargá la página para verlos; tus últimos cambios no se guardaron.")}else estado("mal","Sin guardar")})}
 addEventListener("beforeunload",()=>{if(!tG)return;clearTimeout(tG);
   if(SB)subir(true).catch(()=>{});
   else if(API&&navigator.sendBeacon)navigator.sendBeacon("/api/datos",new Blob([JSON.stringify(D)],{type:"application/json"}))});
@@ -2049,10 +2051,10 @@ function entrarNube(){
     TOKEN=s?s.access_token:null;
     if(!s){if(dentro)location.replace(location.pathname);else pedir("Gestión de clientes");return}
     if(dentro)return;dentro=true;
-    SB.from("datos").select("contenido").eq("id",1).maybeSingle().then(({data,error})=>{
+    SB.from("datos").select("contenido,version").eq("id",1).maybeSingle().then(({data,error})=>{
       if(error||!data){dentro=false;pedir("La cuenta "+s.user.email+" no tiene acceso.",true);return}
       const um=s.user.user_metadata||{};USR=String(um.full_name||um.name||s.user.email.split("@")[0]).split(" ")[0];MIMAIL=String(s.user.email||"").toLowerCase();
-      L.hidden=true;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();cargarEnc();cargarUsu();setInterval(()=>{cargarMsj();cargarEnc()},120000)});
+      L.hidden=true;DATOS_V=data.version;D=norm(data.contenido);estado("ok","Guardado");arrancar();cargarMsj();cargarEnc();cargarUsu();setInterval(()=>{cargarMsj();cargarEnc()},120000)});
   });
 }
 /* Panel lateral: contraer y submenú de configuración */
