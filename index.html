@@ -438,7 +438,7 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 .barra-ctx .btn.neg{height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:var(--carbon);color:#fff;box-shadow:none}
 .barra-ctx .btn.verde{height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:#fff;color:#2e7d32;box-shadow:inset 0 0 0 1.5px #2e7d32}
 .barra-ctx .btn.peligro{height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:#fff;color:#c62828;box-shadow:inset 0 0 0 1.5px #c62828}
-.barra-ctx .btn.chico:not(.claro):not(.neg):not(.peligro){height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:var(--degradado);color:var(--carbon);box-shadow:none}
+.barra-ctx .btn.chico:not(.claro):not(.neg):not(.peligro):not(.verde){height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:var(--degradado);color:var(--carbon);box-shadow:none}
 .barra-ctx .btn.chico.claro{height:44px;min-height:44px;display:inline-flex;align-items:center;padding:0 1.1em;font-size:.95rem;background:#fff;color:var(--tinta);box-shadow:none}
 .barra-ctx .hoy-bt{margin-left:0;align-self:center}
 /* Filtros de la lista de clientes dentro de la barra: buscador de 300 px y filtro de 44 px de alto */
@@ -513,7 +513,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   .cal-card .leyenda{display:grid;grid-template-columns:repeat(3,auto);gap:8px 10px;font-size:.75rem;justify-content:space-around}
 }
 /* Celular: cada fila de tabla se ve como tarjeta, sin scroll horizontal */
-@media (max-width:700px){
+@media (max-width:900px){
   .tabla-w{overflow:visible;border:0;background:transparent;border-radius:0;max-width:300px;margin:0 auto}
   table.t,table.t tbody,table.t tr,table.t td{display:block;width:100%}
   table.t thead{display:none}
@@ -568,6 +568,181 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 .dia .clima{margin-left:auto;display:inline-flex;align-items:center;gap:2px;font-size:.62rem;font-weight:600;color:var(--tinta-suave);white-space:nowrap;line-height:1}
 .dia .clima b{font-weight:700;font-size:.54rem}
 .dia .clima svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* Celular: barras compactas. Pie con íconos sin texto; encabezado más bajo; en horizontal, todavía más chico */
+@media (max-width:900px){
+  .lado{padding:4px 6px calc(4px + env(safe-area-inset-bottom))}
+  .lado>.nav{min-height:46px;padding:.3em .1em;gap:0}
+  .lado>.nav .t{display:none}
+  .lado>.nav .ic{width:22px;height:22px}
+  .lado .cuenta{top:0;right:calc(50% - 20px)}
+  .lado .mas{bottom:calc(60px + env(safe-area-inset-bottom))}
+  main{padding-bottom:70px;padding-top:6px}
+  .barra-sup{padding:4px 8px;gap:6px}
+  .barra-sup .busca input{height:36px}
+  .barra-ctx{gap:8px}
+  .barra-ctx .btn,.barra-ctx .btn.chico,#b-crear{height:36px;min-height:36px;padding:0 .8em;font-size:.85rem}
+  .barra-ctx h1,.barra-ctx .ctx-tit b{font-size:1.05rem}
+  .cab{margin-bottom:6px}
+  .mas-crear{bottom:calc(64px + env(safe-area-inset-bottom));width:48px;height:48px}
+}
+/* Celular en horizontal: todo todavía más compacto */
+@media (max-width:900px) and (orientation:landscape){
+  .lado>.nav{min-height:38px}
+  .lado>.nav .ic{width:20px;height:20px}
+  main{padding-bottom:58px;padding-top:4px}
+  .barra-sup{padding:2px 8px}
+  .barra-sup .busca input{height:32px}
+  .barra-ctx .btn,.barra-ctx .btn.chico,#b-crear{height:32px;min-height:32px}
+  .barra-ctx h1,.barra-ctx .ctx-tit b{font-size:.95rem}
+  .cab{margin-bottom:4px}
+  .cab h1{font-size:1.1rem}
+  .card{padding:8px}
+  .mas-crear{width:40px;height:40px;bottom:calc(56px + env(safe-area-inset-bottom))}
+}
+/* Celular: menú ☰ en el encabezado, encabezado en una línea que se esconde al bajar, botones al alto del buscador */
+.bmenu{display:none;width:36px;height:36px;flex:none;border:0;border-radius:99px;background:var(--carbon);box-shadow:none;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.bmenu svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round}
+@media (max-width:900px){
+  .bmenu{display:inline-flex}
+  /* El pie inferior deja de existir: sus páginas pasan al panel ☰ */
+  .lado{position:fixed;top:0;bottom:0;left:0;width:270px;max-width:82vw;height:100%;flex-direction:column;align-items:stretch;padding:12px 10px;transform:translateX(-105%);transition:transform .2s ease;z-index:30;box-shadow:6px 0 30px rgba(0,0,0,.45);overflow-y:auto;gap:2px}
+  body.menu-abierto .lado{transform:none}
+  body.menu-abierto::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:29}
+  .lado-top{display:none}
+  .lado .pie{display:grid}
+  .lado>.nav,.lado .mas .nav{flex:none;flex-direction:row;justify-content:flex-start;min-height:0;padding:.55em .85em;gap:12px;font-size:1rem;text-align:left;width:100%}
+  .lado>.nav .t,.lado .mas .nav .t{display:inline}
+  .lado>.nav .ic{width:20px;height:20px}
+  .lado .cuenta{position:static;margin-left:auto;margin-top:0}
+  #b-mas{display:none}
+  .lado .mas{position:static!important;display:flex!important;flex-direction:column;gap:2px;background:none;box-shadow:none;border-radius:0;padding:0;margin:0;left:auto;right:auto;bottom:auto;z-index:auto}
+  .lado .solo-cel{display:flex}
+  .lado .pie{display:grid;gap:6px;padding-top:10px}
+  /* Encabezado: una sola línea, fijo arriba y se esconde al bajar */
+  .barra-sup{position:fixed;top:0;left:0;right:0;flex-wrap:nowrap!important;gap:6px;padding:6px 8px;transition:transform .2s ease;z-index:15}
+  .barra-sup.oculta{transform:translateY(-110%)}
+  main{padding-top:58px!important;padding-bottom:70px}
+  .barra-ctx{flex:0 1 auto;min-width:0;flex-wrap:nowrap;overflow:hidden;gap:6px}
+  .barra-ctx .ctx-tit{flex-wrap:nowrap;min-width:0}
+  .barra-ctx h1,.barra-ctx .ctx-tit b{font-size:1.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45vw}
+  .barra-sup .busca{flex:1 1 0;min-width:120px;max-width:none;margin:0 0 0 auto;order:0}
+  .barra-sup .busca input{height:36px}
+  .vsel{order:0}
+  .ctx-filtros{flex:0 1 auto}
+  /* Todos los botones de la barra, al mismo alto que el buscador */
+  .barra-ctx .btn,.barra-ctx .btn.chico,.barra-ctx .hoy-bt .btn,.barra-ctx .tools .btn{height:36px!important;min-height:36px!important;padding:0 .75em!important;font-size:.85rem!important;white-space:nowrap}
+  .mas-crear{position:static;width:auto;height:36px;min-height:36px;padding:0 .8em;border-radius:99px;box-shadow:none;bottom:auto;right:auto;flex:none;z-index:auto}
+  .mas-crear .t{display:none}
+  .mas-crear .ic{width:18px;height:18px}
+}
+/* Celular: micrófono flotante del mismo tamaño que los checks, abajo a la derecha */
+@media (max-width:900px){
+  .voz-fab{right:14px;bottom:calc(16px + env(safe-area-inset-bottom));width:40px;height:40px}
+  .voz-fab .ic{width:18px;height:18px}
+}
+/* Celular: la tabla se ve como tarjetas (sin desplazar a la derecha) y los botones del encabezado en una fila */
+@media (max-width:900px){
+  .barra-ctx .tools{flex-wrap:nowrap;gap:6px}
+  .barra-ctx .seg{flex-wrap:nowrap}
+}
+/* Celular v2: encabezado en dos filas (fila 1: ☰, título, buscar, crear; fila 2: botones de la pantalla).
+   En horizontal, una sola fila. Reglas de Vercel aplicadas: min-width:0 en hijos flex, recorte con "…", sin scroll horizontal, safe-area */
+@media (max-width:900px){
+  html,body{overflow-x:hidden}
+  .barra-sup{flex-wrap:wrap!important;row-gap:6px;column-gap:6px;padding:6px max(8px,env(safe-area-inset-right)) 6px max(8px,env(safe-area-inset-left))!important;align-items:center}
+  .barra-ctx{display:contents!important}
+  .bmenu{order:0}
+  .barra-ctx>*{order:1}
+  .barra-ctx>div:first-child,.barra-ctx>h1,.barra-ctx>.ctx-tit{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+  .barra-ctx h1,.barra-ctx .ctx-tit b{font-size:1.15rem!important;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none!important;min-width:0}
+  .barra-ctx>div:first-child>p:not(:first-child),.barra-ctx .hoy-f{display:none}
+  .barra-ctx p>a{height:36px!important;padding:0 .7em!important;font-size:.85rem!important}
+  .barra-sup>.busca{order:2;flex:0 1 130px!important;min-width:44px!important;max-width:none;margin:0!important}
+  .barra-sup .busca input{height:36px!important;padding:0 .6em 0 2.2em!important;font-size:.9rem}
+  .barra-sup .busca .ic{left:10px}
+  .barra-sup .busca .busca-mic{display:none!important}
+  #b-crear{order:3;width:36px!important;min-width:36px;height:36px!important;padding:0!important;justify-content:center;border-radius:50%!important}
+  /* Fila 2: botones propios de cada pantalla, desplazables de costado si no entran */
+  .barra-ctx>.tools,.barra-ctx>.hoy-bt,.barra-ctx>.cab-ic{order:10;flex:1 0 100%!important;margin:0!important;display:flex;flex-wrap:nowrap!important;gap:6px;overflow-x:auto;scrollbar-width:none;justify-content:flex-start}
+  .barra-ctx>.tools::-webkit-scrollbar,.barra-ctx>.hoy-bt::-webkit-scrollbar{display:none}
+  .barra-ctx .btn,.barra-ctx .btn.chico,.barra-ctx .seg button{height:32px!important;min-height:32px!important;padding:0 .75em!important;font-size:.82rem!important;flex:none;white-space:nowrap}
+  .barra-ctx .seg{flex:none;flex-wrap:nowrap;padding:2px}
+  /* Clientes: buscador y filtro de la lista en la fila 1 */
+  .barra-ctx>.ctx-filtros{order:2;flex:0 1 auto!important;margin:0!important;gap:6px;min-width:0}
+  .ctx-filtros .busca{flex:0 1 120px!important;max-width:none!important;min-width:44px}
+  .ctx-filtros select,.ctx-filtros .sel,.ctx-filtros .sel-btn{width:100px!important;height:36px!important}
+  /* El contenido empieza debajo del encabezado, mida lo que mida */
+  main{padding-top:calc(var(--hdr,58px) + 8px)!important}
+  /* Columnas que nunca son más anchas que la pantalla */
+  .hoy-cols,.pila[data-tp="trabajo"]{grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))!important}
+  .hoy-l .hf,.hoy-l .tx{min-width:0}
+  /* Tarjetas de tabla: todo el ancho y, si hay lugar, en varias columnas */
+  .tabla-w{max-width:none!important;margin:0!important}
+  table.t tbody{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:8px}
+  table.t tr{margin-bottom:0!important}
+  table.t td>span,table.t td>small{white-space:nowrap}
+}
+@media (max-width:900px) and (orientation:landscape){
+  .barra-sup{flex-wrap:nowrap!important}
+  .barra-ctx>.tools,.barra-ctx>.hoy-bt,.barra-ctx>.cab-ic{order:1;flex:0 1 auto!important}
+  .barra-ctx>div:first-child,.barra-ctx>h1,.barra-ctx>.ctx-tit{flex:0 1 auto}
+  .barra-sup>.busca{margin-left:auto!important}
+}
+/* Celular v3 (vertical): un corte de línea fijo separa la fila 1 (☰, título, buscar, crear) de la fila 2 (acciones de la pantalla) */
+@media (max-width:900px) and (orientation:portrait){
+  .barra-sup{row-gap:0!important}
+  .barra-sup::after{content:"";order:9;flex-basis:100%;height:0}
+  .barra-ctx>.tools,.barra-ctx>.hoy-bt,.barra-ctx>.cab-ic,.barra-ctx>button.btn,.barra-ctx>.etq{order:10;flex:0 1 auto!important;margin-top:6px!important}
+  .barra-ctx>.tools,.barra-ctx>.hoy-bt{max-width:100%}
+  /* Volver: solo el piquito, para dejar lugar al título */
+  .barra-ctx>a.btn,.barra-ctx p>a{font-size:0!important;width:36px;min-width:36px;padding:0!important;justify-content:center;flex:none}
+  .barra-ctx>a.btn .chev,.barra-ctx p>a .chev{margin:0;width:16px;height:16px}
+  .barra-ctx>div:first-child>p:first-child{flex:none;margin:0}
+  /* Orden de trabajo: el título completo; las pastillas de cliente y sitio se ven adentro de la orden */
+  .barra-ctx .ctx-tit .chip{display:none}
+  /* Clientes: Nuevo cliente en la fila 1; buscador y filtro en la fila 2, a todo lo ancho */
+  body.con-filtros .barra-ctx>.tools{order:2;margin-top:0!important}
+  body.con-filtros .barra-ctx>.ctx-filtros{order:10;flex:1 0 100%!important;margin-top:6px!important;display:flex}
+  body.con-filtros .ctx-filtros .busca{flex:1 1 0!important;min-width:0}
+}
+/* Celular: columnas que pueden achicarse por debajo de su contenido (no se pasan de la pantalla) */
+@media (max-width:900px){
+  .cols2{grid-template-columns:minmax(0,1fr)!important}
+  .cal{grid-template-columns:repeat(7,minmax(0,1fr))!important}
+  .cal button.dia{min-width:0;overflow:hidden;padding:4px 3px}
+  .dia-top{gap:2px}
+  .cal-cab{flex-wrap:wrap;gap:6px}
+  .cal-mes{max-width:170px;font-size:1.05rem}
+}
+@media (max-width:900px) and (orientation:portrait){
+  .dia .clima b{display:none}
+  .dia .clima svg{width:12px;height:12px}
+}
+/* Celular v4: el filtro de Clientes no se come el buscador; volver solo con piquito; buscador más angosto en vertical */
+@media (max-width:900px){
+  .ctx-filtros .sel{flex:0 0 110px!important;width:110px!important;min-width:0!important}
+  .ctx-filtros .busca{flex:1 1 auto!important;width:auto!important;min-width:0}
+}
+@media (max-width:900px) and (orientation:portrait){
+  .barra-sup .barra-ctx>a.btn.chico,.barra-sup .barra-ctx p>a{font-size:0!important;width:36px!important;min-width:36px;padding:0!important;justify-content:center}
+  .barra-sup .barra-ctx>a.btn.chico .chev,.barra-sup .barra-ctx p>a .chev{width:16px;height:16px;margin:0}
+  .barra-sup>.busca{flex:0 1 110px!important}
+}
+/* Celular (vertical y horizontal): sin pastillas de cliente y sitio en el encabezado; esos datos están dentro de la orden */
+@media (max-width:900px){.barra-ctx .ctx-tit .chip{display:none}}
+/* Celular: el filtro de Clientes del mismo alto que el buscador, sin recortarse */
+@media (max-width:900px){.ctx-filtros{overflow:visible!important}.ctx-filtros .sel-btn{height:36px!important;min-height:36px!important;width:100%!important}}
+/* Botones de solo ícono en la barra: cuadrados y del mismo alto que los demás */
+.barra-ctx .btn.ico{aspect-ratio:1/1;width:auto!important;min-width:0!important;padding:0!important;display:inline-flex;align-items:center;justify-content:center}
+.barra-ctx .btn.ico .ic{width:18px;height:18px}
+/* X para cerrar diálogos (Notificaciones) */
+.dlg-x{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:#eceee8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;z-index:2}
+.dlg-x[hidden]{display:none}
+.dlg-x:hover{background:#e0e2da}
+.dlg-x svg{width:16px;height:16px;fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linecap:round}
+#dlg-gen #g-t{padding-right:44px}
+#dlg-gen .acc[hidden]{display:none}
+#g-c .lista a{text-decoration:none;color:inherit}#g-c .lista a .ttl{font-weight:700}
 </style>
 </head>
 <body>
@@ -607,7 +782,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 <symbol id="i-msg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
-<symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol>
+<symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol><symbol id="i-impr" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7z"/></symbol>
 <symbol id="i-sub" viewBox="0 0 24 24"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 19h14"/></symbol>
 <symbol id="i-xls" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l4 5m0-5-4 5M8 17h8"/></symbol>
 </defs></svg>
@@ -643,7 +818,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   </aside>
   <div class="voz" id="voz" hidden><div class="voz-c"><span class="voz-i"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></span><p id="voz-t" aria-live="polite">Escuchando…</p><div class="voz-b"><button type="button" class="btn claro" id="voz-x">Cancelar</button><button type="button" class="btn pri" id="voz-ok">Listo</button></div></div></div>
   <dialog id="menu-cfg" class="dlg-cfg"><form method="dialog">
-    <div class="cfg-cab"><h2>Configuración</h2><button class="btn chico claro ico" value="x" aria-label="Cerrar">×</button></div>
+    <div class="cfg-cab"><h2>Configuración</h2><button class="dlg-x" value="x" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <section class="cfg-s"><h4>Vista</h4><div class="seg" role="group" aria-label="Vista"><button type="button" data-vista="esencial">Esencial</button><button type="button" data-vista="completa">Completa</button></div></section>
     <section class="cfg-s"><h4>Textos</h4><label style="display:flex;gap:8px;align-items:center"><input style="width:auto" type="checkbox" id="cf-may"> Poner mayúscula al empezar cada oración</label></section>
     <section class="cfg-s"><h4>Mi usuario</h4><div class="grid"><div><label for="cf-nombre">Nombre</label><input id="cf-nombre" autocomplete="name"></div><div><label for="cf-mail">Correo</label><input id="cf-mail" readonly></div></div></section>
@@ -663,6 +838,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   </form></dialog>
   <div class="col">
     <div class="barra-sup no-print" id="barra-sup">
+      <button class="bmenu" id="b-menu" type="button" aria-label="Menú" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="barra-ctx" id="barra-ctx" hidden></div>
       <div class="busca">
         <svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg>
@@ -705,7 +881,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
     <div class="acc"><button class="btn claro" value="cancel" type="submit" formnovalidate>Cancelar</button><button class="btn pri" id="k-guardar" type="button">Guardar</button></div>
   </form>
 </dialog>
-<dialog id="dlg-gen"><form method="dialog" id="f-gen"><h2 id="g-t"></h2><div class="grid" id="g-c"></div><div class="acc"><button class="btn claro" value="cancel" type="submit" formnovalidate>Cancelar</button><button class="btn pri" id="g-ok" type="button">Aceptar</button></div></form></dialog>
+<dialog id="dlg-gen"><form method="dialog" id="f-gen"><button class="dlg-x" id="g-x" type="submit" value="cancel" formnovalidate aria-label="Cerrar" title="Cerrar" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button><h2 id="g-t"></h2><div class="grid" id="g-c"></div><div class="acc"><button class="btn claro" value="cancel" type="submit" formnovalidate>Cancelar</button><button class="btn pri" id="g-ok" type="button">Aceptar</button></div></form></dialog>
 
 <script src="tableros/frente.js"></script>
 <script>
@@ -893,7 +1069,7 @@ const ptI=k=>`<i class="pt si ${k}" aria-hidden="true">${SIMB_T[k]==="$"?"$":`<s
 const TIPOLBL={con:"Contacto",tra:"Trabajo",man:"Mantenimiento",cob:"Cobro",pre:"Presupuesto",fij:"Gasto fijo"};
 
 /* pedir datos en un diálogo */
-function pedir(titulo,campos,ok,okTxt){
+function pedir(titulo,campos,ok,okTxt){document.getElementById("g-x").hidden=true;document.querySelector("#dlg-gen .acc").hidden=false;
   const d=document.getElementById("dlg-gen");document.getElementById("g-t").textContent=titulo;
   document.getElementById("g-ok").textContent=okTxt||"Aceptar";
   document.getElementById("g-c").innerHTML=campos.map(c=>{
@@ -965,9 +1141,23 @@ const V=document.getElementById("vista");
 const ruta=()=>{const p=(location.hash.slice(1)||"panel").split("/");return{r:p[0],id:p[1]}};
 let VISTA=(()=>{try{return localStorage.getItem("wmtec_vista")==="completa"?"completa":"esencial"}catch(e){return "esencial"}})();
 const ESE=()=>VISTA==="esencial";let HOYALL=false;
+/* Celular: menú ☰ y encabezado que se esconde al bajar */
+(function(){
+  const b=document.getElementById("b-menu");
+  const poner=a=>{document.body.classList.toggle("menu-abierto",a);b.setAttribute("aria-expanded",String(a))};
+  b.onclick=e=>{e.stopPropagation();poner(!document.body.classList.contains("menu-abierto"))};
+  document.addEventListener("click",e=>{if(!document.body.classList.contains("menu-abierto"))return;
+    if(e.target.closest(".lado a, .lado button")||!e.target.closest(".lado"))poner(false)});
+  let y=0;
+  addEventListener("scroll",()=>{const bs=document.getElementById("barra-sup");if(!bs)return;
+    if(innerWidth>900){bs.classList.remove("oculta");return}
+    const n=scrollY;if(n>y+8&&n>60)bs.classList.add("oculta");else if(n<y-8)bs.classList.remove("oculta");y=n},{passive:true});
+})();
 /* Elegir mes desde la lista de la agenda */
 document.addEventListener("change",e=>{if(e.target.id!=="cal-mes")return;const [y,m]=e.target.value.split("-").map(Number);CAL.y=y;CAL.m=m;vCal()});
 /* Encabezado de cada pantalla: el bloque .cab pasa a la barra de arriba, junto al buscador y Crear */
+function ajustarHdr(){requestAnimationFrame(()=>{const b=document.getElementById("barra-sup");if(b)document.documentElement.style.setProperty("--hdr",b.offsetHeight+"px")})}
+addEventListener("resize",ajustarHdr);
 function montarCab(){const cabs=[...V.querySelectorAll(":scope > .cab, :scope > .hoy-cab")],fil=V.querySelector(":scope > .ctx-filtros"),bc=document.getElementById("barra-ctx");if((!cabs.length&&!fil)||!bc)return;
   bc.hidden=false;if(cabs.length){bc.append(...cabs[0].children);cabs.forEach(x=>x.remove())}if(fil)bc.append(fil)}
 function render(){
@@ -987,7 +1177,7 @@ function render(){
   set("c-clientes",D.clientes.length);set("c-colab",D.colabs.length);set("c-diag",D.diag.length);set("c-trab",D.trab.filter(t=>t.estado==="agendado").length);
   set("c-pres",D.pres.filter(p=>["borrador","enviado"].includes(p.estado)).length);set("c-cobros",venc||D.cobros.filter(pendiente).length,venc);cuentaMas();
   V.classList.toggle("tablero", q.r === "tablero");if(window.barraSup)barraSup(q.r);
-  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();
+  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();ajustarHdr();
   if(!["calendario"].includes(q.r))window.scrollTo(0,0);
 }
 const vacioInicial=()=>`<div class="vacio"><p><b>Todavía no cargaste nada.</b></p><button class="btn pri" data-a="nuevo">Cargar primer cliente</button> <button class="btn claro" data-a="ejemplo">Ver con datos de ejemplo</button></div>`;
@@ -1271,7 +1461,7 @@ function avisosIni(){const b=document.getElementById("b-avisos");if(!("Notificat
 
 /* Número en "Más": cobros vencidos y mensajes sin leer */
 function abrirAvisos(){const L=avisosActuales(),d=document.getElementById("dlg-gen");
-  pedir("Notificaciones",[],()=>{},"Cerrar");
+  pedir("Notificaciones",[],()=>{},"Cerrar");document.getElementById("g-x").hidden=false;document.querySelector("#dlg-gen .acc").hidden=true;
   const c=document.getElementById("g-c");
   c.innerHTML=L.length?`<ul class="lista">${L.map(x=>`<li class="fila"><a href="${x.u}" class="grow"><span class="ttl">${esc(x.t)}</span><small>${esc(x.b)}</small></a></li>`).join("")}</ul>`:'<p class="vacio">No hay notificaciones.</p>';
   c.onclick=e=>{if(e.target.closest("a"))d.close()}}
@@ -1502,7 +1692,7 @@ function vPresDocS(p){
   const cond=bibCond().filter(e=>condSelDe(p).includes(e.id)).flatMap(e=>lin(e.t)).concat("Validez de la presente cotización: "+vl+" días corridos a partir de su fecha de emisión.");
   const mat=(p.materiales||[]).filter(r=>r.d||num(r.m));
   const w=c?wa(c.tel,`Hola ${pn(c)}, te mando el presupuesto ${p.num}. Cualquier duda lo charlamos.`):"";
-  V.innerHTML=`<div class="cab no-print"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p></div><div class="tools" style="margin:0">${w?`<a class="btn wsp" href="${w}" target="_blank" rel="noopener">Abrir WhatsApp</a>`:""}<a class="btn claro" href="#pres/${p.id}">Editar</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn verde chico" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn chico neg" id="i-print" type="button">Imprimir / guardar PDF</button></div></div>
+  V.innerHTML=`<div class="cab no-print"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p></div><div class="tools" style="margin:0">${w?`<a class="btn wsp ico" href="${w}" target="_blank" rel="noopener" title="Abrir WhatsApp" aria-label="Abrir WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-wsp"/></svg></a>`:""}<a class="btn claro ico" href="#pres/${p.id}" title="Editar" aria-label="Editar"><svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg></a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn verde chico" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn chico neg ico" id="i-print" type="button" title="Imprimir o guardar PDF" aria-label="Imprimir o guardar PDF"><svg class="ic" aria-hidden="true"><use href="#i-impr"/></svg></button></div></div>
   <article class="doc a4"><div class="a4-barra"></div>
    <div class="a4-cab"><div><h1>PRESUPUESTO</h1><div class="a4-fn"><div><small>FECHA</small><b>${fecha(p.fecha)}</b></div><div><small>N°</small><b>${esc(p.num)}</b></div></div></div>
     <div class="a4-emisor"><div class="a4-logo"><img src="logo/wmtec-logo-oscuro.svg" alt="WM TEC"></div><b>Walter Martín Meza</b><span>Pringles 2565</span><span>${WALTER.tel}</span><span>${WALTER.ig}</span></div></div>
