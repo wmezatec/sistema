@@ -743,6 +743,32 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 #dlg-gen #g-t{padding-right:44px}
 #dlg-gen .acc[hidden]{display:none}
 #g-c .lista a{text-decoration:none;color:inherit}#g-c .lista a .ttl{font-weight:700}
+/* Dónde y qué: sitio, descripción y archivos apilados; el indicador de archivos nunca se parte */
+.dq{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.chip-arch{white-space:nowrap;flex:none}
+@media (max-width:900px){table.t td{min-width:0}.dq{align-items:flex-end;text-align:right;max-width:62%}}
+.dq>*{max-width:100%;min-width:0}.dq small{width:100%}
+/* Al bajar a la lista del día, que no quede tapada por el encabezado fijo */
+.cols2>*{scroll-margin-top:calc(var(--hdr,58px) + 10px)}
+/* Agenda: el clima muestra temperatura máxima y % de lluvia */
+.dia .clima .tmax{font-weight:700}
+.dia .clima .lluv{font-weight:600;color:var(--tinta-suave)}
+.cal .mas-n{font-size:.62rem;font-weight:700;color:var(--tinta-suave);align-self:center}
+/* Agenda en celular vertical: celdas iguales, número arriba, clima debajo, actividades como puntitos */
+@media (max-width:900px) and (orientation:portrait){
+  .cal button.dia{height:72px;min-height:0!important;overflow:hidden;padding:4px 3px;gap:2px;justify-content:flex-start}
+  .dia-top{flex-wrap:wrap;row-gap:1px}
+  .dia .clima{margin-left:0;width:100%;gap:1px}
+  .dia .clima .tmax{display:inline!important;font-size:.62rem}
+  .dia .clima .lluv{display:none!important}
+  .dia .clima svg{width:12px;height:12px}
+  .cal .pts{display:flex;flex-wrap:wrap;gap:2px;align-content:flex-start}
+  .cal .pts .pt.si{width:8px!important;height:8px!important;min-width:0;padding:0;border-radius:50%}
+  .cal .pts .pt.si svg{display:none}
+  .cal .mas-n{font-size:.55rem}
+}
+/* Menú ☰ de celular: Configuración una sola vez (la del pie, junto a Notificaciones) */
+@media (max-width:900px){#b-cfg2{display:none!important}}
 </style>
 </head>
 <body>
@@ -1234,8 +1260,8 @@ let VAG={v:"mes"};
 /* Clima de Mar del Plata para la agenda (Open-Meteo, sin clave; pronóstico de 16 días) */
 let CLIMA=null,CLIMA_T=0;
 function cargarClima(){if(CLIMA_T&&Date.now()-CLIMA_T<3*3600e3)return;CLIMA_T=Date.now();
-  fetch("https://api.open-meteo.com/v1/forecast?latitude=-38.0&longitude=-57.55&daily=weather_code,precipitation_probability_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=16")
-    .then(r=>r.json()).then(j=>{const m={},d=j.daily||{};(d.time||[]).forEach((x,i)=>{m[x]={c:d.weather_code[i],p:d.precipitation_probability_max[i]}});CLIMA=m;if(ruta().r==="calendario")vCal()})
+  fetch("https://api.open-meteo.com/v1/forecast?latitude=-38.0&longitude=-57.55&daily=weather_code,precipitation_probability_max,temperature_2m_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=16")
+    .then(r=>r.json()).then(j=>{const m={},d=j.daily||{};(d.time||[]).forEach((x,i)=>{m[x]={c:d.weather_code[i],p:d.precipitation_probability_max[i],t:(d.temperature_2m_max||[])[i]}});CLIMA=m;if(ruta().r==="calendario")vCal()})
     .catch(()=>{CLIMA={}})}
 const CLIMA_ICO={sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   parcial:'<circle cx="8" cy="8" r="3"/><path d="M8 2v1M2.5 8H3.5M4.4 4.4l.7.7M11.6 4.4l-.7.7"/><path d="M9 20h8.5a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.2A3.8 3.8 0 0 0 9 20z"/>',
@@ -1245,7 +1271,7 @@ const CLIMA_ICO={sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.
   tormenta:'<path d="M7 14h10.5a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.2A3.4 3.4 0 0 0 7 14z"/><path d="M12.5 14l-2 3.5h2.5l-1.5 3.5"/>',
   nieve:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>'};
 const icoClima=c=>{const k=c===0?"sol":c<=2?"parcial":c===3?"nube":(c===45||c===48)?"niebla":c>=95?"tormenta":(c>=71&&c<=77)?"nieve":"lluvia";return `<svg viewBox="0 0 24 24" aria-hidden="true">${CLIMA_ICO[k]}</svg>`};
-const claCel=f=>{const c=CLIMA&&CLIMA[f];if(!c||c.c==null)return "";return `<span class="clima" title="Probabilidad de lluvia y clima">${icoClima(c.c)}${c.p==null?"":"<b>"+c.p+"%</b>"}</span>`};
+const claCel=f=>{const c=CLIMA&&CLIMA[f];if(!c||c.c==null)return "";return `<span class="clima" title="Probabilidad de lluvia y clima">${icoClima(c.c)}${c.t==null?"":"<b class=\"tmax\">"+Math.round(c.t)+"°</b>"}${c.p==null?"":"<b class=\"lluv\">"+c.p+"%</b>"}</span>`};
 function vCal(){
   const bc=document.getElementById("barra-ctx");bc.hidden=false;bc.innerHTML='<span class="ctx-tit"><b>Agenda</b></span>';cargarClima();
   const ev=eventos(),h=hoy(),por={};ev.forEach(e=>(por[e.f]=por[e.f]||[]).push(e));
@@ -1255,7 +1281,7 @@ function vCal(){
   for(let y=CAL.y-1;y<=CAL.y+1;y++)for(let i=0;i<12;i++)opsMes.push(`<option value="${y}-${i}"${y===CAL.y&&i===CAL.m?" selected":""}>${MESES_V[i].charAt(0).toUpperCase()+MESES_V[i].slice(1)} ${y}</option>`);
   V.innerHTML=`<div class="cols2"><div class="card cal-card"><div class="cal-cab no-print"><button class="btn pri ico" data-cal="-1" aria-label="Mes anterior"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><select class="cal-mes" id="cal-mes" aria-label="Elegir mes">${opsMes.join("")}</select><button class="btn pri ico" data-cal="1" aria-label="Mes siguiente"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button><button class="btn claro" data-cal="0">Hoy</button></div>
    <div class="cal">${["lun","mar","mié","jue","vie","sáb","dom"].map(x=>`<div class="dn">${x}</div>`).join("")}
-   ${celdas.map(d=>{const f=iso(d),es=por[f]||[],cl=claCel(f);return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><span class="dia-top"><b>${d.getDate()}</b>${cl}</span><span class="pts">${es.slice(0,6).map(e=>ptI(e.t).replace('<i class="pt',`<i data-evh="${esc(e.h)}" title="${esc(TIPOLBL[e.t]+": "+e.x)}" class="pt`)).join("")}</span></button>`}).join("")}</div>
+   ${celdas.map(d=>{const f=iso(d),es=por[f]||[],cl=claCel(f);return `<button class="dia${d.getMonth()!==CAL.m?" fuera":""}${f===h?" hoy":""}${f===CAL.sel?" sel":""}" data-dia="${f}"><span class="dia-top"><b>${d.getDate()}</b>${cl}</span><span class="pts">${es.slice(0,6).map(e=>ptI(e.t).replace('<i class="pt',`<i data-evh="${esc(e.h)}" title="${esc(TIPOLBL[e.t]+": "+e.x)}" class="pt`)).join("")}${es.length>6?`<span class="mas-n">+${es.length-6}</span>`:""}</span></button>`}).join("")}</div>
    <div class="leyenda">${Object.keys(TIPOLBL).map(k=>`<span>${ptI(k)}${TIPOLBL[k]}</span>`).join("")}</div></div>
    <section class="card barra"><h2>${fechaL(CAL.sel)}</h2><ul class="lista" style="margin-top:12px">${sel.map(e=>`<li><a class="fila" href="${e.h}">${ptI(e.t)}<div class="grow"><span class="ttl">${esc(e.x)}</span><small>${TIPOLBL[e.t]}</small></div></a></li>`).join("")||'<li class="vacio">Sin actividades este día.</li>'}</ul>
    <div class="tools" style="margin-top:14px"><button class="btn pri" data-a="cal-agregar" style="height:44px;min-height:44px">+ Agregar</button></div></section></div>`;
@@ -1930,7 +1956,7 @@ function flujoTrab(t){
   return q.length?`<div class="flujo">${q.join("")}</div>`:""}
 function vTrabajos(){
   V.innerHTML=`<div class="cab"><div><h1>Órdenes de trabajo</h1></div><button class="btn pri" data-a="nuevotrab">+ O.T.</button></div>
-  <div class="tabla-w"><table class="t ot-tab"><thead><tr><th>Orden</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Dónde y qué</th><th>Próximo</th><th>Paso</th></tr></thead><tbody>${D.trab.slice().sort((a,b)=>a.fecha<b.fecha?1:-1).map(t=>`<tr data-go="#ot/${t.id}"><td><a href="#ot/${t.id}">${esc(t.ot||"O.T.")}</a></td><td>${fecha(t.fecha)}</td><td><a href="#cliente/${t.cid}">${esc(nomCorto(cli(t.cid)))}</a></td><td>${esc(t.tipo)}</td><td>${esc(t.sitio||"")}${t.desc?"<br><small>"+mdPlano(t.desc)+"</small>":""}${fotosTrab(t)?"<br>"+fotosTrab(t):""}</td><td>${t.prox?fecha(t.prox):"—"}</td><td>${etqOT(t)}</td></tr>`).join("")||`<tr><td colspan="7"><div class="vacio">Todavía no hay órdenes de trabajo.</div></td></tr>`}</tbody></table></div>`;
+  <div class="tabla-w"><table class="t ot-tab"><thead><tr><th>Orden</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Dónde y qué</th><th>Próximo</th><th>Paso</th></tr></thead><tbody>${D.trab.slice().sort((a,b)=>a.fecha<b.fecha?1:-1).map(t=>`<tr data-go="#ot/${t.id}"><td><a href="#ot/${t.id}">${esc(t.ot||"O.T.")}</a></td><td>${fecha(t.fecha)}</td><td><a href="#cliente/${t.cid}">${esc(nomCorto(cli(t.cid)))}</a></td><td>${esc(t.tipo)}</td><td><span class="dq">${t.sitio?`<span>${esc(t.sitio)}</span>`:""}${t.desc?"<small>"+mdPlano(t.desc)+"</small>":""}${fotosTrab(t)}</span></td><td>${t.prox?fecha(t.prox):"—"}</td><td>${etqOT(t)}</td></tr>`).join("")||`<tr><td colspan="7"><div class="vacio">Todavía no hay órdenes de trabajo.</div></td></tr>`}</tbody></table></div>`;
 }
 
 
@@ -2053,7 +2079,7 @@ document.addEventListener("click",e=>{const vs=e.target.closest("[data-vista]");
   const ag=e.target.closest("[data-ag]");if(ag){VAG.v=ag.dataset.ag;vCal();return}const cv=e.target.closest("[data-cv]");if(cv){VCLI.v=cv.dataset.cv;vClientes();return}const g=e.target.closest("[data-go]");if(g&&!e.target.closest("a,button")){location.hash=g.dataset.go;return}
   const b=e.target.closest("[data-a]");if(b&&b.tagName!=="INPUT"){acc(b.dataset.a,b.dataset.id)}
   const cb=e.target.closest("[data-cal]");if(cb){const n=+cb.dataset.cal;if(n===0){const t=new Date();CAL={y:t.getFullYear(),m:t.getMonth(),sel:hoy()}}else{let m=CAL.m+n,y=CAL.y;if(m<0){m=11;y--}if(m>11){m=0;y++}CAL.m=m;CAL.y=y}vCal()}
-  const evh=e.target.closest("[data-evh]");if(evh){location.hash=evh.dataset.evh;return}const dd=e.target.closest("[data-dia]");if(dd){CAL.sel=dd.dataset.dia;vCal()}});
+  const evh=e.target.closest("[data-evh]");if(evh&&!evh.closest("[data-dia]")){location.hash=evh.dataset.evh;return}const dd=e.target.closest("[data-dia]");if(dd){CAL.sel=dd.dataset.dia;vCal();if(innerWidth<=900){const l=V.querySelector(".cols2>:nth-child(2)");if(l)l.scrollIntoView({behavior:"smooth",block:"start"})}}});
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.mover)mover(t.dataset.mover,t.value);
   if(t.dataset&&t.dataset.tf&&t.files&&t.files[0]){const tr=D.trab.find(x=>x.id===t.dataset.tf),r=new FileReader();
     r.onload=()=>{const im=new Image();im.onload=()=>{const m=1000,sc=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);tr.fotos=tr.fotos||[];tr.fotos.push(c.toDataURL("image/jpeg",.6));guardar();render()};im.src=r.result};r.readAsDataURL(t.files[0])}});
