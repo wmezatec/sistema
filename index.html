@@ -388,7 +388,8 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 .a4-emisor{display:grid;gap:2px;font-size:.92rem;justify-items:start}.a4-emisor b{font-size:1rem}
 .a4-logo{background:var(--carbon);border-radius:10px;padding:10px 16px;margin-bottom:8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.a4-logo img{display:block;width:88px}
 .a4-cli{margin:22px 0 18px;display:grid;gap:2px}.a4-cli b{font-size:1.05rem}.a4-cli span{color:#555}
-@page a4{size:A4;margin:16mm 16mm 18mm;@bottom-right{content:"Página " counter(page) " de " counter(pages);font-size:8pt;color:#888}}
+/* Barras del membrete: se dibujan en el MARGEN de cada hoja (fuera del área de texto), así nunca tapan renglones, sea cual sea el papel */
+@page a4{size:A4;margin:16mm 16mm 18mm;@top-left-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-left{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-center{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-right{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-right-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@bottom-left-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-left{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-center{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-right-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-right{content:"Página " counter(page) " de " counter(pages);font-size:8pt;color:#888;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}}
 .pd-datos{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:18px}
 .pd-datos small{display:block;color:#666;text-transform:uppercase;letter-spacing:.04em;font-size:.72rem}.pd-datos b{font-size:1.05rem}
 .doc .pd-t th{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:var(--carbon);color:#fff;padding:9px 12px;font-size:.78rem;letter-spacing:.06em}.doc .pd-t td{padding:12px;font-size:1rem}
@@ -549,10 +550,9 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   body{background:#fff}.lado,.no-print,.toast{display:none!important}
   .app{display:block}main{padding:0}
   .doc{box-shadow:none;padding:0;max-width:none}
-  /* Presupuesto en A4: sigue en varias hojas con márgenes, las barras se repiten arriba y abajo y nada se corta a la mitad */
+  /* Presupuesto en A4: sigue en varias hojas con márgenes y nada se corta a la mitad. Las barras las pone @page a4 en el margen */
   .doc.a4{padding:0;min-height:0;width:auto;border-radius:0}
-  .doc.a4 .a4-barra{position:fixed;left:-16mm;right:-16mm;top:-16mm;height:7mm}
-  .doc.a4 .a4-barra.pie{top:auto;bottom:-18mm;height:5mm}
+  .doc.a4 .a4-barra{display:none}
   .doc.a4 thead{display:table-header-group}
   .doc.a4 tr,.doc.a4 .pd-tot,.doc.a4 .pd-cond,.doc.a4 .pd-cond li,.doc.a4 .a4-cab,.doc.a4 .a4-cli,.doc.a4 .pd-nota,.doc.a4 .a4-emisor{break-inside:avoid}
   .doc.a4 .pd-cond h3{break-after:avoid}
