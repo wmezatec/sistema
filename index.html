@@ -158,6 +158,10 @@ textarea{min-height:76px;resize:vertical}
 .linea li::before{content:"";position:absolute;left:-25px;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--gris);box-shadow:0 0 0 3px var(--papel)}
 .linea li.pre::before{background:var(--naranja)}.linea li.tra::before{background:var(--azul)}.linea li.cob::before{background:var(--verde)}.linea li.dia::before{background:#7b5ea7}.linea li.act::before{background:var(--tinta)}
 .linea li.vacio::before{display:none}
+/* Bitácora diaria */
+.bita{display:grid;gap:22px;margin-top:22px}.bita-f{margin:0 0 8px;font-size:1.05rem}.bita-f small{font-weight:500;color:var(--tinta-suave);margin-left:6px}
+.bita-it{display:flex;gap:12px;align-items:flex-start;padding:10px 0}.bita-it+.bita-it{border-top:1px solid #eeeee9}.bita-it .grow{flex:1;min-width:0;overflow-wrap:anywhere}.bita-it small{display:block;color:var(--tinta-suave);margin-bottom:2px}.bita-it .bt-b{display:flex;gap:6px;flex:none}
+#bt-t{min-height:304px}.bt-nw{display:flex;gap:8px;align-items:center;margin-top:10px}.bt-nw[hidden]{display:none}
 .linea small{flex:none;min-width:78px;color:var(--tinta-suave)}.linea .grow{flex:1;min-width:0;overflow-wrap:anywhere}
 .precios input,.precios select{min-height:40px;width:100%}.precios td{vertical-align:middle}
 .hoy-fila .grow{flex:1;min-width:0;text-decoration:none}.hoy-fila .ttl{display:block;font-weight:700}.hoy-fila small{display:block;color:var(--tinta-suave)}
@@ -367,6 +371,8 @@ dialog .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .ren{display:grid;grid-template-columns:1fr 150px auto;gap:10px;align-items:start;margin-top:12px}
 .ren textarea{min-height:64px}
+/* Presupuesto: materiales, nota y condiciones con campos 2/5 más altos (solo el cuadro, la letra igual) */
+textarea[data-mk="d"]{min-height:42px}textarea[data-cbib]{min-height:120px}textarea[data-p="nota"]{min-height:140px}
 .pres-items .ren{grid-template-columns:1fr 225px auto;gap:15px;margin-top:18px}.pres-items textarea{min-height:150px}.pres-items .monto input{padding:1.1em .8em}
 .md-vivo{position:relative;background:#e7e8e2;border-radius:var(--r-campo);box-shadow:var(--sombra-campo)}
 .md-vivo:focus-within{background:#fff;box-shadow:var(--sombra-campo),inset 0 0 0 2px var(--naranja)}
@@ -806,6 +812,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 <symbol id="i-lapiz" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
 <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-bita" viewBox="0 0 24 24"><path d="M6 3h11a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V5a2 2 0 0 1 1-2z"/><path d="M5 18a2 2 0 0 1 2-2h12M9 7h6M9 11h4"/></symbol>
 <symbol id="i-msg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
 <symbol id="i-desc" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol><symbol id="i-impr" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7z"/></symbol>
@@ -823,6 +830,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
       <a class="nav" href="#presupuestos" data-r="presupuestos" title="Presupuestos"><svg class="ic" aria-hidden="true"><use href="#i-pres"/></svg><span class="t">Presupuestos</span><span class="cuenta" id="c-pres"></span></a>
 <a class="nav" href="#trabajos" data-r="trabajos" title="Trabajos"><svg class="ic" aria-hidden="true"><use href="#i-trab"/></svg><span class="t">Trabajos</span><span class="cuenta" id="c-trab"></span></a>
 <a class="nav" href="#calendario" data-r="calendario" title="Agenda"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span class="t">Agenda</span></a>
+<a class="nav" href="#bitacora" data-r="bitacora" title="Bitácora"><svg class="ic" aria-hidden="true"><use href="#i-bita"/></svg><span class="t">Bitácora</span></a>
     <button class="nav bmas" id="b-mas" type="button" aria-expanded="false" aria-controls="mas" title="Más"><svg class="ic" aria-hidden="true"><use href="#i-mas"/></svg><span class="t">Más</span><span class="cuenta" id="c-mas"></span></button>
     <div class="mas" id="mas">
       <a class="nav" href="#cobros" data-r="cobros" title="Cobros"><svg class="ic" aria-hidden="true"><use href="#i-cobro"/></svg><span class="t">Cobros</span><span class="cuenta" id="c-cobros"></span></a>
@@ -849,7 +857,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
     <section class="cfg-s"><h4>Textos</h4><label style="display:flex;gap:8px;align-items:center"><input style="width:auto" type="checkbox" id="cf-may"> Poner mayúscula al empezar cada oración</label></section>
     <section class="cfg-s"><h4>Mi usuario</h4><div class="grid"><div><label for="cf-nombre">Nombre</label><input id="cf-nombre" autocomplete="name"></div><div><label for="cf-mail">Correo</label><input id="cf-mail" readonly></div></div></section>
     <section class="cfg-s" id="cf-usu-s"><h4>Usuarios con acceso</h4><ul class="lista" id="cf-usu"></ul>
-      <div class="cfg-add"><label class="sr" for="cf-nuevo">Correo nuevo</label><input id="cf-nuevo" type="email" placeholder="correo@gmail.com" autocomplete="off"><button type="button" class="btn pri" id="cf-agregar">Agregar</button></div>
+      <div class="cfg-add"><label class="sr" for="cf-nuevo">Correo nuevo</label><input id="cf-nuevo" type="email" autocomplete="off"><button type="button" class="btn pri" id="cf-agregar">Agregar</button></div>
       <p class="cfg-nota">Si la app de Google sigue en modo prueba, sumá también el correo como usuario de prueba en Google Cloud.</p></section>
     <section class="cfg-s"><h4>Presupuestos</h4><div class="grid"><div><label for="cf-comb">Combustible y traslado ($)</label><input id="cf-comb" inputmode="numeric" data-dinero></div></div>
       <div class="cfg-bt"><button type="button" id="b-num"><svg class="ic" aria-hidden="true"><use href="#i-pres"/></svg>Numeración de presupuestos</button></div></section>
@@ -868,7 +876,7 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
       <div class="barra-ctx" id="barra-ctx" hidden></div>
       <div class="busca">
         <svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg>
-        <input type="search" id="q-global" placeholder="Buscar" aria-label="Buscar" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="q-res">
+        <input type="search" id="q-global" aria-label="Buscar" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="q-res">
         <button class="busca-mic" id="b-voz" type="button" title="Hablar" aria-label="Hablar" hidden><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
         <div class="q-res" id="q-res" role="listbox" hidden></div>
       </div>
@@ -1102,7 +1110,7 @@ function pedir(titulo,campos,ok,okTxt){document.getElementById("g-x").hidden=tru
     const id="g_"+c.k;let inp;
     if(c.t==="select")inp=`<select id="${id}">${opts(c.o,c.v)}</select>`;
     else if(c.t==="area")inp=`<textarea id="${id}">${esc(c.v||"")}</textarea>`;
-    else inp=`<input id="${id}" type="${c.t||"text"}" value="${esc(c.v==null?"":c.v)}"${c.ph?` placeholder="${esc(c.ph)}"`:""}${(!c.t||c.t==="text")&&/\$|Precio|Monto|Importe|Saldo|Valor|Costo/i.test(c.l||"")?" data-dinero":""}>`;
+    else inp=`<input id="${id}" type="${c.t||"text"}" value="${esc(c.v==null?"":c.v)}"${(!c.t||c.t==="text")&&/\$|Precio|Monto|Importe|Saldo|Valor|Costo/i.test(c.l||"")?" data-dinero":""}>`;
     return `<div class="${c.w?"ancho":""}"><label for="${id}">${c.l}</label>${inp}</div>`}).join("");
   document.getElementById("g-ok").onclick=()=>{const r={};campos.forEach(c=>r[c.k]=document.getElementById("g_"+c.k).value);d.close();ok(r)};
   d.showModal();const f=d.querySelector("input,select,textarea");f&&f.focus()}
@@ -1203,7 +1211,7 @@ function render(){
   set("c-clientes",D.clientes.length);set("c-colab",D.colabs.length);set("c-diag",D.diag.length);set("c-trab",D.trab.filter(t=>t.estado==="agendado").length);
   set("c-pres",D.pres.filter(p=>["borrador","enviado"].includes(p.estado)).length);set("c-cobros",venc||D.cobros.filter(pendiente).length,venc);cuentaMas();
   V.classList.toggle("tablero", q.r === "tablero");if(window.barraSup)barraSup(q.r);
-  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();ajustarHdr();
+  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,bitacora:vBitacora,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();ajustarHdr();
   if(!["calendario"].includes(q.r))window.scrollTo(0,0);
 }
 const vacioInicial=()=>`<div class="vacio"><p><b>Todavía no cargaste nada.</b></p><button class="btn pri" data-a="nuevo">Cargar primer cliente</button> <button class="btn claro" data-a="ejemplo">Ver con datos de ejemplo</button></div>`;
@@ -1306,7 +1314,7 @@ function vClientes(){
   if(VCLI.v==="etapa"){vEtapas();return}
   document.body.classList.add("con-filtros");
   V.innerHTML=`<div class="cab"><div><h1>Clientes</h1></div><div class="tools" style="margin:0">${segCli()}<button class="btn pri" data-a="nuevo">+ Nuevo cliente</button></div></div>
-  <div class="tools no-print ctx-filtros"><div class="busca"><svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="q" placeholder="Buscar" aria-label="Buscar"></div><select id="fe" aria-label="Filtrar"><option value="">Todos</option>${ETAPAS.map(e=>`<option value="${e.id}">${e.n}</option>`).join("")}<option value="_saldo">Con saldo pendiente</option><option value="_mant">Mantenimiento vencido</option>${D.colabs.map(k=>`<option value="k:${k.id}">Vino por ${esc(k.nombre)}</option>`).join("")}</select></div>
+  <div class="tools no-print ctx-filtros"><div class="busca"><svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="q" aria-label="Buscar"></div><select id="fe" aria-label="Filtrar"><option value="">Todos</option>${ETAPAS.map(e=>`<option value="${e.id}">${e.n}</option>`).join("")}<option value="_saldo">Con saldo pendiente</option><option value="_mant">Mantenimiento vencido</option>${D.colabs.map(k=>`<option value="k:${k.id}">Vino por ${esc(k.nombre)}</option>`).join("")}</select></div>
   <div id="lc-w"></div>`;
   const pintar=()=>{
     const q=document.getElementById("q").value.toLowerCase(),fe=document.getElementById("fe").value,h=hoy();
@@ -1344,7 +1352,7 @@ function vCliente(id){
    <div><label for="cd-colab">Vino por</label><select id="cd-colab" data-cd="colab"><option value="">— Ninguno —</option>${D.colabs.map(x=>`<option value="${x.id}"${x.id===c.colab?" selected":""}>${esc(x.nombre)}</option>`).join("")}</select></div>
    <div style="grid-column:1/-1"><label for="cd-notas">Notas</label><textarea id="cd-notas" data-cd="notas">${esc(c.notas||"")}</textarea></div></div></section><button class="btn peligro chico" data-a="borrar" data-id="${c.id}" style="justify-self:start">Borrar cliente</button></div>
   <div class="pila" data-tp="seguim"${CTAB.t==="seguim"?"":" hidden"}><section class="card barra"><h2>Seguimiento</h2><div class="grid" style="margin-top:12px"><div><label for="x-etapa">Etapa</label><select id="x-etapa">${opts(ETAPAS,c.etapa,1)}</select></div></div></section><section class="card barra"><div class="tools" style="justify-content:space-between;margin-bottom:8px"><h2>Actividades</h2><button class="btn chico pri" data-a="act-nueva" data-id="${c.id}">+ Actividad</button></div>${listaActs(c)}</section><section class="card barra"><h2>Mensajes</h2><div class="bloque-msg" style="margin-top:12px"><div><label for="m-pl">Mensaje listo</label><select id="m-pl">${PLANTILLAS.map((p,i)=>`<option value="${i}">${p[0]}</option>`).join("")}</select></div><div><label class="sr" for="m-tx">Texto</label><textarea id="m-tx"></textarea></div> <div class="tools" style="margin:0"><a class="btn wsp" id="m-wa" href="#" target="_blank" rel="noopener">Abrir en WhatsApp</a><button class="btn claro" id="m-cp" type="button">Copiar</button></div></div></section></div>
-  <div class="pila" data-tp="hist"${CTAB.t==="hist"?"":" hidden"}><section class="card barra"><h2>Historial</h2><div style="display:flex;gap:8px;margin:12px 0"><label class="sr" for="x-nota">Nueva nota</label><input id="x-nota" placeholder="Nota"><button class="btn chico" id="x-add" type="button">Anotar</button></div>${acts(c).length?`<h3 style="margin:14px 0 8px">Planificado</h3>${listaActs(c)}<h3 style="margin:18px 0 10px">Hecho</h3>`:""}<ul class="linea">${(c.hist||[]).map(x=>`<li class="${claseHist(x.t)}"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><span class="grow md-in">${md(x.t)}</span></li>`).join("")||'<li class="vacio">Sin movimientos.</li>'}</ul></section></div>`;
+  <div class="pila" data-tp="hist"${CTAB.t==="hist"?"":" hidden"}><section class="card barra"><h2>Historial</h2><div style="display:flex;gap:8px;margin:12px 0"><label class="sr" for="x-nota">Nueva nota</label><input id="x-nota"><button class="btn chico" id="x-add" type="button">Anotar</button></div>${acts(c).length?`<h3 style="margin:14px 0 8px">Planificado</h3>${listaActs(c)}<h3 style="margin:18px 0 10px">Hecho</h3>`:""}<ul class="linea">${(c.hist||[]).map(x=>`<li class="${claseHist(x.t)}"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><span class="grow md-in">${md(x.t)}</span></li>`).join("")||'<li class="vacio">Sin movimientos.</li>'}</ul></section></div>`;
   V.querySelectorAll("[data-ctab]").forEach(b=>b.onclick=()=>{CTAB.t=b.dataset.ctab;V.querySelectorAll("[data-ctab]").forEach(x=>x.classList.toggle("on",x===b));V.querySelectorAll("[data-tp]").forEach(x=>x.hidden=x.dataset.tp!==CTAB.t)});
   V.querySelector("#x-etapa").onchange=e=>mover(c.id,e.target.value);
   V.querySelectorAll("[data-cd]").forEach(i=>i.onchange=()=>{const k=i.dataset.cd;c[k]=i.value.trim();guardar();if(["nombre","empresa","tel","rubro","zona"].includes(k))render()});
@@ -1382,7 +1390,7 @@ function mdBar(ta){if(ta._md)return;ta._md=1;const b=document.createElement("div
     if(x[3]){const sel=v.slice(a,z)||x[1].toLowerCase();ta.value=v.slice(0,a)+x[2]+sel+x[3]+v.slice(z);ta.setSelectionRange(a+x[2].length,a+x[2].length+sel.length)}
     else{const ini=v.lastIndexOf("\n",a-1)+1;ta.value=v.slice(0,ini)+x[2]+v.slice(ini);ta.setSelectionRange(a+x[2].length,z+x[2].length)}
     ta.focus();ta.dispatchEvent(new Event("input",{bubbles:true}));ta.dispatchEvent(new Event("change",{bubbles:true}))}}
-new MutationObserver(()=>{if(REC)document.querySelectorAll("dialog textarea,#x-nota,.ot-det textarea,.cli-det textarea,.ot-notas textarea,.busca input:not(#q-global)").forEach(micEn);document.querySelectorAll("dialog textarea,.ot-det textarea,.cli-det textarea,.ot-notas textarea,textarea[data-bar]").forEach(mdBar)}).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>{if(REC)document.querySelectorAll("dialog textarea,#x-nota,.ot-det textarea,.cli-det textarea,.ot-notas textarea,#bt-t,.busca input:not(#q-global)").forEach(micEn);document.querySelectorAll("dialog textarea,.ot-det textarea,.cli-det textarea,.ot-notas textarea,textarea[data-bar]").forEach(mdBar)}).observe(document.body,{childList:true,subtree:true});
 
 /* ---- Hablarle al sistema: "cliente nuevo Juan Pérez", "gasté 20 mil de nafta", "cobré 50 mil de Frigorífico" ---- */
 const sinAc=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -1574,9 +1582,30 @@ function vFeedback(){
   const F=(D.feedback||[]).slice().sort((a,b)=>a.f<b.f?1:-1);
   V.innerHTML=`<div class="cab"><div><h1>Feedback</h1></div></div>
   <section class="card barra"><h2>Nuevo feedback</h2>
-   <div class="ancho" style="margin-top:12px"><label for="fb-t">Feedback sobre el sistema</label><textarea id="fb-t" data-md placeholder="Qué anda bien, qué cambiar, qué falta"></textarea></div>
+   <div class="ancho" style="margin-top:12px"><label for="fb-t">Feedback sobre el sistema</label><textarea id="fb-t" data-md></textarea></div>
    <div class="tools" style="margin-top:12px"><button class="btn pri" data-a="fb-add">+ Agregar feedback</button></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Historial <span class="etq">${F.length}</span></h2>${F.map(x=>`<div class="fila"><div class="grow"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><div class="md-in">${md(x.t)}</div></div><button class="btn chico peligro" data-a="fb-del" data-id="${x.id}">Quitar</button></div>`).join("")||'<p class="vacio">Sin feedback todavía.</p>'}</section>`;
+}
+/* Bitácora diaria: qué se hizo cada día, con cliente opcional. Una sola página con scroll, separada por fechas */
+const cliPorNom=v=>{v=String(v||"").trim().toLowerCase();return v?D.clientes.find(c=>nom(c).toLowerCase()===v||(c.nombre||"").toLowerCase()===v||(c.empresa||"").toLowerCase()===v):null};
+const bitaDia=f=>{const [y,m,d]=f.split("-").map(Number),h=hoy(),dt=new Date(y,m-1,d);let t=dt.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"}).replace(",","");if(y!==new Date().getFullYear())t+=" "+y;t=t.charAt(0).toUpperCase()+t.slice(1);
+  return f===h?"Hoy <small>"+t+"</small>":f===addDias(h,-1)?"Ayer <small>"+t+"</small>":t};
+function vBitacora(){
+  const B=(D.bita||[]).slice().sort((a,b)=>a.f===b.f?(a.ts||0)-(b.ts||0):(a.f<b.f?1:-1)),por=[];
+  B.forEach(x=>{const g=por[por.length-1];if(g&&g.f===x.f)g.it.push(x);else por.push({f:x.f,it:[x]})});
+  const cls=D.clientes.slice().sort((x,y)=>nom(x).localeCompare(nom(y)));
+  const fila=x=>{const c=x.cid&&cli(x.cid),q=[c?`<a href="#cliente/${c.id}">${esc(nom(c))}</a>`:x.cn?esc(x.cn):"",x.u?esc(x.u):""].filter(Boolean).join(" · ");
+    return `<div class="bita-it"><div class="grow">${q?`<small>${q}</small>`:""}<div class="md-in">${md(x.t)}</div></div><div class="bt-b"><button class="btn chico claro ico" data-a="bita-ed" data-id="${x.id}" title="Editar" aria-label="Editar"><svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg></button><button class="btn chico claro ico" data-a="bita-del" data-id="${x.id}" title="Quitar" aria-label="Quitar">×</button></div></div>`};
+  V.innerHTML=`<div class="cab"><div><h1>Bitácora</h1></div></div>
+  <section class="card barra"><h2>Qué hicimos</h2>
+   <div class="grid" style="margin-top:12px"><div><label for="bt-f">Fecha</label><input id="bt-f" type="date" value="${hoy()}"></div><div><label for="bt-c">Cliente (opcional)</label><input id="bt-c" list="bt-cl" autocomplete="off"><datalist id="bt-cl">${cls.map(c=>`<option value="${esc(nom(c))}">`).join("")}</datalist></div></div>
+   <label class="bt-nw" id="bt-nw" hidden><input type="checkbox" id="bt-nc" style="width:auto"> <span></span></label>
+   <div class="ancho" style="margin-top:12px"><label for="bt-t">Qué se hizo</label><textarea id="bt-t" data-bar></textarea></div>
+   <div class="tools" style="margin-top:12px"><button class="btn pri" data-a="bita-add">+ Añadir</button></div></section>
+  <div class="bita">${por.map(g=>`<section><h2 class="bita-f">${bitaDia(g.f)}</h2><div class="card barra">${g.it.map(fila).join("")}</div></section>`).join("")||'<p class="vacio">Todavía no hay nada anotado.</p>'}</div>`;
+  const ci=V.querySelector("#bt-c"),nw=V.querySelector("#bt-nw");
+  ci.oninput=()=>{const v=ci.value.trim(),hay=!v||cliPorNom(v);nw.hidden=!!hay;if(!hay)nw.querySelector("span").textContent="Agregar «"+v+"» como cliente nuevo"};
+  V.querySelector("#bt-t").onkeydown=e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();acc("bita-add")}};
 }
 function vColabs(){
   V.innerHTML=`<div class="cab"><div><h1>Colaboradores</h1></div><button class="btn pri" data-a="nuevocolab">+ Nuevo colaborador</button></div>
@@ -1597,10 +1626,10 @@ function vDiagnosticos(){
 function vDiag(id){
   const d=dia(id);if(!d){location.hash="#diagnosticos";return}
   const c=cli(d.cid);d.items=d.items||{};d.med=d.med||{};const m=d.med;
-  const g=CHECK.map((gr,gi)=>`<div class="grupo"><div class="grupo-cab"><h3>${gr.g}</h3><button type="button" class="btn chico claro" data-todo="${gi}">Marcar todo Bien</button></div>${gr.it.map(it=>{const v=d.items[it[0]]||{e:"",o:"",a:""};return `<div class="item" data-it="${it[0]}"><div class="q"><b>${it[1]}</b><small>${it[2]}</small></div><div class="sem" role="radiogroup" aria-label="${esc(it[1])}">${ESTADOS.map(s=>`<label><input type="radio" name="e_${it[0]}" value="${s.id}"${v.e===s.id?" checked":""}><span class="${s.id}">${s.n}</span></label>`).join("")}</div><div class="nota"${v.e==="mes"||v.e==="urg"||v.o||v.a?"":" hidden"}><input data-o="${it[0]}" placeholder="Qué encontré" value="${esc(v.o)}" aria-label="Qué encontré en ${esc(it[1])}"><input data-a="${it[0]}" placeholder="Qué hay que hacer" value="${esc(v.a)}" aria-label="Acción para ${esc(it[1])}"><div class="fto-w">${v.f?`<img class="fto" src="${v.f}" alt="Foto"><button type="button" class="btn chico peligro" data-fq="${it[0]}">Quitar foto</button>`:`<label class="btn chico claro fto-b">Sacar foto<input type="file" accept="image/*" capture="environment" data-f="${it[0]}" class="sr"></label>`}</div></div></div>`}).join("")}</div>`).join("");
+  const g=CHECK.map((gr,gi)=>`<div class="grupo"><div class="grupo-cab"><h3>${gr.g}</h3><button type="button" class="btn chico claro" data-todo="${gi}">Marcar todo Bien</button></div>${gr.it.map(it=>{const v=d.items[it[0]]||{e:"",o:"",a:""};return `<div class="item" data-it="${it[0]}"><div class="q"><b>${it[1]}</b><small>${it[2]}</small></div><div class="sem" role="radiogroup" aria-label="${esc(it[1])}">${ESTADOS.map(s=>`<label><input type="radio" name="e_${it[0]}" value="${s.id}"${v.e===s.id?" checked":""}><span class="${s.id}">${s.n}</span></label>`).join("")}</div><div class="nota"${v.e==="mes"||v.e==="urg"||v.o||v.a?"":" hidden"}><input data-o="${it[0]}" value="${esc(v.o)}" aria-label="Qué encontré en ${esc(it[1])}"><input data-a="${it[0]}" value="${esc(v.a)}" aria-label="Acción para ${esc(it[1])}"><div class="fto-w">${v.f?`<img class="fto" src="${v.f}" alt="Foto"><button type="button" class="btn chico peligro" data-fq="${it[0]}">Quitar foto</button>`:`<label class="btn chico claro fto-b">Sacar foto<input type="file" accept="image/*" capture="environment" data-f="${it[0]}" class="sr"></label>`}</div></div></div>`}).join("")}</div>`).join("");
   const mf=(k,l,u)=>`<div><label for="m-${k}">${l}${u?" ("+u+")":""}</label><input id="m-${k}" data-m="${k}" inputmode="decimal" value="${esc(m[k]||"")}"></div>`;
   V.innerHTML=`<div class="cab"><div><p><a href="#cliente/${d.cid}"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>${esc(nomCorto(c))}</a></p><h1>Diagnóstico</h1></div><div class="tools" style="margin:0"><a class="btn pri" href="#informe/${d.id}">Ver informe</a><button class="btn claro" data-a="pres-desde-diag" data-id="${d.id}">Crear presupuesto</button><button class="btn peligro chico" data-a="borrardiag" data-id="${d.id}">Borrar</button></div></div>
-  <section class="card barra"><div class="grid"><div><label for="d-sitio">Instalación / tablero</label><input id="d-sitio" value="${esc(d.sitio||"")}" placeholder="Tablero general, sala de máquinas…"></div><div><label for="d-fecha">Fecha</label><input id="d-fecha" type="date" value="${esc(d.fecha)}"></div><div><label for="d-carga">Carga al momento</label><input id="d-carga" value="${esc(d.carga||"")}" placeholder="Ej. 60 % o 180 A"></div><div><label for="d-resp">Quién acompañó</label><input id="d-resp" value="${esc(d.resp||"")}"></div></div></section>
+  <section class="card barra"><div class="grid"><div><label for="d-sitio">Instalación / tablero</label><input id="d-sitio" value="${esc(d.sitio||"")}"></div><div><label for="d-fecha">Fecha</label><input id="d-fecha" type="date" value="${esc(d.fecha)}"></div><div><label for="d-carga">Carga al momento</label><input id="d-carga" value="${esc(d.carga||"")}"></div><div><label for="d-resp">Quién acompañó</label><input id="d-resp" value="${esc(d.resp||"")}"></div></div></section>
   <div class="resumen-estado" style="margin:16px 0" id="resumen"></div>${g}
   <section class="card barra" style="margin-top:18px"><h2>Mediciones</h2><div class="med" style="margin-top:12px">${mf("ir","Corriente R","A")}${mf("is","Corriente S","A")}${mf("it","Corriente T","A")}${mf("tmax","Punto más caliente","°C")}${mf("tamb","Temperatura ambiente","°C")}${mf("pat","Puesta a tierra","Ω")}${mf("aisl","Aislación","MΩ")}</div><p class="calc" id="calc"></p></section>
   <section class="card barra" style="margin-top:18px"><label for="d-concl">Conclusión para el cliente</label><textarea id="d-concl">${esc(d.concl||"")}</textarea></section>
@@ -1660,16 +1689,20 @@ function nuevoPres(cid,diagId,tid){
   if(tr){p.tid=tr.id;tr.pid=p.id;if(!p.titulo)p.titulo=tr.tipo+(tr.sitio?" – "+tr.sitio:"");p.cid=tr.cid;if(!d)p.items=[{d:[tr.tipo,tr.desc].filter(Boolean).join(": "),m:tr.monto||""}]}
   const comb=D.cfg.comb==null?20000:num(D.cfg.comb);if(comb)p.items.push({d:"Combustible y traslado",m:String(comb)});
   D.cfg.prox++;D.pres.push(p);guardar();location.hash="#pres/"+p.id}
+/* Vuelve a dibujar la pantalla sin saltar arriba de todo; opcionalmente deja el cursor en un campo */
+function renderAqui(){const y=window.scrollY;render();window.scrollTo(0,y)}
 function vPresS(p){
+  /* Materiales cargados con Enter dentro de un mismo cuadro: se separan en un material por renglón (el importe queda en el primero) */
+  if((p.materiales||[]).some(r=>/\n/.test(r.d||""))){p.materiales=p.materiales.flatMap(r=>{const ls=String(r.d||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);return ls.length>1?ls.map((d,k)=>({d,m:k?"":r.m})):[r]});guardar()}
   const c=cli(p.cid),f=n=>fmt(n),bib=bibCond(),sel=condSelDe(p);
   V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn peligro chico" data-a="borrarpres" data-id="${p.id}">Borrar</button></div></div>
   <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
-  <section class="card barra pres-items" style="margin-top:18px"><h2>Presupuesto</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" data-md>${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" data-dinero placeholder="$" value="${esc(r.m)}"></div>${p.items.length>1?`<button class="btn chico peligro" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón">Quitar</button>`:""}</div>`).join("")}</div>
+  <section class="card barra pres-items" style="margin-top:18px"><h2>Presupuesto</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" data-md>${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div>${p.items.length>1?`<button class="btn chico peligro" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón">Quitar</button>`:""}</div>`).join("")}</div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addren" data-id="${p.id}">+ Agregar renglón</button><button class="btn chico claro" data-a="pres-delista" data-id="${p.id}">+ Desde la lista de precios</button></div>
    <div class="tot-ed"><div><label for="p-desc">Descuento (%)</label><input id="p-desc" data-p="desc" inputmode="numeric" data-pct value="${esc(p.desc||0)}"></div><div class="res"><span>Subtotal <b id="t-sub"></b></span><span id="t-dd">Descuento <b id="t-desc"></b></span><span class="gr">Total <b id="t-tot"></b></span></div></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Materiales</h2><p class="calc">Salen en su propio apartado del presupuesto. El importe es opcional.</p>
-   <div class="rens">${(p.materiales||[]).map((r,i)=>`<div class="ren"><textarea data-mi="${i}" data-mk="d" aria-label="Material">${esc(r.d)}</textarea><div class="monto"><label class="sr" for="mm${i}">Importe</label><input id="mm${i}" data-mi="${i}" data-mk="m" inputmode="numeric" data-dinero placeholder="$" value="${esc(r.m)}"></div><button class="btn chico peligro" data-a="pres-delmat" data-id="${p.id}" data-i="${i}" aria-label="Quitar material">Quitar</button></div>`).join("")}</div>
-   <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addmat" data-id="${p.id}">+ Agregar material</button></div>
+   <div class="rens">${(p.materiales||[]).map((r,i)=>`<div class="ren"><textarea data-mi="${i}" data-mk="d" aria-label="Material">${esc(r.d)}</textarea><div class="monto"><label class="sr" for="mm${i}">Importe</label><input id="mm${i}" data-mi="${i}" data-mk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div><button class="btn chico peligro" data-a="pres-delmat" data-id="${p.id}" data-i="${i}" aria-label="Quitar material">Quitar</button></div>`).join("")}</div>
+   <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addmat" data-id="${p.id}">+ Agregar material (Enter)</button></div>
    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input style="width:auto" type="checkbox" data-matsuma="1"${p.matSuma?" checked":""}> Sumar los importes de materiales al total</label></section>
   <section class="card barra" style="margin-top:18px"><h2>Nota</h2><textarea data-p="nota" data-bar aria-label="Nota">${esc(p.nota||"")}</textarea></section>
   <section class="card barra" style="margin-top:18px"><h2>Condiciones</h2><p class="calc">Tildá las que van en este presupuesto. Las que agregás quedan disponibles para todos los presupuestos.</p>
@@ -1688,6 +1721,15 @@ function vPresS(p){
     else if(t.dataset.cbib!==undefined){const e=bibCond().find(x=>x.id===t.dataset.cbib);if(e)e.t=t.value}
     else if(t.dataset.f)fic(p)[t.dataset.f]=t.value;
     p.total=totPres(p);guardar();tot()};
+  /* Materiales como etiquetas: Enter crea un material nuevo abajo; pegar una lista la reparte en varios; Borrar en uno vacío lo quita */
+  const irMat=(i,fin)=>{const t=V.querySelector(`textarea[data-mi="${i}"][data-mk="d"]`);if(!t)return;t.focus({preventScroll:true});const n=fin?t.value.length:0;t.setSelectionRange(n,n);t.scrollIntoView({block:"nearest"})};
+  V.onkeydown=e=>{const t=e.target;if(ruta().r!=="pres"||t.dataset.mk!=="d"||t.dataset.mi===undefined||e.isComposing)return;const i=+t.dataset.mi,v=t.value,a=t.selectionStart,z=t.selectionEnd;
+    if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();p.materiales[i].d=v.slice(0,a).trimEnd();p.materiales.splice(i+1,0,{d:v.slice(z).trimStart(),m:""});guardar();renderAqui();irMat(i+1,false)}
+    else if(e.key==="Backspace"&&a===0&&z===0&&!v&&p.materiales.length>1&&!num(p.materiales[i].m)&&i>0){e.preventDefault();p.materiales.splice(i,1);p.total=totPres(p);guardar();renderAqui();irMat(i-1,true)}};
+  V.onpaste=e=>{const t=e.target;if(ruta().r!=="pres"||t.dataset.mk!=="d"||t.dataset.mi===undefined)return;const x=(e.clipboardData||window.clipboardData).getData("text");
+    const ls=x.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);if(ls.length<2)return;e.preventDefault();
+    const i=+t.dataset.mi,v=t.value,a=t.selectionStart,z=t.selectionEnd,antes=v.slice(0,a),despues=v.slice(z);
+    ls[0]=antes+ls[0];ls[ls.length-1]+=despues;p.materiales[i].d=ls[0];p.materiales.splice(i+1,0,...ls.slice(1).map(d=>({d,m:""})));guardar();renderAqui();irMat(i+ls.length-1,true)};
   V.onchange=e=>{const t=e.target;if(t.dataset.p==="num"){const n=parseInt(String(p.num).replace(/\D/g,""),10);if(n>0){D.cfg.prox=n+1;guardar()}}
     if(["cid","estado","num"].includes(t.dataset.p))render();
     else if(t.dataset.matsuma){p.matSuma=t.checked;guardar();render()}
@@ -1700,8 +1742,8 @@ function vPres(id){
   V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn peligro chico" data-a="borrarpres" data-id="${p.id}">Borrar</button></div></div>
   <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-val">Validez (días)</label><input id="p-val" data-p="validez" inputmode="numeric" value="${esc(p.validez)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div>
    <div class="ancho"><label for="p-tit">Título del trabajo</label><input id="p-tit" data-p="titulo" value="${esc(p.titulo)}"></div><div class="ancho"><label for="p-obj">El objetivo</label><textarea id="p-obj" data-p="objetivo">${esc(p.objetivo)}</textarea></div></div></section>
-  <section class="card barra" style="margin-top:18px"><h2>Qué incluye</h2><textarea data-p="incluye" aria-label="Qué incluye" placeholder="Un punto por línea" style="min-height:130px">${esc(p.incluye)}</textarea></section>
-  <section class="card barra" style="margin-top:18px"><h2>Etapas</h2><textarea data-p="etapas" aria-label="Etapas" placeholder="Título | descripción (una etapa por línea)">${esc(p.etapas)}</textarea></section>
+  <section class="card barra" style="margin-top:18px"><h2>Qué incluye</h2><textarea data-p="incluye" aria-label="Qué incluye" style="min-height:130px">${esc(p.incluye)}</textarea></section>
+  <section class="card barra" style="margin-top:18px"><h2>Etapas</h2><textarea data-p="etapas" aria-label="Etapas">${esc(p.etapas)}</textarea></section>
   <section class="card barra" style="margin-top:18px"><h2>Inversión</h2><div class="grid" style="margin-top:12px">${p.opciones.map((o,i)=>`<div class="card" style="padding:12px"><div><label for="o${i}n">Opción ${i+1}</label><input id="o${i}n" data-o="${i}" data-k="nombre" value="${esc(o.nombre)}"></div><div style="margin-top:8px"><label for="o${i}d">Descripción</label><textarea id="o${i}d" data-o="${i}" data-k="desc" style="min-height:60px">${esc(o.desc)}</textarea></div><div style="margin-top:8px"><label for="o${i}p">Precio ($)</label><input id="o${i}p" data-o="${i}" data-k="precio" inputmode="numeric" value="${esc(o.precio)}"></div><label style="display:flex;gap:8px;align-items:center;margin-top:10px"><input style="width:auto" type="radio" name="reco" data-reco="${i}"${o.reco?" checked":""}> Recomendada</label><small class="calc" id="ef${i}"></small></div>`).join("")}</div>
    <div class="grid" style="margin-top:12px"><div><label for="p-ef">Descuento por pago en efectivo o transferencia (%)</label><input id="p-ef" data-p="descEf" inputmode="numeric" data-pct value="${esc(p.descEf)}"></div></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Condiciones</h2><div class="grid" style="margin-top:12px"><div class="ancho"><label for="p-pago">Forma de pago</label><input id="p-pago" data-p="pago" value="${esc(p.pago)}"></div><div class="ancho"><label for="p-plazo">Plazo de ejecución</label><input id="p-plazo" data-p="plazo" value="${esc(p.plazo)}"></div><div class="ancho"><label for="p-no">No incluye</label><textarea id="p-no" data-p="noIncluye">${esc(p.noIncluye)}</textarea></div></div></section>
@@ -1867,7 +1909,7 @@ function vOT(id){const t=D.trab.find(x=>x.id===id);if(!t){location.hash="#trabaj
    <div class="arch-cab"><h3>Archivos${ar.length?` <span class="etq">${ar.length}</span>`:""}</h3></div>
    <div class="arch-g">${ar.map(tile).join("")}<label class="arch add" title="Agregar fotos o videos"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><input type="file" accept="image/*,video/*" multiple data-ota="${t.id}" class="sr"></label></div>
 </section>
-  <section class="sec" style="margin-top:18px"><div class="sec-cab"><h2>Notas</h2><span class="calc">Se guardan solas</span></div><div class="ot-notas"><textarea id="o-nota" placeholder="Escribí acá. Lo que escribas se guarda solo.">${esc(t.notaGral||"")}</textarea></div>${(t.notas||[]).length?'<p class="calc" style="margin:14px 0 0">Anotaciones anteriores</p>':""}
+  <section class="sec" style="margin-top:18px"><div class="sec-cab"><h2>Notas</h2><span class="calc">Se guardan solas</span></div><div class="ot-notas"><textarea id="o-nota">${esc(t.notaGral||"")}</textarea></div>${(t.notas||[]).length?'<p class="calc" style="margin:14px 0 0">Anotaciones anteriores</p>':""}
    <ul class="lista" style="margin-top:10px">${(t.notas||[]).map(n=>`<li class="fila"><div class="grow"><small>${esc([n.u,fecha(n.f)+(n.h?" "+n.h:"")].filter(Boolean).join(" · "))}</small><div class="md-in">${md(n.t)}</div></div><button type="button" class="btn chico claro ico" data-a="ot-nota-borrar" data-id="${t.id}|${n.id}" title="Borrar nota" aria-label="Borrar nota">×</button></li>`).join("")}</ul></section>
   <div class="tools" style="margin-top:6px"><button class="btn chico peligro" data-a="borrartrab" data-id="${t.id}">Borrar O.T.</button></div>`;
   V.querySelectorAll("[data-ot]").forEach(i=>i.onchange=()=>{const k=i.dataset.ot;if(k==="fh"){const x=fyh(i.value);if(x.f)t.fecha=x.f;t.hora=x.h}else t[k]=k==="monto"?(num(i.value)||""):i.value;guardar();if(k==="cid"||k==="tipo")render()});
@@ -1924,7 +1966,7 @@ const fotosTrabViejo=t=>{const f=t.fotos||[];return (f.length?`<span class="foto
 /* Al anotar o terminar un trabajo sin presupuesto: cuándo se cobra */
 const CUANDO_COB=["Cobrar en una fecha","Ya está cobrado","Sin fecha: recordarme en una semana","Va con presupuesto"];
 function preguntarCobro(t){if(!t||t.pid||t.cobrado||D.cobros.some(c=>c.tid===t.id))return;const h=hoy();
-  pedir("¿Cuándo se cobra?",[{k:"c",l:"Cobro",t:"select",o:CUANDO_COB,v:CUANDO_COB[0],w:1},{k:"monto",l:"Monto ($)",v:t.monto||"",ph:"$"},{k:"f",l:"Fecha",t:"date",v:t.fecha&&t.fecha>h?t.fecha:h},{k:"medio",l:"Medio",t:"select",o:MEDIOS,v:"Transferencia"}],r=>{
+  pedir("¿Cuándo se cobra?",[{k:"c",l:"Cobro",t:"select",o:CUANDO_COB,v:CUANDO_COB[0],w:1},{k:"monto",l:"Monto ($)",v:t.monto||""},{k:"f",l:"Fecha",t:"date",v:t.fecha&&t.fecha>h?t.fecha:h},{k:"medio",l:"Medio",t:"select",o:MEDIOS,v:"Transferencia"}],r=>{
     const c=cli(t.cid);
     if(r.c===CUANDO_COB[3]){nuevoPres(t.cid,t.did||null,t.id);return}
     if(num(r.monto))t.monto=num(r.monto);
@@ -2009,7 +2051,7 @@ function vFin(){
     <section class="card barra" style="margin-top:18px"><h2>Resumen de ${y}</h2><div class="tabla-w" style="margin-top:10px;border:0"><table class="t"><thead><tr><th>Mes</th><th class="num">Ingresos</th><th class="num">Gastos</th><th class="num">Resultado</th></tr></thead><tbody>${anual.map(x=>`<tr><td>${mesTxt(x.m).split(" ")[0]}</td><td class="num">${fmt(x.i)}</td><td class="num">${fmt(x.g)}</td><td class="num">${signo(x.i-x.g)}</td></tr>`).join("")||'<tr><td colspan="4"><div class="vacio">Sin movimientos este año.</div></td></tr>'}${anual.length?`<tr><td><b>Total</b></td><td class="num"><b>${fmt(ti)}</b></td><td class="num"><b>${fmt(tg)}</b></td><td class="num">${signo(ti-tg)}</td></tr>`:""}</tbody></table></div></section>`;
   }else if(FIN.tab==="mov"){
     const q=FIN.q.toLowerCase(),l=r.ent.concat(r.sal.map(x=>x)).map(x=>Object.assign({tipo:r.ent.includes(x)?"in":"out"},x)).filter(x=>!q||((x.desc||"")+" "+(x.cat||"")+" "+nomCorto(cli(x.cid))).toLowerCase().includes(q)).sort((a,b)=>a.f<b.f?1:-1);
-    cuerpo=`<div class="tools"><div class="busca"><svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="f-q" placeholder="Buscar" aria-label="Buscar" value="${esc(FIN.q)}"></div><button class="btn pri" data-a="nuevogasto">+ Gasto</button><button class="btn claro" data-a="nuevoingreso">+ Ingreso</button></div>
+    cuerpo=`<div class="tools"><div class="busca"><svg class="ic" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="f-q" aria-label="Buscar" value="${esc(FIN.q)}"></div><button class="btn pri" data-a="nuevogasto">+ Gasto</button><button class="btn claro" data-a="nuevoingreso">+ Ingreso</button></div>
     <div class="tabla-w"><table class="t"><thead><tr><th>Fecha</th><th>Detalle</th><th>Categoría</th><th>Cliente</th><th class="num">Monto</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td>${fecha(x.f)}</td><td>${esc(x.desc||"")}</td><td>${esc(x.cat||"")}</td><td>${x.cid?`<a href="#cliente/${x.cid}">${esc(nomCorto(cli(x.cid)))}</a>`:"—"}</td><td class="num">${x.tipo==="in"?'<span class="pos">+':'<span class="neg">-'}${fmt(x.monto)}</span></td><td class="num">${x.auto?'<a class="btn chico claro" href="#cobros">Cobro</a>':`<button class="btn chico claro" data-a="editarmov" data-id="${x.id}"<svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button>`}</td></tr>`).join("")||'<tr><td colspan="6"><div class="vacio">Sin movimientos en este mes.</div></td></tr>'}</tbody></table></div>`;
   }else if(FIN.tab==="fijos"){
     cuerpo=`<div class="tools"><button class="btn pri" data-a="nuevofijo">+ Gasto fijo</button></div>
@@ -2037,7 +2079,7 @@ function pedirMov(tipo,x){
   if(x){const b=document.createElement("button");b.type="button";b.className="btn peligro chico";b.textContent="Borrar";b.style.marginRight="auto";b.onclick=()=>{if(confirm("¿Borrar este movimiento?")){D.movs=D.movs.filter(m=>m.id!==x.id);guardar();document.getElementById("dlg-gen").close();render()}};document.querySelector("#dlg-gen .acc").prepend(b)}
 }
 function pedirFijo(f){
-  pedir(f?"Editar gasto fijo":"Nuevo gasto fijo",[{k:"desc",l:"Detalle",v:f?f.desc:"",w:1,ph:"Monotributo, seguro, celular…"},{k:"cat",l:"Categoría",t:"select",o:CAT_GASTO,v:f?f.cat:""},{k:"monto",l:"Monto ($)",v:f?f.monto:""},{k:"dia",l:"Día de vencimiento",v:f?f.dia:"10"}],r=>{
+  pedir(f?"Editar gasto fijo":"Nuevo gasto fijo",[{k:"desc",l:"Detalle",v:f?f.desc:"",w:1},{k:"cat",l:"Categoría",t:"select",o:CAT_GASTO,v:f?f.cat:""},{k:"monto",l:"Monto ($)",v:f?f.monto:""},{k:"dia",l:"Día de vencimiento",v:f?f.dia:"10"}],r=>{
     if(!r.desc.trim()||!num(r.monto)){aviso("Falta el detalle o el monto");return}
     if(f)Object.assign(f,{desc:r.desc,cat:r.cat,monto:num(r.monto),dia:r.dia});else D.fijos.push({id:uid(),desc:r.desc,cat:r.cat,monto:num(r.monto),dia:r.dia});
     guardar();render()},"Guardar");
@@ -2126,6 +2168,16 @@ function acc(a,id){
     let n=0;D.precios.forEach(x=>{if(r.cu==="Todos"||x.src===GUIA.src){x.p=String(Math.round(num(x.p)*(1+pc/100)));n++}});guardar();render();aviso(n+" precios ajustados")},"Ajustar")}
   else if(a==="precio-borrar"){D.precios=D.precios.filter(x=>x.id!==id);guardar();render()}
   else if(a==="fb-add"){const t=document.getElementById("fb-t").value.trim();if(!t){aviso("Escribí el feedback");return}(D.feedback=D.feedback||[]).push({id:uid(),f:h,t,u:USR||""});guardar();render()}
+  else if(a==="bita-add"){const t=document.getElementById("bt-t").value.trim();if(!t){aviso("Escribí qué se hizo");return}
+    const f=document.getElementById("bt-f").value||h,cn=document.getElementById("bt-c").value.trim();let c=cliPorNom(cn);
+    if(cn&&!c&&document.getElementById("bt-nc").checked){c={id:uid(),nombre:cn,empresa:"",tel:"",mail:"",rubro:"Otro",origen:"",zona:"",cuit:"",colab:"",etapa:"nueva",prox:"",proxm:"",notas:"",hist:[]};log(c,"Cliente creado desde la bitácora");D.clientes.push(c)}
+    (D.bita=D.bita||[]).push({id:uid(),f,ts:Date.now(),t,cid:c?c.id:"",cn:c?"":cn,u:USR||""});guardar();render()}
+  else if(a==="bita-ed"){const x=(D.bita||[]).find(b=>b.id===id);if(!x)return;const c=x.cid&&cli(x.cid),sin="— Sin cliente —";
+    const ops=[sin].concat(x.cn&&!c?[x.cn]:[],D.clientes.slice().sort((p,q)=>nom(p).localeCompare(nom(q))).map(nom));
+    pedir("Editar bitácora",[{k:"f",l:"Fecha",t:"date",v:x.f},{k:"c",l:"Cliente",t:"select",o:ops,v:c?nom(c):x.cn||sin},{k:"t",l:"Qué se hizo",t:"area",w:1,v:x.t}],r=>{
+      if(!r.t.trim()){aviso("Escribí qué se hizo");return}const k=r.c===sin?null:D.clientes.find(y=>nom(y)===r.c);
+      x.f=r.f||x.f;x.t=r.t.trim();x.cid=k?k.id:"";x.cn=k||r.c===sin?"":r.c;guardar();render()},"Guardar")}
+  else if(a==="bita-del"){if(!confirm("¿Quitar esta entrada de la bitácora?"))return;D.bita=(D.bita||[]).filter(x=>x.id!==id);guardar();render()}
   else if(a==="fb-del"){if(!confirm("¿Quitar este feedback?"))return;D.feedback=(D.feedback||[]).filter(x=>x.id!==id);guardar();render()}
   else if(a==="pres-delista"){const p=pre(id);if(!D.precios.length){aviso("Primero cargá precios en Precios");return}
     const L=D.precios.slice().sort((x,y)=>x.n.localeCompare(y.n)),o=L.map(x=>x.n+" · "+fmt(num(x.p))+" / "+x.u);
@@ -2135,7 +2187,7 @@ function acc(a,id){
   else if(a==="ejemplo"){ejemplo();render()}
   else if(a==="borrar"){if(confirm("¿Borrar este cliente y todo lo que tiene (diagnósticos, presupuestos, cobros, trabajos)?")){["diag","pres","cobros","trab","tableros"].forEach(k=>D[k]=D[k].filter(x=>x.cid!==id));D.clientes=D.clientes.filter(c=>c.id!==id);guardar();location.hash="#clientes"}}
   else if(a==="nuevotab"){
-    pedir("Nuevo tablero",[{k:"nombre",l:"Nombre",w:1,ph:"Tablero general, sala de máquinas…"},{k:"cid",l:"Cliente",t:"select",o:[],v:id}],r=>{
+    pedir("Nuevo tablero",[{k:"nombre",l:"Nombre",w:1},{k:"cid",l:"Cliente",t:"select",o:[],v:id}],r=>{
       const t={id:uid(),cid:r.cid,nombre:r.nombre.trim()||"Tablero sin nombre",fecha:h,diagrama:null};D.tableros.push(t);guardar();location.hash="#tablero/"+t.id},"Crear y abrir");
     document.getElementById("g_cid").innerHTML='<option value="">— Sin cliente —</option>'+cliOpts(id)}
   else if(a==="borrartab"){if(confirm("¿Borrar este tablero?")){D.tableros=D.tableros.filter(x=>x.id!==id);guardar();location.hash="#tableros"}}
@@ -2148,14 +2200,14 @@ function acc(a,id){
   else if(a==="saldoini")pedir("Saldo inicial de caja",[{k:"v",l:"Monto ($)",v:D.cfg.saldoIni||0}],r=>{D.cfg.saldoIni=num(r.v);guardar();render()},"Guardar")
   else if(a==="nuevocolab"||a==="editarcolab"){
     const x=a==="editarcolab"?D.colabs.find(k=>k.id===id):null;
-    pedir(x?"Editar colaborador":"Nuevo colaborador",[{k:"nombre",l:"Nombre",v:x?x.nombre:""},{k:"empresa",l:"Empresa / estudio",v:x?x.empresa:""},{k:"rol",l:"Rol",v:x?x.rol:"",ph:"Arquitecta, administrador, proveedor…"},{k:"tel",l:"WhatsApp / teléfono",v:x?x.tel:""},{k:"mail",l:"Mail",v:x?x.mail:""},{k:"notas",l:"Notas",t:"area",w:1,v:x?x.notas:""}],r=>{
+    pedir(x?"Editar colaborador":"Nuevo colaborador",[{k:"nombre",l:"Nombre",v:x?x.nombre:""},{k:"empresa",l:"Empresa / estudio",v:x?x.empresa:""},{k:"rol",l:"Rol",v:x?x.rol:""},{k:"tel",l:"WhatsApp / teléfono",v:x?x.tel:""},{k:"mail",l:"Mail",v:x?x.mail:""},{k:"notas",l:"Notas",t:"area",w:1,v:x?x.notas:""}],r=>{
       if(!r.nombre.trim()){aviso("Falta el nombre");return}
       if(x)Object.assign(x,r);else{r.id=uid();D.colabs.push(r);location.hash="#colab/"+r.id}
       guardar();render()},"Guardar")}
   else if(a==="borrarcolab"){if(confirm("¿Borrar este colaborador? Sus clientes quedan sin colaborador asignado.")){D.clientes.forEach(c=>{if(c.colab===id)c.colab=""});D.colabs=D.colabs.filter(k=>k.id!==id);guardar();location.hash="#colaboradores"}}
   else if(a==="nuevodiag"){
     if(!D.clientes.length){aviso("Primero cargá un cliente");abrirCliente();return}
-    conClientes("Nuevo diagnóstico",id,[{k:"sitio",l:"Instalación / tablero",w:1,ph:"Tablero general, sala de máquinas…"},{k:"fecha",l:"Fecha",t:"date",v:h},{k:"base",l:"Empezar con",t:"select",o:["Lista en blanco","Datos de muestra (para probar)"],v:"Lista en blanco"}],r=>{
+    conClientes("Nuevo diagnóstico",id,[{k:"sitio",l:"Instalación / tablero",w:1},{k:"fecha",l:"Fecha",t:"date",v:h},{k:"base",l:"Empezar con",t:"select",o:["Lista en blanco","Datos de muestra (para probar)"],v:"Lista en blanco"}],r=>{
       const m=r.base.startsWith("Datos")?diagMuestra():{carga:"",items:{},med:{},concl:""};
       const d={id:uid(),cid:r.cid,fecha:r.fecha,sitio:r.sitio,carga:m.carga,resp:"",items:m.items,med:m.med,concl:m.concl};
       D.diag.push(d);log(cli(r.cid),"Diagnóstico iniciado"+(r.sitio?": "+r.sitio:""));{const cc=cli(r.cid);if(["nueva","visita"].includes(cc.etapa)){log(cc,"Etapa: "+etapaN(cc.etapa)+" → "+etapaN("diag"));cc.etapa="diag"}}guardar();location.hash="#diag/"+d.id},"Crear y abrir")}
@@ -2164,7 +2216,7 @@ function acc(a,id){
   else if(a==="pres-desde-diag"){nuevoPres(null,id)}
   else if(a==="anotar"){const vz=VOZ;VOZ={ct:"",tel:""};
     const ops=["— Cliente nuevo —"].concat(D.clientes.slice().sort((x,y)=>nom(x).localeCompare(nom(y))).map(nom));
-    pedir("Anotar trabajo",[{k:"cli",l:"Cliente",t:"select",o:ops,v:ops[1]||ops[0]},{k:"nuevo",l:"Cliente nuevo",w:1},{k:"desc",l:"Descripción",t:"area",w:1},{k:"tipo",l:"Tipo",t:"select",o:TIPOS_TRAB,v:TIPOS_TRAB[0]},{k:"fecha",l:"Fecha y hora",t:"datetime-local",v:h+"T09:00"},{k:"monto",l:"Precio",ph:"$"}],r=>{
+    pedir("Anotar trabajo",[{k:"cli",l:"Cliente",t:"select",o:ops,v:ops[1]||ops[0]},{k:"nuevo",l:"Cliente nuevo",w:1},{k:"desc",l:"Descripción",t:"area",w:1},{k:"tipo",l:"Tipo",t:"select",o:TIPOS_TRAB,v:TIPOS_TRAB[0]},{k:"fecha",l:"Fecha y hora",t:"datetime-local",v:h+"T09:00"},{k:"monto",l:"Precio"}],r=>{
       let c;
       if(r.cli===ops[0]){if(!r.nuevo.trim()){aviso("Falta el nombre del cliente");return}
         c={id:uid(),nombre:vz.ct,empresa:r.nuevo.trim(),tel:vz.tel,mail:"",rubro:"Otro",origen:"WhatsApp",zona:"",cuit:"",colab:"",etapa:"nueva",prox:"",proxm:"",notas:"",hist:[]};log(c,"Cliente creado");D.clientes.push(c)}
@@ -2188,8 +2240,8 @@ function acc(a,id){
   else if(a==="pres-rechazar"){const p=pre(id);p.estado="rechazado";const c=cli(p.cid);log(c,"Presupuesto "+p.num+" rechazado");c.acts=acts(c).filter(a=>!(a.t||"").includes(p.num));guardar();render()}
   else if(a==="pres-addren"){const p=pre(id);p.items.push({d:"",m:""});guardar();render()}
   else if(a==="pres-delren"){const p=pre(id);p.items.splice(+(window.event.target.closest("[data-i]").dataset.i),1);p.total=totPres(p);guardar();render()}
-  else if(a==="pres-addmat"){const p=pre(id);(p.materiales=p.materiales||[]).push({d:"",m:""});guardar();render()}
-  else if(a==="pres-delmat"){const p=pre(id);p.materiales.splice(+(window.event.target.closest("[data-i]").dataset.i),1);p.total=totPres(p);guardar();render()}
+  else if(a==="pres-addmat"){const p=pre(id);(p.materiales=p.materiales||[]).push({d:"",m:""});guardar();renderAqui();const t=V.querySelector(`textarea[data-mi="${p.materiales.length-1}"][data-mk="d"]`);if(t){t.focus({preventScroll:true});t.scrollIntoView({block:"nearest"})}}
+  else if(a==="pres-delmat"){const p=pre(id);p.materiales.splice(+(window.event.target.closest("[data-i]").dataset.i),1);p.total=totPres(p);guardar();renderAqui()}
   else if(a==="cond-add"){const e={id:uid(),t:""},p=pre(id);bibCond().push(e);if(p)condSelDe(p).push(e.id);guardar();render();const ta=document.querySelector(`[data-cbib="${e.id}"]`);if(ta)ta.focus()}
   else if(a==="cond-del"){if(!confirm("¿Eliminar esta condición de la biblioteca?"))return;D.cfg.condBib=bibCond().filter(e=>e.id!==id);D.pres.forEach(p=>{if(p.condSel)p.condSel=p.condSel.filter(x=>x!==id)});guardar();render()}
   else if(a==="pres-aceptar"&&pre(id).simple){const p=pre(id),tot=totPres(p);
@@ -2356,6 +2408,10 @@ function selMarca(s){
     else if(e.key==="Escape"||e.key==="Tab")cerrar()};
 }
 const marcarSelects=r=>{r.querySelectorAll("select").forEach(x=>{if(x.dataset.marca)x._pinta&&x._pinta();else selMarca(x)})};
+/* Materiales: el cuadro crece solo a medida que se agregan renglones (nunca baja de su alto mínimo) */
+const crecerMat=t=>{t.style.height="auto";t.style.height=t.scrollHeight+2+"px"};
+document.addEventListener("input",e=>{if(e.target.matches&&e.target.matches('textarea[data-mk="d"]'))crecerMat(e.target)});
+new MutationObserver(()=>document.querySelectorAll('textarea[data-mk="d"]:not([data-crece])').forEach(t=>{t.dataset.crece=1;crecerMat(t)})).observe(document.body,{childList:true,subtree:true});
 new MutationObserver(()=>marcarSelects(document.body)).observe(document.body,{childList:true,subtree:true});
 /* Los diálogos cargan valores por código antes de abrirse: repintar al abrir */
 const _showModal=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){marcarSelects(this);return _showModal.apply(this,arguments)};
