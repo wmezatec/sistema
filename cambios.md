@@ -58,7 +58,19 @@ Cambios hechos en la sesión del 28 al 29/10/2026. Todo está en `index.html`, s
 ## Supabase
 - La app guarda todo el sistema en la fila `datos` de la tabla `datos`, y las encuestas, mensajes, usuarios y archivos en sus tablas y bucket.
 - Control de versión: la app guarda solo si la versión de la fila no cambió desde la última carga. Si cambió, avisa y no pisa nada.
-- **Requiere** ejecutar en el SQL Editor la columna `version` y el trigger. Mientras no esté, la app carga y guarda como antes, sin control de versión.
+- **Requiere** correr `supabase/version.sql` en el SQL Editor. Mientras no esté, la app carga y guarda como antes, sin control de versión.
+
+## Sesión del 05/11/2026
+- `90a92fc`: celular con menú ☰, encabezado en dos filas y diálogos con X.
+- `5693548`: celular con agenda de celdas iguales, tarjetas de órdenes y menú sin duplicados.
+- `665be77`: impresión con las barras del membrete en el margen de la hoja, sin tapar renglones.
+
+## Sesión del 13/11/2026
+- Bitácora diaria en el menú, debajo de Agenda: fecha, cliente opcional (ofrece agregarlo como cliente nuevo) y texto con formato. Historial en una sola página separado por días. Campo de texto de 304 px de alto.
+- Se sacaron todas las aclaraciones de los campos de texto (placeholders) y el cartel "Ctrl + Enter también añade".
+- Presupuesto: Enter en un material crea el siguiente, pegar una lista la reparte y los cuadros crecen solos.
+- Manual de marca en `manual-de-marca.md` y `manual-de-marca.pdf`.
+- `supabase/version.sql`: el SQL de la columna `version` y su disparador, que antes no estaba en el repositorio.
 
 ## Pendientes
 Ver `pendientes.md`.

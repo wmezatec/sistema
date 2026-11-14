@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="es-AR"><head><meta charset="utf-8"><title>Manual de marca · WM TEC</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--carbon:#232323;--chapa:#e3e4df;--papel:#f7f7f3;--tinta:#1f201d;--suave:#55574f;--naranja:#f9a01b;--nosc:#e07b00;--deg:linear-gradient(90deg,#ffc107,#f9a01b 55%,#e07b00);--rojo:#c23b2c;--verde:#277a41;--ambar:#d99a13;--azul:#3a6ea5;--gris:#8b8d85}
+@page{size:A4;margin:18mm 16mm 18mm}
+@page:first{margin:0}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Archivo",sans-serif;color:var(--tinta);font-size:10.5pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1,h2,h3{font-weight:800;font-variation-settings:"wdth" 85;letter-spacing:-.01em;line-height:1.05;margin:0}
+h2{font-size:26pt;margin:0 0 4mm}
+h3{font-size:13pt;margin:5.5mm 0 2.5mm}
+p{margin:0 0 2.5mm}
+.sec{break-before:page}
+.num{display:inline-block;font-size:10pt;font-weight:800;color:var(--nosc);letter-spacing:.12em;margin-bottom:2mm}
+.raya{height:4px;width:38mm;background:var(--deg);border-radius:9px;margin:0 0 6mm}
+.lead{font-size:12.5pt;color:var(--suave);max-width:150mm;margin-bottom:6mm}
+/* tapa */
+.tapa{width:210mm;height:297mm;background:var(--carbon);color:var(--papel);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:26mm 22mm}
+.tapa .logo svg{width:78mm;height:auto}
+.tapa h1{font-size:46pt;font-variation-settings:"wdth" 75;letter-spacing:-.02em}
+.tapa h1 span{background:var(--deg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tapa .sub{font-size:13pt;color:#c9cac4;margin-top:5mm;max-width:130mm}
+.tapa .pie{display:flex;justify-content:space-between;font-size:9.5pt;color:#a9aaa4;border-top:1px solid #3a3a3a;padding-top:5mm}
+.tapa .zz{position:absolute;right:-30mm;top:95mm;width:170mm;opacity:.07}
+/* tarjetas */
+.card{background:var(--papel);border:1px solid #c9cbc4;border-top:4px solid #d2d4cc;border-radius:5mm;padding:5mm 6mm;break-inside:avoid}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.dato{display:grid;grid-template-columns:34mm 1fr;gap:2mm 5mm;font-size:10.5pt}
+.dato b{color:var(--suave);font-weight:600}
+/* colores */
+.sw{border-radius:4mm;overflow:hidden;border:1px solid #d2d4cc;break-inside:avoid;background:#fff}
+.sw .c{height:13mm}
+.sw .t{padding:2mm 3mm;font-size:8.5pt;line-height:1.25}
+.sw .t b{display:block;font-size:10pt}
+.sw .t code{font-family:inherit;color:var(--suave)}
+/* tipografía */
+.aa{font-size:70pt;font-weight:800;font-variation-settings:"wdth" 85;line-height:1}
+.pesos span{display:inline-block;margin-right:6mm;font-size:15pt}
+/* botones de muestra */
+.btn{display:inline-flex;align-items:center;gap:2mm;padding:2.2mm 5mm;border-radius:999px;font-weight:700;font-size:10pt;background:linear-gradient(135deg,#4a4a4a,#2c2c2c);color:#fff;box-shadow:2px 2px 5px -2px rgba(0,0,0,.35)}
+.btn.pri{background:var(--deg);color:var(--carbon)}
+.btn.claro{background:#fff;color:var(--tinta);box-shadow:inset 0 0 0 1px #c9cbc4}
+.btn.wsp{background:linear-gradient(135deg,#3be37a,#1fb556);color:#0d2b17}
+.btn.pel{background:#fff;color:#c62828;box-shadow:inset 0 0 0 1.5px #c62828}
+table{width:100%;border-collapse:collapse;font-size:10pt}
+td,th{text-align:left;padding:1.8mm 2.5mm;border-bottom:1px solid #e2e3dd;vertical-align:middle}
+th{font-size:8.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);font-weight:700}
+/* campos */
+.lbl{font-size:9.5pt;font-weight:600;margin-bottom:1.5mm}
+.campo{background:#e7e8e2;border-radius:3.5mm;box-shadow:inset 2px 2px 4px rgba(0,0,0,.22);padding:2.6mm 3.5mm;min-height:10mm;font-size:10.5pt}
+.campo.foco{background:#fff;box-shadow:inset 2px 2px 4px rgba(0,0,0,.22),inset 0 0 0 2px var(--naranja)}
+.campo.ph{color:#9a9c94;font-style:normal}
+.mdbar{display:flex;gap:1.5mm;margin-bottom:1.5mm}.mdbar span{width:7mm;height:7mm;border-radius:2mm;background:#ecede7;display:grid;place-items:center;font-size:9pt;font-weight:700}
+.si,.no{border-radius:5mm;padding:4mm 5mm;break-inside:avoid;font-size:9.5pt}.si li,.no li{margin-bottom:1.1mm}
+.si{background:#eaf3ec;border:1px solid #bcd9c4}.no{background:#f8ebe8;border:1px solid #e6c1ba}
+.si h3,.no h3{margin-top:0;display:flex;align-items:center;gap:2.5mm}
+.si h3 i,.no h3 i{width:7mm;height:7mm;border-radius:50%;display:grid;place-items:center;color:#fff;font-style:normal;font-size:11pt}
+.si h3 i{background:var(--verde)}.no h3 i{background:var(--rojo)}
+ul{margin:0;padding-left:5mm}li{margin-bottom:1.6mm}
+.tach{text-decoration:line-through;text-decoration-color:var(--rojo);text-decoration-thickness:1.5px}
+/* voz */
+.frase{background:var(--carbon);color:var(--papel);border-radius:5mm;padding:5mm 6mm;font-size:13pt;font-weight:600;break-inside:avoid}
+.frase small{display:block;color:#a9aaa4;font-size:9pt;font-weight:500;margin-top:2mm}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:3mm;font-size:10pt}
+.par div{padding:2.6mm 3.5mm;border-radius:3mm}
+.par .b{background:#eaf3ec}.par .m{background:#f8ebe8}
+/* menú */
+.menu{background:var(--carbon);color:#d0d0d0;border-radius:5mm;padding:5mm 3.5mm;width:58mm;font-weight:600;font-size:10pt}
+.menu .it{padding:1.1mm 3.5mm;border-radius:99px;margin-bottom:.4mm}
+.menu .on{background:rgba(255,255,255,.14);color:#fff;box-shadow:inset 3px 0 0 var(--naranja)}
+.menu .lg{text-align:center;padding:1mm 0 4mm}.menu .lg svg{width:26mm;height:auto}
+.menu .sep{border-top:1px solid #3a3a3a;margin:2.5mm 0}
+.semaf span{display:inline-flex;align-items:center;gap:1.8mm;margin-right:5mm;font-size:10pt}.semaf i{width:3.5mm;height:3.5mm;border-radius:50%;display:inline-block}
+.doc{background:#fff;border:1px solid #d2d4cc;border-radius:2mm;padding:0;overflow:hidden;font-size:8.5pt;break-inside:avoid}
+.doc .bar{height:3mm;background:var(--deg)}
+.doc .in{padding:5mm 6mm}
+.paso{display:grid;grid-template-columns:9mm 1fr;gap:3mm;margin-bottom:3mm;break-inside:avoid}
+.paso b.n{width:9mm;height:9mm;border-radius:50%;background:var(--deg);display:grid;place-items:center;color:var(--carbon);font-weight:800}
+.nota{font-size:9pt;color:var(--suave)}
+</style></head><body>
+
+<section class="tapa">
+ <div class="logo">{{LOGO}}</div>
+ <div class="zz">{{ISO}}</div>
+ <div><h1>Manual<br>de <span>marca</span></h1><p class="sub">Identidad, interfaz, campos de texto y voz de WM TEC. Para que cualquiera pueda mantener o rehacer el sistema sin perder cómo se ve ni cómo habla.</p></div>
+ <div class="pie"><span>WM TEC · Mantenimiento eléctrico industrial</span><span>Mar del Plata y zona · 13/11/2026</span></div>
+</section>
+
+<section>
+ <span class="num">01</span><h2>Quién es WM TEC</h2><div class="raya"></div>
+ <p class="lead">Un técnico serio, prolijo y de confianza. Habla claro, sin vueltas y sin palabras de más. Trabaja en la calle con el celular en la mano: todo tiene que ser rápido de leer y de usar.</p>
+ <div class="card"><div class="dato">
+  <b>Qué hace</b><span>Mantenimiento eléctrico industrial y comercial: tableros, cámaras de frío, máquinas, instalaciones, reparaciones, diagnósticos de tablero, trabajos domiciliarios y contratos de mantenimiento.</span>
+  <b>Quién está detrás</b><span>Walter Martín Meza, electricista. Firma los documentos.</span>
+  <b>Dónde</b><span>Mar del Plata y zona.</span>
+  <b>Contacto</b><span>223 531 3019 · @wmeza.tec · Pringles 2565</span>
+  <b>Clientes típicos</b><span>Frigoríficos, hoteles, consorcios, comercios, estudios de arquitectura y particulares. Llegan por recomendación, WhatsApp, Instagram o la web.</span>
+  <b>Página web</b><span>wmezatec.github.io</span>
+  <b>Sistema</b><span>wmezatec.github.io/sistema (con cuenta de Google habilitada)</span>
+ </div></div>
+
+ <h3 style="margin-top:12mm">Logo</h3>
+ <div class="g2">
+  <div class="card" style="background:var(--carbon);border-color:var(--carbon);display:grid;place-items:center;min-height:52mm">{{LOGO_CH}}</div>
+  <div class="card" style="display:grid;place-items:center;min-height:52mm">{{ISO_CH}}</div>
+ </div>
+ <div class="g2" style="margin-top:3mm"><p class="nota"><b>Logo completo</b> (<code>wmtec-logo-oscuro.svg</code>). Sobre fondo carbón: menú, acceso y encabezado del presupuesto.</p><p class="nota"><b>Isotipo</b> (<code>wmtec-isotipo.svg</code>). Ícono de la pestaña, del menú contraído y de la app en el celular.</p></div>
+ <div class="card" style="margin-top:5mm"><p><b>El símbolo:</b> un zigzag continuo de 7 trazos que forma "WM", como una línea de tensión. Alterna dos degradados verticales: amarillo <code>#FFD54F → #FFB300</code> y naranja <code>#F9A01B → #E07B00</code>.</p>
+ <p style="margin:0"><b>No:</b> cambiarle los colores, ponerle sombras o contornos, estirarlo ni deformarlo. Sobre fondo claro, usar el isotipo solo: el logo completo tiene "TEC" en blanco cálido y va siempre sobre carbón.</p></div>
+</section>
+
+<section class="sec">
+ <span class="num">02</span><h2>Colores</h2><div class="raya"></div>
+ <p class="lead">Están en <code>index.html</code> como variables de <code>:root</code>. Para rehacer el sistema, copiarlas tal cual.</p>
+ <h3>Base</h3>
+ <div class="g3">
+  <div class="sw"><div class="c" style="background:#232323"></div><div class="t"><b>Carbón</b><code>#232323</code><br>Menú, acceso, botones oscuros.</div></div>
+  <div class="sw"><div class="c" style="background:#e3e4df"></div><div class="t"><b>Chapa</b><code>#e3e4df</code><br>Fondo general de la app.</div></div>
+  <div class="sw"><div class="c" style="background:#f7f7f3"></div><div class="t"><b>Papel</b><code>#f7f7f3</code><br>Tarjetas y texto sobre carbón.</div></div>
+  <div class="sw"><div class="c" style="background:#1f201d"></div><div class="t"><b>Tinta</b><code>#1f201d</code><br>Texto principal.</div></div>
+  <div class="sw"><div class="c" style="background:#55574f"></div><div class="t"><b>Tinta suave</b><code>#55574f</code><br>Fechas, autores, secundarios.</div></div>
+  <div class="sw"><div class="c" style="background:#2e2e2e"></div><div class="t"><b>Carbón 2</b><code>#2e2e2e</code><br>Capas sobre el carbón.</div></div>
+ </div>
+ <h3>Marca</h3>
+ <div class="g3">
+  <div class="sw"><div class="c" style="background:#f9a01b"></div><div class="t"><b>Naranja</b><code>#f9a01b</code><br>Foco, ítem activo, acentos.</div></div>
+  <div class="sw"><div class="c" style="background:#e07b00"></div><div class="t"><b>Naranja oscuro</b><code>#e07b00</code><br>Final del degradado.</div></div>
+  <div class="sw"><div class="c" style="background:linear-gradient(90deg,#ffc107,#f9a01b 55%,#e07b00)"></div><div class="t"><b>Degradado</b><code>#ffc107 → #e07b00</code><br>Botón principal y scroll.</div></div>
+ </div>
+ <h3>Estados</h3>
+ <div class="g3">
+  <div class="sw"><div class="c" style="background:#277a41"></div><div class="t"><b>Verde</b><code>#277a41</code><br>Hecho, cobrado, bien.</div></div>
+  <div class="sw"><div class="c" style="background:#d99a13"></div><div class="t"><b>Ámbar</b><code>#d99a13</code><br>Este mes, atención.</div></div>
+  <div class="sw"><div class="c" style="background:#c23b2c"></div><div class="t"><b>Rojo</b><code>#c23b2c</code><br>Urgente, vencido, borrar.</div></div>
+  <div class="sw"><div class="c" style="background:#3a6ea5"></div><div class="t"><b>Azul</b><code>#3a6ea5</code><br>Trabajos en la línea de tiempo.</div></div>
+  <div class="sw"><div class="c" style="background:#8b8d85"></div><div class="t"><b>Gris</b><code>#8b8d85</code><br>No medido, neutro.</div></div>
+  <div class="sw"><div class="c" style="background:linear-gradient(135deg,#3be37a,#1fb556)"></div><div class="t"><b>Verde WhatsApp</b><code>#3be37a → #1fb556</code><br>Solo WhatsApp y Aceptado.</div></div>
+ </div>
+ <div class="card semaf" style="margin-top:6mm"><b style="margin-right:5mm">Semáforo del diagnóstico</b><span><i style="background:#277a41"></i>Bien</span><span><i style="background:#d99a13"></i>Este mes</span><span><i style="background:#c23b2c"></i>Urgente</span><span><i style="background:#8b8d85"></i>No medido</span></div>
+</section>
+
+<section class="sec">
+ <span class="num">03</span><h2>Tipografía y formas</h2><div class="raya"></div>
+ <div class="g2">
+  <div class="card"><div class="aa">Aa</div><p style="font-size:16pt;font-weight:800;font-variation-settings:'wdth' 85;margin:3mm 0 1mm">Archivo</p><p class="nota">Fuente única, de Google Fonts. Variable en ancho (62–125) y peso (300–900). No se usan otras familias.</p></div>
+  <div class="card"><p style="font-size:22pt;font-weight:800;font-variation-settings:'wdth' 85;line-height:1.05;margin-bottom:3mm">Título h1 · 800 condensado</p><p style="font-size:15pt;font-weight:800;font-variation-settings:'wdth' 85">Título h2 · 1.25rem</p><p style="font-size:11pt;font-weight:800;font-variation-settings:'wdth' 85">Título h3 · 1rem</p><p>Texto de lectura, 1rem, interlineado 1.45. Botones y menú en peso 600 a 700.</p></div>
+ </div>
+ <div class="card pesos" style="margin-top:5mm"><span style="font-weight:300">Liviana 300</span><span style="font-weight:500">Media 500</span><span style="font-weight:600">Semi 600</span><span style="font-weight:700">Negrita 700</span><span style="font-weight:800">Extra 800</span></div>
+
+ <h3 style="margin-top:10mm">Formas y detalles</h3>
+ <table>
+  <tr><th>Elemento</th><th>Regla</th></tr>
+  <tr><td>Botones</td><td>Píldora, totalmente redondeados (999px).</td></tr>
+  <tr><td>Tarjetas</td><td>Radio 20 px, borde fino <code>#c9cbc4</code> y franja gris de 4 px arriba.</td></tr>
+  <tr><td>Campos</td><td>Radio 14 px, fondo <code>#e7e8e2</code>, sin borde, sombra hacia adentro: se ven hundidos en la chapa.</td></tr>
+  <tr><td>Foco</td><td>Contorno naranja de 3 px. Al escribir, el campo se pone blanco con borde naranja.</td></tr>
+  <tr><td>Scroll</td><td>Fondo carbón con barra en degradado naranja.</td></tr>
+  <tr><td>Íconos</td><td>De línea, trazo 1.8, puntas redondeadas, 21 px. SVG dentro de <code>index.html</code>. Nada de emojis.</td></tr>
+  <tr><td>Volver y mes</td><td>Flechas en piquito (chevron), no flechas comunes.</td></tr>
+  <tr><td>Editar</td><td>Siempre con el lapicito.</td></tr>
+ </table>
+</section>
+
+<section class="sec">
+ <span class="num">04</span><h2>Componentes</h2><div class="raya"></div>
+ <div style="display:grid;grid-template-columns:62mm 1fr;gap:7mm">
+  <div class="menu"><div class="lg">{{LOGO_MENU}}</div>
+   <div class="it">Hoy</div><div class="it">Clientes</div><div class="it">Presupuestos</div><div class="it">Trabajos</div><div class="it">Agenda</div><div class="it on">Bitácora</div><div class="it">Más</div>
+   <div class="sep"></div><div class="it">Página web</div><div class="it">Configuración</div><div class="it">Notificaciones</div></div>
+  <div>
+   <h3 style="margin-top:0">Menú lateral</h3>
+   <ul><li>Fondo carbón, logo arriba y botón para contraerlo.</li><li>Orden fijo: Hoy, Clientes, Presupuestos, Trabajos, Agenda, Bitácora, Más.</li><li>Dentro de Más: Cobros, Mensajes, Precios, Diagnósticos, Finanzas, Tableros, Colaboradores, Feedback.</li><li>Ítem activo: fondo más claro y raya naranja a la izquierda.</li><li>Contadores a la derecha, en alerta si hay algo vencido.</li><li>Tiene que entrar en la pantalla sin scroll.</li></ul>
+   <h3>Barra de arriba</h3>
+   <p>Título de la pantalla, grande y subrayado. Los botones de la pantalla van ahí, no repetidos abajo.</p>
+   <h3>Celular</h3>
+   <p>Menú ☰, encabezado en dos filas, tablas convertidas en tarjetas, diálogos con X, buscador y filtro a todo el ancho y micrófono flotante.</p>
+  </div>
+ </div>
+ <h3 style="margin-top:6mm">Botones</h3>
+ <table>
+  <tr><th style="width:52mm">Muestra</th><th>Tipo</th><th>Uso</th></tr>
+  <tr><td><span class="btn pri">+ Añadir</span></td><td>Principal</td><td>La acción principal de la pantalla.</td></tr>
+  <tr><td><span class="btn">Anotar</span></td><td>Oscuro</td><td>Acciones comunes.</td></tr>
+  <tr><td><span class="btn claro">Editar</span></td><td>Claro</td><td>Acciones secundarias y botones de ícono.</td></tr>
+  <tr><td><span class="btn wsp">WhatsApp</span></td><td>Verde</td><td>WhatsApp y presupuesto Aceptado.</td></tr>
+  <tr><td><span class="btn pel">Borrar</span></td><td>Peligro</td><td>Borrar, quitar, rechazado. Siempre pide confirmación.</td></tr>
+ </table>
+ <h3>Tarjetas y listas</h3>
+ <p>Cada bloque es una tarjeta con título. Las filas se separan con líneas finas, no con cajas dobles. Las descripciones ocupan dos renglones como máximo. El historial del cliente es una línea de tiempo con puntos de color: presupuesto naranja, trabajo azul, cobro verde y diagnóstico violeta.</p>
+</section>
+
+<section class="sec">
+ <span class="num">05</span><h2>Campos de texto</h2><div class="raya"></div>
+ <p class="lead">El punto más importante para quien siga el sistema: cada campo lleva su título arriba y nada adentro.</p>
+ <div class="g2">
+  <div class="card"><p class="nota" style="margin-bottom:3mm"><b style="color:var(--verde)">Así sí</b></p>
+   <div class="lbl">Cliente</div><div class="campo"></div>
+   <div class="lbl" style="margin-top:4mm">Qué se hizo</div>
+   <div class="mdbar"><span>B</span><span><i>I</i></span><span><u>S</u></span><span>H</span><span>•</span><span>☐</span></div>
+   <div class="campo foco" style="min-height:20mm">Hoy instalamos el <b>tablero general</b> y avanzamos con la cámara 2.</div></div>
+  <div class="card"><p class="nota" style="margin-bottom:3mm"><b style="color:var(--rojo)">Así no</b></p>
+   <div class="lbl">Cliente</div><div class="campo ph">Elegí o escribí un cliente</div>
+   <div class="lbl" style="margin-top:4mm">Qué se hizo</div>
+   <div class="campo ph" style="min-height:12mm">Hoy instalamos…, avanzamos con…</div>
+   <p class="nota" style="margin-top:3mm">Ctrl + Enter también añade</p>
+   <p class="nota" style="margin:0">Texto de ejemplo gris adentro, carteles de ayuda y campo chico para un texto largo.</p></div>
+ </div>
+ <div class="g2" style="margin-top:4mm">
+  <div class="si"><h3><i>✓</i>Lo que sí</h3><ul>
+   <li><b>Título arriba</b> que diga qué va, en pocas palabras.</li>
+   <li><b>Formato en vivo:</b> **negrita**, *cursiva*, ++subrayado++, ## título, - lista, - [ ] tarea. Las marcas se ocultan.</li>
+   <li><b>Barra de formato</b> en los textos largos: B, I, S, H, •, ☐.</li>
+   <li><b>Micrófono</b> en buscadores y áreas de texto.</li>
+   <li><b>Mayúscula automática</b> al empezar cada oración.</li>
+   <li><b>Montos</b> <code>$ 160.000</code> y porcentajes con <code>%</code>.</li>
+   <li><b>Fechas</b> dd/mm/aaaa. En títulos: "Jueves 13 de noviembre".</li>
+   <li><b>Autoguardado</b> en las notas.</li>
+   <li><b>Campos grandes:</b> el de la Bitácora mide 304 px; los materiales crecen solos.</li>
+   <li><b>Atajos que funcionan sin anunciarse:</b> Enter en materiales, pegar una lista, Ctrl + Enter.</li></ul></div>
+  <div class="no"><h3><i>✕</i>Lo que no</h3><ul>
+   <li><b>Aclaraciones dentro de los campos</b> (placeholder): <span class="tach">Buscar</span>, <span class="tach">$</span>, <span class="tach">Ej. 60 %</span>, <span class="tach">Arquitecta, administrador…</span>. Se sacaron de todo el sistema el 13/11/2026 y no se vuelven a poner.</li>
+   <li><b>Carteles de ayuda</b> como <span class="tach">Ctrl + Enter también añade</span>.</li>
+   <li><b>Aclaraciones redundantes</b> en etiquetas: la etapa "Cliente" va sola.</li>
+   <li><b>Datos de ejemplo</b> en el sistema real.</li>
+   <li><b>Campos chicos</b> para textos largos.</li></ul></div>
+ </div>
+</section>
+
+<section class="sec">
+ <span class="num">06</span><h2>Cómo comunica</h2><div class="raya"></div>
+ <div class="frase">"Hoy instalamos el tablero. Avanzamos con la cámara 2."<small>Así habla WM TEC: corto, concreto, como lo diría Walter.</small></div>
+ <h3 style="margin-top:8mm">Reglas</h3>
+ <ul>
+  <li><b>Español rioplatense con voseo:</b> Elegí, Tildá, Escribí, Cargá, Llamalo.</li>
+  <li><b>Pantallas y botones</b> de una o dos palabras: Hoy, Clientes, Agenda, Bitácora, Anotar, Hecho, Aceptado, Quitar.</li>
+  <li><b>Sin tecnicismos</b> de computación.</li>
+  <li><b>Avisos en una línea.</b></li>
+  <li><b>Para borrar se pregunta siempre.</b></li>
+  <li><b>Con el cliente</b> (presupuestos, encuesta, WhatsApp): formal pero cercano, prolijo y sin errores.</li>
+ </ul>
+ <h3 style="margin-top:8mm">Así sí / así no</h3>
+ <div class="par" style="margin-bottom:2mm"><b style="color:var(--verde)">Así sí</b><b style="color:var(--rojo)">Así no</b></div>
+ <div class="par" style="margin-bottom:2mm"><div class="b">Se guarda solo</div><div class="m">Sincronizando con la base de datos…</div></div>
+ <div class="par" style="margin-bottom:2mm"><div class="b">Escribí qué se hizo</div><div class="m">Error: el campo descripción es obligatorio</div></div>
+ <div class="par" style="margin-bottom:2mm"><div class="b">Falta el nombre del cliente</div><div class="m">Por favor, ingrese un nombre válido para continuar</div></div>
+ <div class="par" style="margin-bottom:2mm"><div class="b">¿Quitar esta entrada de la bitácora?</div><div class="m">¿Está seguro de que desea eliminar el registro seleccionado?</div></div>
+ <div class="par"><div class="b">Cliente</div><div class="m">Cliente (ganado)</div></div>
+ <div class="card" style="margin-top:8mm"><p style="margin:0"><b>Firma en los documentos:</b> Walter Martín Meza · WM TEC · Mantenimiento eléctrico industrial · Mar del Plata y zona.</p></div>
+</section>
+
+<section class="sec">
+ <span class="num">07</span><h2>Presupuesto, Bitácora y Feedback</h2><div class="raya"></div>
+ <div style="display:grid;grid-template-columns:70mm 1fr;gap:7mm">
+  <div class="doc"><div class="bar"></div><div class="in">
+   <div style="background:var(--carbon);border-radius:1.5mm;padding:3mm;display:inline-block;margin-bottom:3mm">{{LOGO_DOC}}</div>
+   <p style="margin:0"><b>Walter Martín Meza</b><br>Pringles 2565 · 223 531 3019 · @wmeza.tec</p>
+   <p style="margin:3mm 0 1mm;font-weight:800;font-size:11pt">Presupuesto WM-037</p>
+   <table style="font-size:8pt"><tr><td>Tablero general: recableado</td><td style="text-align:right">$ 380.000</td></tr><tr><td>Combustible y traslado</td><td style="text-align:right">$ 20.000</td></tr><tr><td><b>Total</b></td><td style="text-align:right"><b>$ 400.000</b></td></tr></table>
+   <p class="nota" style="margin-top:3mm">Materiales · Nota · Condiciones</p><p class="nota" style="text-align:right;margin:0">Página 1 de 2</p></div><div class="bar"></div></div>
+  <div><h3 style="margin-top:0">Presupuesto en A4</h3><ul>
+   <li><b>Membrete:</b> logo, nombre, dirección, teléfono e Instagram.</li>
+   <li><b>Barras del membrete</b> arriba y abajo de cada hoja, en el margen, sin tapar renglones. "Página X de Y".</li>
+   <li><b>Numeración</b> WM-001, WM-002… Si se cambia a mano, sigue desde ese número.</li>
+   <li><b>Partes:</b> renglones de trabajo con importe, Materiales (importe opcional), Nota, Condiciones (de una biblioteca, se tildan) y descuentos.</li>
+   <li><b>Combustible y traslado:</b> $ 20.000 en cada presupuesto nuevo.</li>
+   <li><b>Ficha privada</b> (valor caja, módulos, cómo se cotizó): <b>no sale en el PDF</b>.</li>
+   <li><b>Precios de referencia:</b> guía AAIERIC de mano de obra.</li><li><b>Aceptado:</b> pregunta cómo se cobra (50 % y 50 %, o un pago) y arma los cobros.</li></ul></div>
+ </div>
+ <div class="g2" style="margin-top:9mm">
+  <div class="card"><h3 style="margin-top:0">Bitácora</h3><p>El diario de trabajo. Al terminar el día se anota qué se hizo.</p><ul><li>Cliente opcional. Si no existe, se ofrece agregarlo.</li><li>Mismo formato que las notas.</li><li>Una sola página con scroll, separada por días: Hoy, Ayer y después la fecha. Lo más reciente arriba.</li></ul></div>
+  <div class="card"><h3 style="margin-top:0">Feedback</h3><p>Debajo de Colaboradores. Qué anda bien, qué cambiar y qué falta del sistema. La fecha se pone sola.</p><p class="nota" style="margin:0">Lo anotado en Bitácora y Feedback vive en Supabase (tabla <code>datos</code>), no en el repositorio. Este manual no lo copia.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <span class="num">08</span><h2>Qué hace cada pantalla</h2><div class="raya"></div>
+ <table style="font-size:9pt">
+  <tr><th style="width:30mm">Pantalla</th><th>Qué hace</th></tr>
+  <tr><td><b>Hoy</b></td><td>Atrasado, Hoy y Pendiente en columnas. "+ Trabajo" y "Cobro". WhatsApp, Llamar y Hecho como íconos.</td></tr>
+  <tr><td><b>Clientes</b></td><td>Lista con buscador y filtro. Ficha con Trabajos, Datos, Seguimiento e Historial. Etapas: Consulta nueva, Visita agendada, Diagnóstico hecho, Presupuesto enviado, Cliente, Perdido.</td></tr>
+  <tr><td><b>Presupuestos</b></td><td>Borrador, Enviado, Aceptado, Rechazado. Documento A4 para imprimir o mandar.</td></tr>
+  <tr><td><b>Trabajos</b></td><td>O.T. con pasos: pedido, visita de obra, presupuesto, trabajo y remito, cobro y cierre. Clic izquierdo = hecho, clic derecho = no lleva. Fotos y videos, notas que se guardan solas, remito y encuesta.</td></tr>
+  <tr><td><b>Agenda</b></td><td>Mes con íconos por tipo y clima de Mar del Plata. Tocar un día abre el detalle.</td></tr>
+  <tr><td><b>Bitácora</b></td><td>Diario de trabajo separado por días.</td></tr>
+  <tr><td><b>Cobros</b></td><td>Lo que hay que cobrar, vencidos en rojo. Al anotar un trabajo sin presupuesto pregunta cuándo se cobra.</td></tr>
+  <tr><td><b>Mensajes</b></td><td>Lo que llega del formulario de la página web.</td></tr>
+  <tr><td><b>Precios</b></td><td>Lista de precios con la guía AAIERIC.</td></tr>
+  <tr><td><b>Diagnósticos</b></td><td>Lista de control con semáforo, hallazgos, acciones y fotos. Arma el informe para el cliente.</td></tr>
+  <tr><td><b>Finanzas</b></td><td>Ingresos, gastos, gastos fijos y saldo.</td></tr>
+  <tr><td><b>Tableros</b></td><td>Editor de esquemas unifilar y frente (basado en OneLineEditor). Exporta e imprime.</td></tr>
+  <tr><td><b>Colaboradores</b></td><td>Quien trae trabajo y cuánto facturaron sus clientes.</td></tr>
+  <tr><td><b>Feedback</b></td><td>Ideas y cambios para el sistema.</td></tr>
+  <tr><td><b>Configuración</b></td><td>Vista Esencial/Completa, mayúscula automática, usuarios con acceso, combustible, numeración, avisos, copias (.json), cartera a Excel (.csv), cerrar sesión.</td></tr>
+ </table>
+ <div class="g2" style="margin-top:6mm">
+  <div class="card"><h3 style="margin-top:0">Vista Esencial</h3><p style="margin:0">Oculta Diagnósticos, Finanzas, Tableros, Colaboradores y Feedback. Completa muestra todo.</p></div>
+  <div class="card"><h3 style="margin-top:0">En todo el sistema</h3><p style="margin:0">Micrófono que entiende frases ("gasté 20 mil en cables", "cliente nuevo…", "llamar a… el jueves"), Ctrl + Z para deshacer, autor en cada nota y encuesta de 5 preguntas por WhatsApp.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <span class="num">09</span><h2>Instalar desde cero</h2><div class="raya"></div>
+ <p class="lead">Para levantar el sistema en una cuenta nueva, en este orden.</p>
+ <div class="paso"><b class="n">1</b><span><b>Supabase:</b> crear el proyecto y correr en <i>SQL Editor</i>, en orden: <code>esquema.sql</code>, <code>version.sql</code>, <code>usuarios.sql</code>, <code>archivos.sql</code>, <code>encuestas.sql</code> y <code>mensajes.sql</code>.</span></div>
+ <div class="paso"><b class="n">2</b><span><b>Primer usuario:</b> agregar a mano el primer correo de Google, en minúsculas, en la tabla <code>permitidos</code>. Los demás se suman desde Configuración.</span></div>
+ <div class="paso"><b class="n">3</b><span><b>Google:</b> crear un cliente OAuth en Google Cloud y pegarlo en Supabase, en <i>Authentication → Providers → Google</i>. En <i>URL Configuration</i>, sumar la dirección del sistema y <code>http://localhost:8787</code>. En modo prueba, cada correo va también como usuario de prueba.</span></div>
+ <div class="paso"><b class="n">4</b><span><b><code>config.js</code>:</b> URL del proyecto y clave publicable. Es pública por diseño.</span></div>
+ <div class="paso"><b class="n">5</b><span><b>GitHub Pages:</b> subir el repositorio y activar Pages desde <code>main</code>. La web de WM TEC escribe en <code>mensajes</code>.</span></div>
+ <div class="paso"><b class="n">6</b><span><b>Probar:</b> entrar, cargar algo, recargar y ver que siga ahí.</span></div>
+ <div class="g2" style="margin-top:7mm">
+  <div class="card"><h3 style="margin-top:0">Copias de seguridad</h3><ul><li>La base guarda una copia por día (tabla <code>copias</code>, 60 días).</li><li>Desde Configuración se descarga y se restaura una copia <code>.json</code>. Conviene bajarla una vez por mes y guardarla aparte.</li><li>El código está en GitHub. Los datos, no: solo en Supabase y en esas copias.</li></ul></div>
+  <div class="card"><h3 style="margin-top:0">Otros archivos</h3><ul><li><code>cambios.md</code>: registro de cambios.</li><li><code>pendientes.md</code>: lo hecho y lo que falta.</li><li><code>eventos-relaciones-publicas.md</code>: eventos de la zona.</li><li><code>iniciar.bat</code>: uso local sin Supabase (necesita Node.js).</li><li><code>manual/</code>: fuente de este PDF. Editar <code>plantilla.html</code> y correr <code>python manual/armar.py</code>.</li></ul></div>
+ </div>
+</section>
+
+<section class="sec">
+ <span class="num">10</span><h2>Cómo replicar el sistema</h2><div class="raya"></div>
+ <div class="g2">
+  <div class="card"><h3 style="margin-top:0">Piezas</h3><table>
+   <tr><td><b>Sistema</b></td><td><code>index.html</code>: HTML, estilos y JavaScript en un archivo, sin frameworks.</td></tr>
+   <tr><td><b>Datos</b></td><td>Supabase. URL y clave publicable en <code>config.js</code>. <code>supabase/esquema.sql</code> crea tablas, permisos y copias diarias.</td></tr>
+   <tr><td><b>Acceso</b></td><td>Google. Solo entran los correos de la tabla <code>permitidos</code>.</td></tr>
+   <tr><td><b>Sin internet</b></td><td><code>iniciar.bat</code> → localhost:8787, datos en <code>datos/datos.json</code>.</td></tr>
+   <tr><td><b>Celular</b></td><td><code>manifest.webmanifest</code> y <code>sw.js</code>.</td></tr>
+   <tr><td><b>Publicación</b></td><td>GitHub Pages, repositorio <code>wmezatec/sistema</code>.</td></tr>
+   <tr><td><b>Clima</b></td><td>Open-Meteo, en la agenda.</td></tr>
+   <tr><td><b>Registro</b></td><td><code>cambios.md</code> y <code>pendientes.md</code>.</td></tr></table></div>
+  <div><h3 style="margin-top:0">Reglas para seguirlo</h3>
+   <div class="paso"><b class="n">1</b><span>Mismos colores, misma fuente y mismos radios.</span></div>
+   <div class="paso"><b class="n">2</b><span>Un solo archivo y código simple.</span></div>
+   <div class="paso"><b class="n">3</b><span>Probar siempre en el celular.</span></div>
+   <div class="paso"><b class="n">4</b><span>Textos con voseo y cortos.</span></div>
+   <div class="paso"><b class="n">5</b><span>Nunca volver a poner aclaraciones dentro de los campos.</span></div>
+   <div class="paso"><b class="n">6</b><span>Un commit por cambio, con un mensaje en castellano que diga qué cambió.</span></div>
+  </div>
+ </div>
+ <div style="margin-top:16mm;text-align:center">{{ISO_FIN}}<p class="nota" style="margin-top:3mm">WM TEC · Manual de marca · 13/11/2026</p></div>
+</section>
+</body></html>

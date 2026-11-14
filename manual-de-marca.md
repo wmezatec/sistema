@@ -38,7 +38,7 @@ Los archivos están en la carpeta `logo/`:
 **Reglas:**
 - No cambiarle los colores ni ponerle sombras o contornos.
 - No estirarlo ni deformarlo.
-- Sobre fondo claro, usar el isotipo solo o el logo con "TEC" en carbón.
+- Sobre fondo claro, usar el isotipo solo. El logo completo tiene "TEC" en blanco cálido (`#F7F7F3`), así que va siempre sobre carbón. No hay versión del logo completo para fondo claro: si hace falta, se arma copiando el SVG y cambiando el color de "TEC" a carbón (`#232323`).
 
 ---
 
@@ -148,7 +148,7 @@ Este es el punto más importante para quien siga el sistema.
 ### Lo que NO
 - **Nada de aclaraciones dentro de los campos.** No se usan textos de ejemplo grises (placeholder) como "Elegí o escribí un cliente", "Hoy instalamos…", "Buscar", "$", "Ej. 60 %" ni "Arquitecta, administrador…". Se sacaron de todo el sistema el 13/11/2026 y no se vuelven a poner.
 - **Nada de carteles de ayuda** del estilo "Ctrl + Enter también añade".
-- **Nada de aclaraciones redundantes** en las etiquetas. Por ejemplo, la etapa "Cliente" va sola, sin explicación entre paréntesis.
+- **Nada de aclaraciones redundantes** en las etiquetas. Por ejemplo, la etapa se llamaba "Cliente (ganado)" y quedó "Cliente", sola.
 - **Nada de datos de ejemplo** cargados en el sistema real.
 - **Nada de campos chicos** para textos largos.
 
@@ -190,10 +190,73 @@ Este es el punto más importante para quien siga el sistema.
 
 ---
 
-## 11. Cómo replicar el sistema
+## 11. Qué hace cada pantalla
+
+| Pantalla | Qué hace |
+|---|---|
+| **Hoy** | Lo del día en tres columnas: Atrasado, Hoy y Pendiente. Botones "+ Trabajo" y "Cobro". Cada fila tiene WhatsApp, Llamar y Hecho como íconos. |
+| **Clientes** | Lista con buscador y filtro. La ficha tiene pestañas Trabajos, Datos (editable), Seguimiento e Historial (línea de tiempo con autor). Etapas: Consulta nueva, Visita agendada, Diagnóstico hecho, Presupuesto enviado, Cliente, Perdido. |
+| **Presupuestos** | Ver la sección 9. Estados: Borrador, Enviado, Aceptado, Rechazado. Al marcarlo Aceptado pregunta cómo se cobra (50 % de anticipo y 50 % al terminar, o un solo pago) y arma los cobros con sus fechas. |
+| **Trabajos** | Órdenes de trabajo (O.T.) con pasos en cuadrícula: pedido, visita de obra, presupuesto, trabajo y remito, cobro y cierre. Clic izquierdo marca hecho (tilde verde); clic derecho, "no lleva" (X roja). Tienen fotos y videos (Supabase Storage), notas que se guardan solas, remito y la encuesta de conformidad. Tipos: Reparación, Instalación, Falla de máquina, Domiciliario, Diagnóstico de tablero, Mantenimiento, Otro. |
+| **Agenda** | Mes con íconos por tipo (contacto, trabajo, mantenimiento, cobro, presupuesto, gasto fijo) y el clima de Mar del Plata (Open-Meteo). Tocar un día abre el detalle a la derecha. |
+| **Bitácora** | Diario de trabajo (sección 10). |
+| **Cobros** | Lo que hay que cobrar, con los vencidos en rojo. Al anotar o terminar un trabajo sin presupuesto, el sistema pregunta cuándo se cobra: en una fecha, ya cobrado, sin fecha (lo recuerda en una semana) o con presupuesto. |
+| **Mensajes** | Lo que llega del formulario de la página web (tabla `mensajes`). Solo aparece si la tabla existe. |
+| **Precios** | Lista de precios, con la guía AAIERIC de mano de obra cargada. |
+| **Diagnósticos** | Lista de control del tablero con el semáforo (Bien, Este mes, Urgente, No medido), qué se encontró, qué hay que hacer y fotos. Arma un informe para el cliente. |
+| **Finanzas** | Movimientos (ingresos y gastos), gastos fijos y saldo. |
+| **Tableros** | Editor de esquemas de tableros (unifilar y frente), basado en OneLineEditor (ver `tableros/THIRD_PARTY_NOTICES.md` y la licencia). Exporta a imagen e imprime. |
+| **Colaboradores** | Quien trae trabajo (arquitectos, administradores, empresas) y cuánto facturaron sus clientes. |
+| **Feedback** | Ideas y cambios para el sistema (sección 10). |
+| **Notificaciones** | La campanita junta todos los avisos. Con los avisos de Chrome activados, avisa cobros, actividades y trabajos del día mientras el sistema está abierto. |
+| **Configuración** | Vista (Esencial o Completa), Textos (mayúscula automática), Mi usuario, Usuarios con acceso, Combustible y traslado, Numeración de presupuestos, Avisos, Copias y datos (descargar copia .json, restaurar copia, cartera a Excel .csv) y Cerrar sesión. |
+
+**Vista Esencial:** oculta Diagnósticos, Finanzas, Tableros, Colaboradores y Feedback (los ítems marcados `solo-completa`). **Completa** muestra todo.
+
+**Funciones que atraviesan todo el sistema:**
+- **Micrófono en el buscador:** entiende frases. Ejemplos: "cliente nuevo Juan Pérez", "gasté 20 mil en cables", "cobré 150 mil a…", "trabajo para… mañana", "llamar a… el jueves", "nota para…".
+- **Deshacer y rehacer:** Ctrl + Z y Ctrl + Y (o Ctrl + Shift + Z), fuera de los campos de texto.
+- **Encuesta de conformidad:** `encuesta.html`. Es el último paso de la O.T. Se manda el link por WhatsApp; el cliente contesta 5 preguntas y la respuesta queda en el historial.
+- **Autor:** cada nota guarda quién la escribió, según la cuenta de Google.
+
+---
+
+## 12. Instalar el sistema desde cero
+
+Para levantarlo en una cuenta nueva, en este orden:
+
+1. **Supabase:** crear un proyecto. En *SQL Editor*, correr los archivos de `supabase/` en este orden: `esquema.sql`, `version.sql`, `usuarios.sql`, `archivos.sql`, `encuestas.sql` y `mensajes.sql`.
+2. **Primer usuario:** en *Table Editor → permitidos*, agregar a mano el primer correo de Google, en minúsculas. Después se suman los demás desde Configuración → Usuarios con acceso.
+3. **Google:** en Google Cloud, crear un cliente OAuth (aplicación web). En Supabase, *Authentication → Providers → Google*, pegar el ID y el secreto. En *URL Configuration*, agregar la dirección del sistema (por ejemplo `https://wmezatec.github.io/sistema/`) y `http://localhost:8787`. Mientras la app de Google esté en modo prueba, cada correo tiene que estar también como usuario de prueba en Google Cloud.
+4. **`config.js`:** poner la URL del proyecto y la clave publicable (*Project Settings → API*). Es pública por diseño: la seguridad la dan los permisos de la base.
+5. **GitHub Pages:** subir el repositorio y activar Pages desde la rama `main`. La página web de WM TEC escribe en la tabla `mensajes` con la misma URL y clave.
+6. **Probar:** entrar con el correo habilitado, cargar algo, recargar y ver que siga ahí.
+
+**Copias de seguridad:**
+- La base guarda sola una copia por día en la tabla `copias` y conserva 60 días.
+- Desde Configuración se puede descargar una copia `.json` y restaurarla. Conviene descargarla una vez por mes y guardarla fuera de Supabase.
+- El código de toda la app está en GitHub. Los datos, no: están solo en Supabase y en esas copias.
+
+**Uso local, sin Supabase:** `iniciar.bat` (necesita Node.js) abre http://localhost:8787 y guarda en `datos/datos.json`. Lo cargado ahí no se mezcla con lo de la nube.
+
+---
+
+## 13. Otros archivos del repositorio
+
+| Archivo | Qué es |
+|---|---|
+| `cambios.md` | Registro de cambios por sesión. |
+| `pendientes.md` | Lo que está hecho y lo que falta (por ejemplo, avisos con el sistema cerrado). |
+| `eventos-relaciones-publicas.md` | Eventos de la zona para hacer relaciones públicas (industria, construcción, agro). |
+| `manual-de-marca.md` / `.pdf` | Este manual. |
+| `manual/plantilla.html` y `manual/armar.py` | La fuente del PDF. Se cambia el texto en `plantilla.html` y se corre `python manual/armar.py` (necesita Python y Chrome) para generar de nuevo `manual-de-marca.pdf`. |
+
+---
+
+## 14. Cómo replicar el sistema
 
 - **Todo en un archivo:** `index.html` (HTML, estilos y JavaScript, sin frameworks).
-- **Datos:** Supabase, con la URL y la clave publicable en `config.js`. `supabase/esquema.sql` crea las tablas, los permisos y las copias diarias. Solo los correos de la tabla `permitidos` pueden entrar.
+- **Datos:** Supabase, con la URL y la clave publicable en `config.js`. Los pasos para instalarlo están en la sección 12.
 - **Acceso:** con Google.
 - **Uso sin internet:** `iniciar.bat` levanta `server.js` en http://localhost:8787 y guarda los datos en `datos/datos.json`.
 - **App en el celular:** `manifest.webmanifest` y `sw.js`.
