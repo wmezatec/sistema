@@ -121,6 +121,27 @@ textarea{min-height:76px;resize:vertical}
 .hoy-acc{gap:10px;flex-wrap:wrap;margin-bottom:16px}.hoy-acc .btn{min-height:52px;font-size:1.05rem;padding:.7em 1.6em}
 .grid.corto .extra{display:none}.grid .solo-corto{display:none}.grid.corto .solo-corto{display:block}
 .pila[hidden]{display:none}
+/* Ficha de cliente: datos fijos a un lado, pestañas y línea de tiempo al otro */
+.fc-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.fc-etapa{width:auto;min-width:170px}
+.fc-nuevo{position:relative}
+.fc-menu{position:absolute;left:0;top:calc(100% + 6px);z-index:30;min-width:190px;background:#fff;border:1px solid #c9cbc4;border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:grid}
+.fc-menu[hidden]{display:none}
+.fc-menu button{border:0;background:none;text-align:left;font:inherit;font-weight:600;padding:.6em .8em;border-radius:10px;cursor:pointer;color:var(--tinta)}
+.fc-menu button:hover{background:#f0f1ec}
+.fc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.fc-st{background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 1px 0 #d9dbd4;display:grid;gap:2px}
+.fc-st b{font-size:1.15rem}.fc-st small{color:var(--tinta-suave);font-weight:600}.fc-st.rojo b{color:var(--rojo)}
+.fc-msg{margin-bottom:16px}.fc-msg[hidden]{display:none}
+.fc-cols{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;align-items:start}
+
+.fc-ficha summary{font-weight:800;cursor:pointer;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave)}
+.fc-campos{display:grid;gap:10px;margin-top:12px}.fc-campos textarea{min-height:90px}
+.fc-main{min-width:0;display:grid;gap:14px;align-content:start}
+.seg.fc-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;width:100%;margin:0}.seg.fc-tabs button{flex:1 0 auto;padding:0 1em;white-space:nowrap}
+.fc-filtro{margin-bottom:10px}
+@media(max-width:900px){.fc-cols{grid-template-columns:1fr}.fc-ficha{position:static}.fc-etapa{min-width:0}}
+
 .pila[data-tp="trabajo"]{grid-template-columns:repeat(auto-fit,minmax(340px,1fr));align-items:stretch;gap:18px 20px}.pila[data-tp="trabajo"]>section{min-width:0;margin:0;display:flex;flex-direction:column}
 .pila[data-tp="trabajo"]>section>ul.lista{flex:1;display:flex;flex-direction:column}.pila[data-tp="trabajo"] li.vacio{flex:1;display:flex;align-items:center;justify-content:center}
 .flujo{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;font-size:0.9rem;align-items:center}.flujo .btn{min-height:36px}.fotos{display:flex;gap:6px;flex-wrap:wrap}.fotos .fto{max-width:110px;max-height:80px}
@@ -1386,12 +1407,12 @@ document.addEventListener("keydown",e=>{
   const q=document.getElementById("q");if(!q)return;q.focus()});
 
 /* ---- Ficha de cliente ---- */
-let CTAB={id:"",t:"trabajo"};
+let CTAB={id:"",t:"res",f:"todo"};
 function vCliente(id){
   const c=cli(id);if(!c){location.hash="#clientes";return}
   const ds=D.diag.filter(d=>d.cid===id).sort((a,b)=>a.fecha<b.fecha?1:-1), ps=D.pres.filter(p=>p.cid===id), cs=cobrosDe(id), ts=trabDe(id).sort((a,b)=>a.fecha<b.fecha?1:-1);
   const u=ultimoTrab(id),m=proxMant(id),h=hoy(),w=wa(c.tel);
-  if(CTAB.id!==id){CTAB.id=id;CTAB.t="trabajo"}
+  if(CTAB.id!==id){CTAB.id=id;CTAB.t="res";CTAB.f="todo"}
   const sd=saldo(id),venc=cs.some(x=>pendiente(x)&&x.vence<h),vis=D.trab.filter(t=>t.cid===id&&t.estado==="agendado").sort((a,b)=>a.fecha<b.fecha?-1:1)[0],esp=ps.filter(p=>p.estado==="enviado").length,resumen=[];
   if(sd>0)resumen.push(`<span class="${venc?"rojo":""}">Debe ${fmt(sd)}${venc?" (vencido)":""}</span>`);
   if(vis)resumen.push(`<span>Próxima visita ${fecha(vis.fecha)}</span>`);
@@ -1399,16 +1420,54 @@ function vCliente(id){
   if(m&&!m.agendado&&m.f<h)resumen.push('<span class="rojo">Mantenimiento vencido</span>');
   
   const bc=document.getElementById("barra-ctx");bc.hidden=false;bc.innerHTML=`<a class="btn chico pri" href="#clientes"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Clientes</a><span class="ctx-tit"><b>${esc(nomCorto(c))}</b></span>${telIco(c)}<button class="btn chico claro ico" data-a="editar" data-id="${c.id}" title="Editar" aria-label="Editar"><svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg></button>`;
+  const prs=D.proy.filter(x=>x.cid===id),tbs=D.tableros.filter(t=>t.cid===id),pa=proxAct(c);
+  const TABS=[["res","Resumen",0],["tp","Trabajos y presupuestos",ts.length+ps.length],["cob","Cobros",cs.length],["proy","Proyectos",prs.length],["tec","Técnico",ds.length+tbs.length]].filter(t=>["res","tp"].includes(t[0])||t[2]>0||CTAB.t===t[0]);
+  if(!TABS.some(t=>t[0]===CTAB.t))CTAB.t="res";
+  const vacioP=t=>`<li class="vacio">${t}</li>`;
+  const liTrab=t=>`<li class="fila" data-k="tra" data-go="#ot/${t.id}"><div class="grow"><span class="ttl"><span class="etq">Trabajo</span> <a href="#ot/${t.id}">${t.ot?esc(t.ot)+" · ":""}${esc(t.tipo)}</a></span><small>${fecha(t.fecha)} · ${esc(t.sitio||"")}${t.desc?" · "+mdPlano(t.desc):""}</small>${flujoTrab(t)}</div>${etqOT(t)}</li>`;
+  const liPres=p=>`<li data-k="pre"><a class="fila" href="#presdoc/${p.id}"><div class="grow"><span class="ttl"><span class="etq">Presupuesto</span> ${p.num}${p.titulo?" · "+esc(p.titulo):""}</span><small>${fecha(p.fecha)} · ${fmt(montoPres(p))}</small></div><span class="etq ${p.estado==="aceptado"?"ok":p.estado==="enviado"?"az":""}">${EST_PRES[p.estado]}</span></a></li>`;
+  const mezcla=ts.map(t=>({f:t.fecha,h:liTrab(t)})).concat(ps.map(p=>({f:p.fecha,h:liPres(p)}))).sort((a,b)=>a.f<b.f?1:-1);
+  const stats=[
+    [sd>0?fmt(sd):"Al día","Saldo"+(venc?" (vencido)":""),venc?"rojo":""],
+    [fmt(facturado(id)),"Facturado",""],
+    [vis?"Visita "+fecha(vis.fecha):pa?fecha(pa.f)+" · "+esc(pa.tipo):"—","Lo próximo",""],
+    [esp?String(esp):"0","Presupuestos esperando",""]
+  ];
+  if(m&&!m.agendado&&m.f<h)stats.push(["Vencido","Mantenimiento","rojo"]);
+  const campo=([k,l])=>`<div><label for="cd-${k}">${l}</label><input id="cd-${k}" data-cd="${k}" value="${esc(c[k]||"")}"${k==="tel"?' inputmode="tel"':k==="mail"?' type="email"':""}></div>`;
   V.innerHTML=`
-  <div class="seg tabs4 no-print" role="tablist">${[["trabajo","Trabajos"],["datos","Datos"],["seguim","Seguimiento"],["hist","Historial"]].map(t=>`<button role="tab" class="${CTAB.t===t[0]?"on":""}" data-ctab="${t[0]}">${t[1]}</button>`).join("")}</div>${resumen.length?`<p class="resumen">${resumen.join("")}</p>`:""}
-  <div class="pila" data-tp="trabajo"${CTAB.t==="trabajo"?"":" hidden"}><section class="sec"><div class="sec-cab"><h2>Trabajos</h2><button class="btn mas-r" data-a="nuevotrab" data-id="${c.id}" title="Agregar trabajo" aria-label="Agregar trabajo"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div><ul class="lista">${ts.map(t=>`<li class="fila" data-go="#ot/${t.id}"><div class="grow"><span class="ttl"><a href="#ot/${t.id}">${t.ot?esc(t.ot)+" · ":""}${esc(t.tipo)}</a></span><small>${fecha(t.fecha)} · ${esc(t.sitio||"")}${t.desc?" · "+mdPlano(t.desc):""}</small>${flujoTrab(t)}</div>${etqOT(t)}</li>`).join("")||'<li class="vacio">Sin trabajos.</li>'}</ul></section><section class="sec"><div class="sec-cab"><h2>Presupuestos</h2><button class="btn mas-r" data-a="nuevopres" data-id="${c.id}" title="Agregar presupuesto" aria-label="Agregar presupuesto"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div><ul class="lista">${ps.map(p=>`<li><a class="fila" href="#presdoc/${p.id}"><div class="grow"><span class="ttl">${p.num}${p.titulo?" · "+esc(p.titulo):""}</span><small>${fecha(p.fecha)} · ${fmt(montoPres(p))}</small></div><span class="etq ${p.estado==="aceptado"?"ok":p.estado==="enviado"?"az":""}">${EST_PRES[p.estado]}</span></a></li>`).join("")||'<li class="vacio">Sin presupuestos.</li>'}</ul></section><section class="sec"><div class="sec-cab"><h2>Cobros</h2><button class="btn mas-r" data-a="nuevocobro" data-id="${c.id}" title="Agregar cobro" aria-label="Agregar cobro"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div><ul class="lista">${cs.sort((a,b)=>a.vence<b.vence?1:-1).map(x=>`<li class="fila"><div class="grow"><span class="ttl">${fmt(x.monto)} · ${esc(x.concepto)}</span><small>${x.pagado?"Cobrado el "+fecha(x.pagado)+" · "+esc(x.medio):"Vence el "+fecha(x.vence)}</small></div>${x.pagado?'<span class="etq ok">Cobrado</span>':`<button class="btn chico pri" data-a="cobrar" data-id="${x.id}">Cobrar</button>`}</li>`).join("")||'<li class="vacio">Sin cobros.</li>'}</ul></section><section class="sec"><div class="sec-cab"><h2>Diagnósticos</h2><button class="btn mas-r" data-a="nuevodiag" data-id="${c.id}" title="Agregar diagnóstico" aria-label="Agregar diagnóstico"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div><ul class="lista">${ds.map(d=>`<li><a class="fila" href="#diag/${d.id}"><div class="grow"><span class="ttl">${esc(d.sitio||"Diagnóstico")}</span><small>${fecha(d.fecha)} · ${cuenta(d,"urg")} urgentes, ${cuenta(d,"mes")} este mes</small></div>${etq(estadoGlobal(d))}</a></li>`).join("")||'<li class="vacio">Sin diagnósticos.</li>'}</ul></section><section class="sec"><div class="sec-cab"><h2>Tableros</h2><button class="btn mas-r" data-a="nuevotab" data-id="${c.id}" title="Agregar tablero" aria-label="Agregar tablero"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div><ul class="lista">${D.tableros.filter(t=>t.cid===id).map(t=>`<li><a class="fila" href="#tablero/${t.id}"><div class="grow"><span class="ttl">${esc(t.nombre)}</span><small>${fecha(t.fecha)} · ${contarTab(t)} elementos</small></div></a></li>`).join("")||'<li class="vacio">Sin tableros.</li>'}</ul></section></div>
-  <div class="pila" data-tp="datos"${CTAB.t==="datos"?"":" hidden"}><section class="card barra cli-det"><h2>Datos</h2><div class="grid" style="margin-top:12px">${[["nombre","Contacto"],["empresa","Empresa"],["tel","WhatsApp / teléfono"],["mail","Mail"],["cuit","CUIT"],["zona","Zona / dirección"]].map(([k,l])=>`<div><label for="cd-${k}">${l}</label><input id="cd-${k}" data-cd="${k}" value="${esc(c[k]||"")}"${k==="tel"?' inputmode="tel"':k==="mail"?' type="email"':""}></div>`).join("")}
-   <div><label for="cd-rubro">Rubro</label><select id="cd-rubro" data-cd="rubro">${opts(!c.rubro||RUBROS.includes(c.rubro)?RUBROS:RUBROS.concat(c.rubro),c.rubro)}</select></div>
-   <div><label for="cd-origen">Llegó por</label><select id="cd-origen" data-cd="origen">${opts(!c.origen||ORIGENES.includes(c.origen)?ORIGENES:ORIGENES.concat(c.origen),c.origen)}</select></div>
-   <div><label for="cd-colab">Vino por</label><select id="cd-colab" data-cd="colab"><option value="">— Ninguno —</option>${D.colabs.map(x=>`<option value="${x.id}"${x.id===c.colab?" selected":""}>${esc(x.nombre)}</option>`).join("")}</select></div>
-   <div style="grid-column:1/-1"><label for="cd-notas">Notas</label><textarea id="cd-notas" data-cd="notas">${esc(c.notas||"")}</textarea></div></div></section><button class="btn peligro chico" data-a="borrar" data-id="${c.id}" style="justify-self:start">Borrar cliente</button></div>
-  <div class="pila" data-tp="seguim"${CTAB.t==="seguim"?"":" hidden"}><section class="card barra"><h2>Seguimiento</h2><div class="grid" style="margin-top:12px"><div><label for="x-etapa">Etapa</label><select id="x-etapa">${opts(ETAPAS,c.etapa,1)}</select></div></div></section><section class="card barra"><div class="tools" style="justify-content:space-between;margin-bottom:8px"><h2>Actividades</h2><button class="btn chico pri" data-a="act-nueva" data-id="${c.id}">+ Actividad</button></div>${listaActs(c)}</section><section class="card barra"><h2>Mensajes</h2><div class="bloque-msg" style="margin-top:12px"><div><label for="m-pl">Mensaje listo</label><select id="m-pl">${PLANTILLAS.map((p,i)=>`<option value="${i}">${p[0]}</option>`).join("")}</select></div><div><label class="sr" for="m-tx">Texto</label><textarea id="m-tx"></textarea></div> <div class="tools" style="margin:0"><a class="btn wsp" id="m-wa" href="#" target="_blank" rel="noopener">Abrir en WhatsApp</a><button class="btn claro" id="m-cp" type="button">Copiar</button></div></div></section></div>
-  <div class="pila" data-tp="hist"${CTAB.t==="hist"?"":" hidden"}><section class="card barra"><h2>Historial</h2><div style="display:flex;gap:8px;margin:12px 0"><label class="sr" for="x-nota">Nueva nota</label><input id="x-nota"><button class="btn chico" id="x-add" type="button">Anotar</button></div>${acts(c).length?`<h3 style="margin:14px 0 8px">Planificado</h3>${listaActs(c)}<h3 style="margin:18px 0 10px">Hecho</h3>`:""}<ul class="linea">${(c.hist||[]).map(x=>`<li class="${claseHist(x.t)}"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><span class="grow md-in">${md(x.t)}</span></li>`).join("")||'<li class="vacio">Sin movimientos.</li>'}</ul></section></div>`;
+  <div class="fc-bar no-print"><div><label class="sr" for="x-etapa">Etapa</label><select id="x-etapa" class="fc-etapa">${opts(ETAPAS,c.etapa,1)}</select></div>
+   <div class="fc-nuevo"><button class="btn pri" id="fc-nuevo" type="button" aria-haspopup="menu" aria-expanded="false">+ Nuevo</button><div class="fc-menu" id="fc-menu" role="menu" hidden>
+    ${[["nuevotrab","Trabajo"],["nuevopres","Presupuesto"],["nuevoproy","Proyecto"],["nuevocobro","Cobro"],["nuevodiag","Diagnóstico"],["nuevotab","Tablero"],["act-nueva","Actividad"]].map(([a,t])=>`<button type="button" role="menuitem" data-a="${a}" data-id="${c.id}">${t}</button>`).join("")}<button type="button" role="menuitem" id="fc-nota-ir">Nota</button></div></div>
+   <button class="btn claro" id="fc-msg-b" type="button" aria-expanded="false">Enviar mensaje</button></div>
+  <div class="fc-stats">${stats.map(x=>`<div class="fc-st ${x[2]}"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("")}</div>
+  <section class="card barra fc-msg" id="fc-msg" hidden><h2>Mensaje por WhatsApp</h2><div class="bloque-msg" style="margin-top:12px"><div><label for="m-pl">Mensaje listo</label><select id="m-pl">${PLANTILLAS.map((p,i)=>`<option value="${i}">${p[0]}</option>`).join("")}</select></div><div><label class="sr" for="m-tx">Texto</label><textarea id="m-tx"></textarea></div> <div class="tools" style="margin:0"><a class="btn wsp" id="m-wa" href="#" target="_blank" rel="noopener">Abrir en WhatsApp</a><button class="btn claro" id="m-cp" type="button">Copiar</button></div></div></section>
+  <div class="fc-cols">
+   <details class="card barra fc-ficha cli-det"${innerWidth>900?" open":""}><summary>Ficha del cliente</summary><div class="fc-campos">${[["nombre","Contacto"],["empresa","Empresa"],["tel","WhatsApp / teléfono"],["mail","Mail"],["cuit","CUIT"],["zona","Zona / dirección"]].map(campo).join("")}
+    <div><label for="cd-rubro">Rubro</label><select id="cd-rubro" data-cd="rubro">${opts(!c.rubro||RUBROS.includes(c.rubro)?RUBROS:RUBROS.concat(c.rubro),c.rubro)}</select></div>
+    <div><label for="cd-origen">Llegó por</label><select id="cd-origen" data-cd="origen">${opts(!c.origen||ORIGENES.includes(c.origen)?ORIGENES:ORIGENES.concat(c.origen),c.origen)}</select></div>
+    <div><label for="cd-colab">Vino por</label><select id="cd-colab" data-cd="colab"><option value="">— Ninguno —</option>${D.colabs.map(x=>`<option value="${x.id}"${x.id===c.colab?" selected":""}>${esc(x.nombre)}</option>`).join("")}</select></div>
+    <div><label for="cd-notas">Notas</label><textarea id="cd-notas" data-cd="notas">${esc(c.notas||"")}</textarea></div></div>
+    <button class="btn peligro chico" data-a="borrar" data-id="${c.id}" style="margin-top:14px">Borrar cliente</button></details>
+   <div class="fc-main">
+    <div class="seg fc-tabs no-print" role="tablist">${TABS.map(t=>`<button role="tab" class="${CTAB.t===t[0]?"on":""}" data-ctab="${t[0]}">${t[1]}${t[2]?` <span class="etq">${t[2]}</span>`:""}</button>`).join("")}</div>
+    <div class="pila" data-tp="res"${CTAB.t==="res"?"":" hidden"}>
+     <section class="card barra"><div style="display:flex;gap:8px"><label class="sr" for="x-nota">Nueva nota</label><input id="x-nota" placeholder="Anotar algo de este cliente…"><button class="btn chico" id="x-add" type="button">Anotar</button></div></section>
+     ${acts(c).length?`<section class="card barra"><div class="sec-cab"><h2>Lo próximo</h2></div>${listaActs(c)}</section>`:""}
+     <section class="card barra"><div class="sec-cab"><h2>Historia del cliente</h2></div><ul class="linea">${(c.hist||[]).map(x=>`<li class="${claseHist(x.t)}"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><span class="grow md-in">${md(x.t)}</span></li>`).join("")||'<li class="vacio">Sin movimientos.</li>'}</ul></section></div>
+    <div class="pila" data-tp="tp"${CTAB.t==="tp"?"":" hidden"}><section class="card barra"><div class="seg seg-chico fc-filtro no-print">${[["todo","Todos"],["tra","Trabajos"],["pre","Presupuestos"]].map(([k,t])=>`<button type="button" class="${CTAB.f===k?"on":""}" data-tf="${k}">${t}</button>`).join("")}</div><ul class="lista" id="fc-tp">${mezcla.map(x=>x.h).join("")||vacioP("Todavía no hay trabajos ni presupuestos.")}</ul></section></div>
+    <div class="pila" data-tp="cob"${CTAB.t==="cob"?"":" hidden"}><section class="card barra"><ul class="lista">${cs.sort((a,b)=>a.vence<b.vence?1:-1).map(x=>`<li class="fila"><div class="grow"><span class="ttl">${fmt(x.monto)} · ${esc(x.concepto)}</span><small>${x.pagado?"Cobrado el "+fecha(x.pagado)+" · "+esc(x.medio):"Vence el "+fecha(x.vence)}</small></div>${x.pagado?'<span class="etq ok">Cobrado</span>':`<button class="btn chico pri" data-a="cobrar" data-id="${x.id}">Cobrar</button>`}</li>`).join("")||vacioP("Sin cobros.")}</ul></section></div>
+    <div class="pila" data-tp="proy"${CTAB.t==="proy"?"":" hidden"}><section class="card barra"><ul class="lista">${prs.map(p=>`<li><a class="fila" href="#proy/${p.id}"><div class="grow"><span class="ttl">${esc(p.titulo||"(sin título)")}</span><small>${fecha(p.fecha)} · ${fmt(totCot(p))}</small></div></a></li>`).join("")||vacioP("Sin proyectos.")}</ul></section></div>
+    <div class="pila" data-tp="tec"${CTAB.t==="tec"?"":" hidden"}><section class="card barra"><div class="sec-cab"><h2>Diagnósticos</h2></div><ul class="lista">${ds.map(d=>`<li><a class="fila" href="#diag/${d.id}"><div class="grow"><span class="ttl">${esc(d.sitio||"Diagnóstico")}</span><small>${fecha(d.fecha)} · ${cuenta(d,"urg")} urgentes, ${cuenta(d,"mes")} este mes</small></div>${etq(estadoGlobal(d))}</a></li>`).join("")||vacioP("Sin diagnósticos.")}</ul></section>
+     <section class="card barra"><div class="sec-cab"><h2>Tableros</h2></div><ul class="lista">${tbs.map(t=>`<li><a class="fila" href="#tablero/${t.id}"><div class="grow"><span class="ttl">${esc(t.nombre)}</span><small>${fecha(t.fecha)} · ${contarTab(t)} elementos</small></div></a></li>`).join("")||vacioP("Sin tableros.")}</ul></section></div>
+   </div></div>`;
+  /* + Nuevo, mensaje y filtro */
+  const mn=V.querySelector("#fc-menu"),bn=V.querySelector("#fc-nuevo"),cierra=()=>{mn.hidden=true;bn.setAttribute("aria-expanded","false")};
+  bn.onclick=e=>{e.stopPropagation();const ab=mn.hidden;mn.hidden=!ab;bn.setAttribute("aria-expanded",String(ab));if(ab)document.addEventListener("click",cierra,{once:true})};
+  V.querySelector("#fc-nota-ir").onclick=()=>{cierra();CTAB.t="res";V.querySelector('[data-ctab="res"]').click();const i=V.querySelector("#x-nota");i.focus();i.scrollIntoView({block:"center"})};
+  V.querySelector("#fc-msg-b").onclick=e=>{const b=V.querySelector("#fc-msg");b.hidden=!b.hidden;e.currentTarget.setAttribute("aria-expanded",String(!b.hidden))};
+  const filtra=()=>V.querySelectorAll("#fc-tp>li[data-k]").forEach(l=>l.hidden=CTAB.f!=="todo"&&l.dataset.k!==CTAB.f);filtra();
+  V.querySelectorAll("[data-tf]").forEach(b=>b.onclick=()=>{CTAB.f=b.dataset.tf;V.querySelectorAll("[data-tf]").forEach(x=>x.classList.toggle("on",x===b));filtra()});
   V.querySelectorAll("[data-ctab]").forEach(b=>b.onclick=()=>{CTAB.t=b.dataset.ctab;V.querySelectorAll("[data-ctab]").forEach(x=>x.classList.toggle("on",x===b));V.querySelectorAll("[data-tp]").forEach(x=>x.hidden=x.dataset.tp!==CTAB.t)});
   V.querySelector("#x-etapa").onchange=e=>mover(c.id,e.target.value);
   V.querySelectorAll("[data-cd]").forEach(i=>i.onchange=()=>{const k=i.dataset.cd;c[k]=i.value.trim();guardar();if(["nombre","empresa","tel","rubro","zona"].includes(k))render()});
