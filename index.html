@@ -775,6 +775,48 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 }
 /* Menú ☰ de celular: Configuración una sola vez (la del pie, junto a Notificaciones) */
 @media (max-width:900px){#b-cfg2{display:none!important}}
+
+/* Ajustes WMTEC: importes compactos, signo fijo y acciones circulares */
+.ico-eliminar{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;padding:0!important;border-radius:50%!important;display:inline-flex!important;align-items:center;justify-content:center;flex:none;font-size:0!important}
+.ico-eliminar .ic{width:18px;height:18px;stroke-width:2}
+.precio-pesos{position:relative;display:flex;align-items:center;max-width:100%}
+.precio-pesos>span{position:absolute;left:12px;z-index:2;font-weight:800;pointer-events:none;color:var(--tinta)}
+.precio-pesos>input{padding-left:29px!important;min-height:0!important;height:36px!important;box-sizing:border-box}
+.pres-items .monto input{padding-top:0!important;padding-bottom:0!important}
+@media(max-width:900px){
+ .pres-items .ren,.ren:has([data-mi]){grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:center}
+ .pres-items .ren>textarea,.pres-items .ren>.md-vivo,.ren:has([data-mi])>textarea{grid-column:1/-1;width:100%;min-width:0}
+ .pres-items .ren>.monto,.ren:has([data-mi])>.monto{grid-column:1;grid-row:2;width:min(150px,55vw);justify-self:start}
+ .pres-items .ren>.ico-eliminar,.ren:has([data-mi])>.ico-eliminar{grid-column:2;grid-row:2}
+ .precio-pesos>input{height:30px!important;font-size:.92rem}
+}
+
+/* WMTEC: búsqueda compacta en celulares, desplegada al tocar la lupa */
+@media(max-width:900px){
+  .barra-sup>.busca{flex:0 0 36px!important;width:36px!important;min-width:36px!important;max-width:36px!important;height:36px;position:static!important;margin-left:auto!important}
+  .barra-sup>.busca>.ic{position:static!important;display:block!important;width:20px;height:20px;pointer-events:none}
+  .barra-sup>.busca>#q-global{display:none!important}
+  .barra-sup>.busca:not(.busca-abierta){display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;background:#fff}
+  .barra-sup>.busca.busca-abierta>#q-global{display:block!important;position:fixed!important;top:calc(env(safe-area-inset-top) + 10px);left:54px;width:calc(100vw - 108px)!important;height:44px!important;z-index:101;background:#fff;box-shadow:0 5px 20px #0003;padding:0 12px!important}
+  .barra-sup>.busca.busca-abierta:before{content:"";position:fixed;inset:0;background:#0009;z-index:99}
+  .barra-sup>.busca.busca-abierta>.ic{position:fixed!important;top:calc(env(safe-area-inset-top) + 20px);right:16px;z-index:102;color:#fff}
+  .barra-sup>.busca.busca-abierta .q-res{position:fixed!important;top:calc(env(safe-area-inset-top) + 64px)!important;left:12px!important;right:12px!important;width:auto!important;max-height:65vh;overflow:auto;z-index:102}
+  .barra-sup>.busca.busca-abierta .q-res[hidden]{display:none!important}
+}
+
+/* Accesos de presupuestos en móvil */
+.pres-fab,.cfg-busca{display:none}
+@media(max-width:900px){
+  .pres-fab{display:flex;position:fixed;right:64px;bottom:calc(16px + env(safe-area-inset-bottom));width:40px;height:40px;align-items:center;justify-content:center;border:0;border-radius:50%;background:var(--degradado);color:var(--carbon);box-shadow:0 8px 24px #0004;z-index:22;padding:0}
+  .pres-fab .ic{width:21px;height:21px;stroke-width:2.5}
+  .cfg-busca{display:flex;align-items:center;justify-content:center;order:0;flex:0 0 36px;width:36px;height:36px;border:0;border-radius:50%;background:#fff;color:var(--tinta);font-size:23px;line-height:1;padding:0}
+  .barra-sup>.busca:not(.busca-abierta){display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
+  .barra-sup>.busca>.ic{width:20px!important;height:20px!important;margin:0!important;flex:none;transform:none!important;left:auto!important;top:auto!important}
+}
+
+@media(max-width:900px){.pres-fab{display:none}body.en-presupuestos .pres-fab{display:flex}}
+/* El acceso rápido a configuración aparece exclusivamente en Presupuestos. */
+@media(max-width:900px){.cfg-busca{display:none!important}body.en-presupuestos .cfg-busca{display:flex!important}}
 </style>
 </head>
 <body>
@@ -882,6 +924,8 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
         <button class="busca-mic" id="b-voz" type="button" title="Hablar" aria-label="Hablar" hidden><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
         <div class="q-res" id="q-res" role="listbox" hidden></div>
       </div>
+      <button class="pres-fab" id="b-pres-fab" type="button" data-a="nuevopres" title="Nuevo presupuesto" aria-label="Nuevo presupuesto"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <button class="cfg-busca" id="b-cfg-pres-mobile" type="button" data-a="pres-config-num" title="Configurar numeración de presupuestos" aria-label="Configurar numeración de presupuestos">⚙</button>
       <button class="voz-fab" id="b-voz2" type="button" title="Hablar" aria-label="Hablar"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
       <button class="mas-crear" id="b-crear" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-crear" aria-label="Crear"><svg class="ic" aria-hidden="true"><use href="#i-mas2"/></svg><span class="t">Crear</span></button>
       <div class="menu-crear" id="menu-crear" role="menu" hidden>
@@ -957,7 +1001,7 @@ const PLANTILLAS=[
 const CF=window.WM_SUPA||{}, SB=CF.url&&window.supabase?supabase.createClient(CF.url,CF.key,{auth:{flowType:"pkce"}}):null;
 const API=!SB&&/^https?:$/.test(location.protocol), KEY="wmtec_crm_v2";
 let TOKEN=null;
-const vacio=()=>({v:2,clientes:[],colabs:[],diag:[],pres:[],cobros:[],trab:[],movs:[],fijos:[],tableros:[],precios:[],proy:[],cfg:{prox:1,ot:1,saldoIni:0}});
+const vacio=()=>({v:2,clientes:[],colabs:[],diag:[],pres:[],cobros:[],trab:[],movs:[],fijos:[],tableros:[],precios:[],proy:[],cfg:{prox:36,ot:1,saldoIni:0}});
 const norm=x=>{const b=vacio();x=x&&typeof x==="object"?x:{};for(const k in b)if(x[k]===undefined)x[k]=b[k];return x};
 let D=vacio(), tG=null;
 function estado(t,m){const g=document.getElementById("guardado");g.className="guardado "+t;g.lastElementChild.textContent=m;g.title=m}
@@ -994,7 +1038,7 @@ addEventListener("beforeunload",()=>{if(!tG)return;clearTimeout(tG);
   if(SB)subir(true).catch(()=>{});
   else if(API&&navigator.sendBeacon)navigator.sendBeacon("/api/datos",new Blob([JSON.stringify(D)],{type:"application/json"}))});
 const TIPO_VIEJO={"Reparar o cambiar algo":"Reparación","Instalar o poner en marcha una máquina":"Instalación","Falla de una máquina":"Falla de máquina"};
-function arrancar(){sinEjemplos();ULT=JSON.stringify(D);if(!SB&&D.cfg.nombre)USR=D.cfg.nombre;D.trab.forEach(t=>{if(TIPO_VIEJO[t.tipo])t.tipo=TIPO_VIEJO[t.tipo]});addEventListener("hashchange",render);render();avisosIni()}
+function arrancar(){if(!D.cfg.inicioPres36){D.cfg.prox=Math.max(36,Number(D.cfg.prox)||1);D.cfg.inicioPres36=1;guardar()}sinEjemplos();ULT=JSON.stringify(D);if(!SB&&D.cfg.nombre)USR=D.cfg.nombre;D.trab.forEach(t=>{if(TIPO_VIEJO[t.tipo])t.tipo=TIPO_VIEJO[t.tipo]});addEventListener("hashchange",render);render();avisosIni()}
 /* Borra una vez los datos de ejemplo que venían cargados */
 function sinEjemplos(){if(D.cfg.sinEj)return;const cids=new Set(D.clientes.filter(c=>c.ej).map(c=>c.id));
   D.clientes=D.clientes.filter(c=>!c.ej);["diag","pres","cobros","trab","tableros"].forEach(k=>D[k]=(D[k]||[]).filter(x=>!x.ej&&!cids.has(x.cid)));
@@ -1072,7 +1116,7 @@ const condSelDe=p=>{if(!p.condSel){const bib=bibCond(),txt=p.condB?p.condB.filte
   txt.forEach(t=>{const l=String(t).trim();if(!l)return;let e=bib.find(x=>x.t.trim()===l);if(!e){e={id:uid(),t:l};bib.push(e)}if(!p.condSel.includes(e.id))p.condSel.push(e.id)})}return p.condSel};
 /* Ficha privada: referencias para vos, nunca salen en el presupuesto */
 const fichaVacia=()=>({valorCaja:"",modulos:"",metodo:"",notas:""});
-const fic=p=>{p.ficha=Object.assign(fichaVacia(),p.ficha||{});return p.ficha};
+const fic=p=>{p.ficha=Object.assign(fichaVacia(),p.ficha||{});if(!p.ficha.notasUnificadas){const partes=[p.ficha.valorCaja&&"Valor caja: "+p.ficha.valorCaja,p.ficha.modulos&&"Módulos: "+p.ficha.modulos,p.ficha.metodo&&"Cómo lo cotizaste: "+p.ficha.metodo,p.ficha.notas].filter(Boolean);p.ficha.notas=partes.join("\n");p.ficha.notasUnificadas=true;}return p.ficha};
 const migrarPres=p=>{if(p.simple)return p;const o=(p.elegida!=null&&p.opciones&&p.opciones[p.elegida])||recomendada(p);
   p.items=[{d:[p.titulo,o.desc].filter(Boolean).join(". "),m:p.total||o.precio||""}];p.desc=0;p.nota="";p.cond=COND_PRES;p.simple=true;guardar();return p};
 const montoPres=p=>p.simple?totPres(p):(p.total||num(recomendada(p).precio));
@@ -1522,7 +1566,7 @@ function abrirCfg(){const d=document.getElementById("menu-cfg"),$=id=>document.g
   $("cf-usu-s").hidden=!SB;pintarUsu();if(!d.open)d.showModal()}
 function pintarUsu(){const ul=document.getElementById("cf-usu");if(!SB||!ul)return;
   if(!USUARIOS){ul.innerHTML='<li class="vacio">Cargando…</li>';cargarUsu();return}
-  ul.innerHTML=USUARIOS.map(u=>`<li class="fila"><div class="grow"><span class="ttl">${esc(u.nombre||u.email.split("@")[0])}</span><small>${esc(u.email)}</small></div>${u.email===MIMAIL?'<span class="etq">Vos</span>':`<button type="button" class="btn chico peligro" data-usu-q="${esc(u.email)}">Quitar</button>`}</li>`).join("")}
+  ul.innerHTML=USUARIOS.map(u=>`<li class="fila"><div class="grow"><span class="ttl">${esc(u.nombre||u.email.split("@")[0])}</span><small>${esc(u.email)}</small></div>${u.email===MIMAIL?'<span class="etq">Vos</span>':`<button aria-label="Quitar" title="Quitar" type="button" class="btn chico peligro ico-eliminar" data-usu-q="${esc(u.email)}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button>`}</li>`).join("")}
 function cargarUsu(){if(!SB)return;SB.from("permitidos").select("*").order("email").then(({data,error})=>{
   if(error){const ul=document.getElementById("cf-usu");if(ul)ul.innerHTML='<li class="vacio">Para administrar usuarios hay que correr usuarios.sql en Supabase.</li>';return}
   USUARIOS=data||[];const yo=USUARIOS.find(u=>u.email===MIMAIL);if(yo&&yo.nombre)USR=yo.nombre;pintarUsu()})}
@@ -1550,7 +1594,7 @@ function vMensajes(){
   V.innerHTML=`<div class="cab"><div><h1>Mensajes</h1><p>De la página web</p></div></div>
   <div class="pila">${MSJ.map(m=>{const w=wa(m.telefono,"Hola "+String(m.nombre).split(" ")[0]+", te escribo por la consulta que dejaste en la web.");
     return `<article class="msj${m.leido?"":" nuevo"}"><div class="de"><b>${esc(m.nombre)}${m.empresa?" · "+esc(m.empresa):""}</b><small>${fecha(m.creado.slice(0,10))} · ${esc(m.tipo||"")}</small></div><p>${esc(m.mensaje)}</p><small>${esc(m.telefono)}</small>
-    <div class="acc">${w?`<a class="btn chico ico" href="${w}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:""}<a class="btn chico claro ico" href="tel:${esc(String(m.telefono).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a><button class="btn chico pri" data-a="msj-cliente" data-id="${m.id}">Crear cliente</button><button class="btn chico claro" data-a="msj-leido" data-id="${m.id}">${m.leido?"Marcar no leído":"Marcar leído"}</button><button class="btn chico peligro" data-a="msj-borrar" data-id="${m.id}">Borrar</button></div></article>`}).join("")||'<div class="vacio">Sin mensajes.</div>'}</div>`;
+    <div class="acc">${w?`<a class="btn chico ico" href="${w}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">${ico("wsp")}</a>`:""}<a class="btn chico claro ico" href="tel:${esc(String(m.telefono).replace(/[^\d+]/g,""))}" title="Llamar" aria-label="Llamar">${ico("tel")}</a><button class="btn chico pri" data-a="msj-cliente" data-id="${m.id}">Crear cliente</button><button class="btn chico claro" data-a="msj-leido" data-id="${m.id}">${m.leido?"Marcar no leído":"Marcar leído"}</button><button aria-label="Borrar" title="Borrar" class="btn chico peligro ico-eliminar" data-a="msj-borrar" data-id="${m.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></article>`}).join("")||'<div class="vacio">Sin mensajes.</div>'}</div>`;
 }
 function marcarMsj(m,v){m.leido=v;SB.from("mensajes").update({leido:v}).eq("id",m.id).then(({error})=>{if(error)aviso("No se pudo guardar");cargarMsj()})}
 
@@ -1584,7 +1628,7 @@ const GUIA={src:"AAIERIC",f:"septiembre 2026",l:[
 function vPrecios(){
   const L=D.precios.slice().sort((a,b)=>a.n.localeCompare(b.n));
   V.innerHTML=`<div class="cab"><div><h1>Lista de precios</h1></div><div class="tools" style="margin:0"><button class="btn claro chico" data-a="precio-guia">Cargar guía AAIERIC</button><button class="btn claro chico" data-a="precio-ajuste">Ajustar %</button><button class="btn pri chico" data-a="precio-nuevo">+ Agregar</button></div></div>
-  <div class="tabla-w precios"><table class="t"><thead><tr><th>Qué</th><th>Unidad</th><th class="num">Precio</th><th></th></tr></thead><tbody>${L.map(x=>`<tr><td><label class="sr" for="pn${x.id}">Nombre</label><input id="pn${x.id}" data-pr="${x.id}" data-k="n" value="${esc(x.n)}">${x.src?`<small class="src">${esc(x.src)}</small>`:""}</td><td><label class="sr" for="pu${x.id}">Unidad</label><select id="pu${x.id}" data-pr="${x.id}" data-k="u">${opts(UNIDADES,x.u)}</select></td><td class="num"><label class="sr" for="pp${x.id}">Precio</label><input id="pp${x.id}" data-pr="${x.id}" data-k="p" inputmode="numeric" data-dinero value="${esc(x.p)}" style="text-align:right"></td><td><button class="btn chico peligro" data-a="precio-borrar" data-id="${x.id}">Quitar</button></td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Sin precios cargados.</div></td></tr>`}</tbody></table></div>`;
+  <div class="tabla-w precios"><table class="t"><thead><tr><th>Qué</th><th>Unidad</th><th class="num">Precio</th><th></th></tr></thead><tbody>${L.map(x=>`<tr><td><label class="sr" for="pn${x.id}">Nombre</label><input id="pn${x.id}" data-pr="${x.id}" data-k="n" value="${esc(x.n)}">${x.src?`<small class="src">${esc(x.src)}</small>`:""}</td><td><label class="sr" for="pu${x.id}">Unidad</label><select id="pu${x.id}" data-pr="${x.id}" data-k="u">${opts(UNIDADES,x.u)}</select></td><td class="num"><label class="sr" for="pp${x.id}">Precio</label><input id="pp${x.id}" data-pr="${x.id}" data-k="p" inputmode="numeric" data-dinero value="${esc(x.p)}" style="text-align:right"></td><td><button aria-label="Quitar" title="Quitar" class="btn chico peligro ico-eliminar" data-a="precio-borrar" data-id="${x.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Sin precios cargados.</div></td></tr>`}</tbody></table></div>`;
   V.oninput=e=>{const t=e.target;if(ruta().r!=="precios"||!t.dataset.pr)return;const x=D.precios.find(y=>y.id===t.dataset.pr);if(x){x[t.dataset.k]=t.value;guardar()}};
   V.onchange=null;
 }
@@ -1596,7 +1640,7 @@ function vFeedback(){
   <section class="card barra"><h2>Nuevo feedback</h2>
    <div class="ancho" style="margin-top:12px"><label for="fb-t">Feedback sobre el sistema</label><textarea id="fb-t" data-md></textarea></div>
    <div class="tools" style="margin-top:12px"><button class="btn pri" data-a="fb-add">+ Agregar feedback</button></div></section>
-  <section class="card barra" style="margin-top:18px"><h2>Historial <span class="etq">${F.length}</span></h2>${F.map(x=>`<div class="fila"><div class="grow"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><div class="md-in">${md(x.t)}</div></div><button class="btn chico peligro" data-a="fb-del" data-id="${x.id}">Quitar</button></div>`).join("")||'<p class="vacio">Sin feedback todavía.</p>'}</section>`;
+  <section class="card barra" style="margin-top:18px"><h2>Historial <span class="etq">${F.length}</span></h2>${F.map(x=>`<div class="fila"><div class="grow"><small>${fecha(x.f)}${x.u?" · "+esc(x.u):""}</small><div class="md-in">${md(x.t)}</div></div><button aria-label="Quitar" title="Quitar" class="btn chico peligro ico-eliminar" data-a="fb-del" data-id="${x.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div>`).join("")||'<p class="vacio">Sin feedback todavía.</p>'}</section>`;
 }
 /* Bitácora diaria: qué se hizo cada día, con cliente opcional. Una sola página con scroll, separada por fechas */
 const cliPorNom=v=>{v=String(v||"").trim().toLowerCase();return v?D.clientes.find(c=>nom(c).toLowerCase()===v||(c.nombre||"").toLowerCase()===v||(c.empresa||"").toLowerCase()===v):null};
@@ -1626,7 +1670,7 @@ function vColabs(){
 function vColab(id){
   const x=D.colabs.find(k=>k.id===id);if(!x){location.hash="#colaboradores";return}
   const cs=D.clientes.filter(c=>c.colab===id),w=wa(x.tel);
-  V.innerHTML=`<div class="cab"><div><p><a href="#colaboradores"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Colaboradores</a></p><h1>${esc(x.nombre)}</h1><p>${esc([x.rol,x.empresa].filter(Boolean).join(" · "))}</p></div><div class="tools" style="margin:0">${w?`<a class="btn wsp" href="${w}" target="_blank" rel="noopener">WhatsApp</a>`:""}<button class="btn claro" data-a="editarcolab" data-id="${x.id}"<svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button><button class="btn peligro chico" data-a="borrarcolab" data-id="${x.id}">Borrar</button></div></div>
+  V.innerHTML=`<div class="cab"><div><p><a href="#colaboradores"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Colaboradores</a></p><h1>${esc(x.nombre)}</h1><p>${esc([x.rol,x.empresa].filter(Boolean).join(" · "))}</p></div><div class="tools" style="margin:0">${w?`<a class="btn wsp" href="${w}" target="_blank" rel="noopener">WhatsApp</a>`:""}<button class="btn claro" data-a="editarcolab" data-id="${x.id}"<svg class="ic" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button><button aria-label="Borrar" title="Borrar" class="btn peligro chico ico-eliminar" data-a="borrarcolab" data-id="${x.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></div>
   <div class="cols2"><section class="card barra"><div class="tools" style="justify-content:space-between;margin-bottom:8px"><h2>Clientes que trajo</h2><button class="btn chico pri" data-a="nuevo" data-colab="${x.id}">+ Cliente</button></div><ul class="lista">${cs.map(c=>`<li><a class="fila" href="#cliente/${c.id}"><div class="grow"><span class="ttl">${esc(nomCorto(c))}</span><small>${esc([c.rubro,c.zona].filter(Boolean).join(" · "))}</small></div><span class="etq">${etapaN(c.etapa)}</span></a></li>`).join("")||'<li class="vacio">Todavía no tiene clientes asociados.</li>'}</ul></section>
   <section class="card barra"><h2>Datos</h2><p style="margin-top:10px">${[x.tel&&"<b>Tel:</b> "+esc(x.tel),x.mail&&"<b>Mail:</b> "+esc(x.mail)].filter(Boolean).join("<br>")||"Sin datos de contacto todavía."}</p>${x.notas?`<p style="white-space:pre-wrap">${esc(x.notas)}</p>`:""}<p class="calc">Total facturado por sus clientes: ${fmt(cs.reduce((a,c)=>a+facturado(c.id),0))}</p></section></div>`;
 }
@@ -1640,7 +1684,7 @@ function vDiag(id){
   const c=cli(d.cid);d.items=d.items||{};d.med=d.med||{};const m=d.med;
   const g=CHECK.map((gr,gi)=>`<div class="grupo"><div class="grupo-cab"><h3>${gr.g}</h3><button type="button" class="btn chico claro" data-todo="${gi}">Marcar todo Bien</button></div>${gr.it.map(it=>{const v=d.items[it[0]]||{e:"",o:"",a:""};return `<div class="item" data-it="${it[0]}"><div class="q"><b>${it[1]}</b><small>${it[2]}</small></div><div class="sem" role="radiogroup" aria-label="${esc(it[1])}">${ESTADOS.map(s=>`<label><input type="radio" name="e_${it[0]}" value="${s.id}"${v.e===s.id?" checked":""}><span class="${s.id}">${s.n}</span></label>`).join("")}</div><div class="nota"${v.e==="mes"||v.e==="urg"||v.o||v.a?"":" hidden"}><input data-o="${it[0]}" value="${esc(v.o)}" aria-label="Qué encontré en ${esc(it[1])}"><input data-a="${it[0]}" value="${esc(v.a)}" aria-label="Acción para ${esc(it[1])}"><div class="fto-w">${v.f?`<img class="fto" src="${v.f}" alt="Foto"><button type="button" class="btn chico peligro" data-fq="${it[0]}">Quitar foto</button>`:`<label class="btn chico claro fto-b">Sacar foto<input type="file" accept="image/*" capture="environment" data-f="${it[0]}" class="sr"></label>`}</div></div></div>`}).join("")}</div>`).join("");
   const mf=(k,l,u)=>`<div><label for="m-${k}">${l}${u?" ("+u+")":""}</label><input id="m-${k}" data-m="${k}" inputmode="decimal" value="${esc(m[k]||"")}"></div>`;
-  V.innerHTML=`<div class="cab"><div><p><a href="#cliente/${d.cid}"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>${esc(nomCorto(c))}</a></p><h1>Diagnóstico</h1></div><div class="tools" style="margin:0"><a class="btn pri" href="#informe/${d.id}">Ver informe</a><button class="btn claro" data-a="pres-desde-diag" data-id="${d.id}">Crear presupuesto</button><button class="btn peligro chico" data-a="borrardiag" data-id="${d.id}">Borrar</button></div></div>
+  V.innerHTML=`<div class="cab"><div><p><a href="#cliente/${d.cid}"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>${esc(nomCorto(c))}</a></p><h1>Diagnóstico</h1></div><div class="tools" style="margin:0"><a class="btn pri" href="#informe/${d.id}">Ver informe</a><button class="btn claro" data-a="pres-desde-diag" data-id="${d.id}">Crear presupuesto</button><button aria-label="Borrar" title="Borrar" class="btn peligro chico ico-eliminar" data-a="borrardiag" data-id="${d.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></div>
   <section class="card barra"><div class="grid"><div><label for="d-sitio">Instalación / tablero</label><input id="d-sitio" value="${esc(d.sitio||"")}"></div><div><label for="d-fecha">Fecha</label><input id="d-fecha" type="date" value="${esc(d.fecha)}"></div><div><label for="d-carga">Carga al momento</label><input id="d-carga" value="${esc(d.carga||"")}"></div><div><label for="d-resp">Quién acompañó</label><input id="d-resp" value="${esc(d.resp||"")}"></div></div></section>
   <div class="resumen-estado" style="margin:16px 0" id="resumen"></div>${g}
   <section class="card barra" style="margin-top:18px"><h2>Mediciones</h2><div class="med" style="margin-top:12px">${mf("ir","Corriente R","A")}${mf("is","Corriente S","A")}${mf("it","Corriente T","A")}${mf("tmax","Punto más caliente","°C")}${mf("tamb","Temperatura ambiente","°C")}${mf("pat","Puesta a tierra","Ω")}${mf("aisl","Aislación","MΩ")}</div><p class="calc" id="calc"></p></section>
@@ -1690,10 +1734,11 @@ const encDoc=(t,f)=>`<div class="enc"><div><span class="enc-logo"><img src="logo
 
 /* ---- Presupuestos ---- */
 function vPresupuestos(){
-  V.innerHTML=`<div class="cab"><div><h1>Presupuestos</h1></div><button class="btn pri" data-a="nuevopres">+ Nuevo presupuesto</button></div>
+  V.innerHTML=`<div class="cab"><div><h1>Presupuestos</h1></div></div>
   <div class="tabla-w"><table class="t"><thead><tr><th>N°</th><th>Cliente</th><th>Trabajo</th><th>Fecha</th><th>Vence</th><th class="num">Monto</th><th>Estado</th></tr></thead><tbody>${D.pres.slice().sort((a,b)=>a.num<b.num?1:-1).map(p=>`<tr data-go="#presdoc/${p.id}" style="cursor:pointer"><td><a href="#presdoc/${p.id}">${p.num}</a></td><td>${esc(nomCorto(cli(p.cid)))}</td><td>${esc(p.titulo||"")}</td><td>${fecha(p.fecha)}</td><td class="${p.estado==="enviado"&&vencePres(p)<hoy()?"vence":""}">${p.estado==="enviado"?fecha(vencePres(p)):"—"}</td><td class="num">${fmt(montoPres(p))}</td><td><span class="etq ${p.estado==="aceptado"?"ok":p.estado==="enviado"?"az":""}">${EST_PRES[p.estado]}</span></td></tr>`).join("")||`<tr><td colspan="7"><div class="vacio">Todavía no hay presupuestos. Creá uno desde la ficha de un cliente o desde un diagnóstico.</div></td></tr>`}</tbody></table></div>`;
 }
 function nuevoPres(cid,diagId,tid){
+  while(D.pres.some(x=>x.num===PREF+"-"+String(D.cfg.prox).padStart(3,"0")))D.cfg.prox++;
   const p={id:uid(),simple:true,num:PREF+"-"+String(D.cfg.prox).padStart(3,"0"),cid:cid||(D.clientes[0]&&D.clientes[0].id)||"",fecha:hoy(),validez:15,estado:"borrador",titulo:"",items:[{d:"",m:""}],desc:0,nota:"",condSel:bibCond().map(e=>e.id),materiales:[],matSuma:false,ficha:fichaVacia()};
   const d=diagId&&dia(diagId);
   if(d){p.cid=d.cid;p.titulo=d.sitio||"";const l=[];CHECK.forEach(g=>g.it.forEach(it=>{const v=d.items[it[0]];if(v&&(v.e==="urg"||v.e==="mes")&&v.a)l.push({d:v.a,m:""})}));if(l.length)p.items=l;p.did=d.id}
@@ -1707,26 +1752,37 @@ function vPresS(p){
   /* Materiales cargados con Enter dentro de un mismo cuadro: se separan en un material por renglón (el importe queda en el primero) */
   if((p.materiales||[]).some(r=>/\n/.test(r.d||""))){p.materiales=p.materiales.flatMap(r=>{const ls=String(r.d||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);return ls.length>1?ls.map((d,k)=>({d,m:k?"":r.m})):[r]});guardar()}
   const c=cli(p.cid),f=n=>fmt(n),bib=bibCond(),sel=condSelDe(p);
-  V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn peligro chico" data-a="borrarpres" data-id="${p.id}">Borrar</button></div></div>
-  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
-  <section class="card barra pres-items" style="margin-top:18px"><h2>Presupuesto</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" data-md>${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div>${p.items.length>1?`<button class="btn chico peligro" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón">Quitar</button>`:""}</div>`).join("")}</div>
+  V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button aria-label="Borrar" title="Borrar" class="btn peligro chico ico-eliminar" data-a="borrarpres" data-id="${p.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></div>
+  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><input id="p-cid" class="cliente-autocomplete" data-cliente-buscar="1" list="pres-clientes" autocomplete="off" placeholder="Escribí para buscar un cliente" value="${esc(nom(cli(p.cid)))}"><datalist id="pres-clientes">${D.clientes.slice().sort((a,b)=>nom(a).localeCompare(nom(b))).map(x=>`<option value="${esc(nom(x))}"></option>`).join("")}</datalist></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
+  <section class="card barra pres-items" style="margin-top:18px"><h2>Presupuesto</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" data-md>${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><div class="precio-pesos"><span aria-hidden="true">$</span><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div></div>${p.items.length>1?`<button title="Quitar" class="btn chico peligro ico-eliminar" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button>`:""}</div>`).join("")}</div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addren" data-id="${p.id}">+ Agregar renglón</button><button class="btn chico claro" data-a="pres-delista" data-id="${p.id}">+ Desde la lista de precios</button></div>
    <div class="tot-ed"><div><label for="p-desc">Descuento (%)</label><input id="p-desc" data-p="desc" inputmode="numeric" data-pct value="${esc(p.desc||0)}"></div><div class="res"><span>Subtotal <b id="t-sub"></b></span><span id="t-dd">Descuento <b id="t-desc"></b></span><span class="gr">Total <b id="t-tot"></b></span></div></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Materiales</h2><p class="calc">Salen en su propio apartado del presupuesto. El importe es opcional.</p>
-   <div class="rens">${(p.materiales||[]).map((r,i)=>`<div class="ren"><textarea data-mi="${i}" data-mk="d" aria-label="Material">${esc(r.d)}</textarea><div class="monto"><label class="sr" for="mm${i}">Importe</label><input id="mm${i}" data-mi="${i}" data-mk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div><button class="btn chico peligro" data-a="pres-delmat" data-id="${p.id}" data-i="${i}" aria-label="Quitar material">Quitar</button></div>`).join("")}</div>
+   <div class="rens">${(p.materiales||[]).map((r,i)=>`<div class="ren"><textarea data-mi="${i}" data-mk="d" aria-label="Material">${esc(r.d)}</textarea><div class="monto"><label class="sr" for="mm${i}">Importe</label><div class="precio-pesos"><span aria-hidden="true">$</span><input id="mm${i}" data-mi="${i}" data-mk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div></div><button title="Quitar" class="btn chico peligro ico-eliminar" data-a="pres-delmat" data-id="${p.id}" data-i="${i}" aria-label="Quitar material"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div>`).join("")}</div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addmat" data-id="${p.id}">+ Agregar material (Enter)</button></div>
    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input style="width:auto" type="checkbox" data-matsuma="1"${p.matSuma?" checked":""}> Sumar los importes de materiales al total</label></section>
   <section class="card barra" style="margin-top:18px"><h2>Nota</h2><textarea data-p="nota" data-bar aria-label="Nota">${esc(p.nota||"")}</textarea></section>
   <section class="card barra" style="margin-top:18px"><h2>Condiciones</h2><p class="calc">Tildá las que van en este presupuesto. Las que agregás quedan disponibles para todos los presupuestos.</p>
    <div class="tools" style="margin:10px 0 0"><button class="btn chico pri" data-a="cond-add" data-id="${p.id}">+ Agregar condición</button></div>
-   <div class="rens">${bib.map(e=>`<div class="ren"><textarea data-cbib="${e.id}" aria-label="Condición" data-md>${esc(e.t)}</textarea><div class="monto"><label style="display:flex;gap:6px;align-items:center"><input style="width:auto" type="checkbox" data-csel="${e.id}"${sel.includes(e.id)?" checked":""}> Usar</label></div><button class="btn chico peligro" data-a="cond-del" data-id="${e.id}" aria-label="Eliminar condición">Eliminar</button></div>`).join("")||'<p class="vacio">Sin condiciones guardadas.</p>'}</div>
+   <div class="rens">${bib.map(e=>`<div class="ren"><textarea data-cbib="${e.id}" aria-label="Condición" data-md>${esc(e.t)}</textarea><div class="monto"><label style="display:flex;gap:6px;align-items:center"><input style="width:auto" type="checkbox" data-csel="${e.id}"${sel.includes(e.id)?" checked":""}> Usar</label></div><button title="Eliminar" class="btn chico peligro ico-eliminar" data-a="cond-del" data-id="${e.id}" aria-label="Eliminar condición"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div>`).join("")||'<p class="vacio">Sin condiciones guardadas.</p>'}</div>
    <div class="grid" style="margin-top:12px"><div><label for="p-val">Validez (días)</label><input id="p-val" data-p="validez" inputmode="numeric" value="${esc(p.validez)}"></div></div></section>
   <section class="card barra" style="margin-top:18px;border:1px dashed var(--tinta-suave)"><h2>Ficha privada</h2><p class="calc">Solo para vos: no sale en el presupuesto ni en el PDF.</p>
-   <div class="grid" style="margin-top:12px"><div><label for="f-caja">Valor caja ($)</label><input id="f-caja" data-f="valorCaja" inputmode="numeric" data-dinero value="${esc(fic(p).valorCaja)}"></div><div><label for="f-mod">Módulos</label><input id="f-mod" data-f="modulos" value="${esc(fic(p).modulos)}"></div><div class="ancho"><label for="f-met">Cómo lo cotizaste</label><textarea id="f-met" data-f="metodo" data-bar>${esc(fic(p).metodo)}</textarea></div><div class="ancho"><label for="f-not">Otras referencias</label><textarea id="f-not" data-f="notas" data-bar>${esc(fic(p).notas)}</textarea></div></div>
-   <p class="calc" id="f-dif" style="margin-top:10px"></p></section>
+   <div style="margin-top:12px"><label for="f-not">Notas privadas</label><textarea id="f-not" data-f="notas" data-bar style="min-height:150px" aria-label="Notas privadas">${esc(fic(p).notas)}</textarea></div></section>
   <div class="sticky no-print"><a class="btn pri" href="#presdoc/${p.id}">Guardar y ver documento</a></div>`;
   const tot=()=>{const g=n=>document.getElementById(n);g("t-sub").textContent=fmt(subPres(p));g("t-dd").hidden=!num(p.desc);g("t-desc").textContent="- "+fmt(subPres(p)-totPres(p));g("t-tot").textContent=fmt(totPres(p));
-    const dif=g("f-dif");if(dif)dif.textContent=num(fic(p).valorCaja)?"Valor final "+fmt(totPres(p))+" · diferencia con el valor caja: "+fmt(totPres(p)-num(fic(p).valorCaja)):""};tot();
+    };tot();
+  const buscarCliente=V.querySelector("#p-cid");
+  if(buscarCliente){
+    const normalizar=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
+    const aplicarCliente=()=>{const nombre=normalizar(buscarCliente.value);const elegido=D.clientes.find(x=>normalizar(nom(x))===nombre);
+      if(elegido){if(p.cid!==elegido.id){p.cid=elegido.id;guardar();render()}return}
+      if(!nombre){buscarCliente.value=nom(cli(p.cid));return}
+      buscarCliente.setCustomValidity("Seleccioná un cliente de las sugerencias");
+    };
+    buscarCliente.addEventListener("input",()=>buscarCliente.setCustomValidity(""));
+    buscarCliente.addEventListener("change",aplicarCliente);
+    buscarCliente.addEventListener("blur",()=>{if(!D.clientes.some(x=>normalizar(nom(x))===normalizar(buscarCliente.value)))buscarCliente.value=nom(cli(p.cid));buscarCliente.setCustomValidity("")});
+  }
   V.oninput=e=>{const t=e.target;if(ruta().r!=="pres")return;
     if(t.dataset.p)p[t.dataset.p]=t.value;else if(t.dataset.ri!==undefined)p.items[t.dataset.ri][t.dataset.rk]=t.value;
     else if(t.dataset.mi!==undefined)p.materiales[t.dataset.mi][t.dataset.mk]=t.value;
@@ -1751,8 +1807,8 @@ function vPres(id){
   const p=pre(id);if(!p){location.hash="#presupuestos";return}
   migrarPres(p);return vPresS(p);
   const c=cli(p.cid),ed=p.estado==="borrador";
-  V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button class="btn peligro chico" data-a="borrarpres" data-id="${p.id}">Borrar</button></div></div>
-  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><select id="p-cid" data-p="cid">${D.clientes.map(x=>`<option value="${x.id}"${x.id===p.cid?" selected":""}>${esc(nom(x))}</option>`).join("")}</select></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-val">Validez (días)</label><input id="p-val" data-p="validez" inputmode="numeric" value="${esc(p.validez)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div>
+  V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button aria-label="Borrar" title="Borrar" class="btn peligro chico ico-eliminar" data-a="borrarpres" data-id="${p.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></div>
+  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><input id="p-cid" class="cliente-autocomplete" data-cliente-buscar="1" list="pres-clientes" autocomplete="off" placeholder="Escribí para buscar un cliente" value="${esc(nom(cli(p.cid)))}"><datalist id="pres-clientes">${D.clientes.slice().sort((a,b)=>nom(a).localeCompare(nom(b))).map(x=>`<option value="${esc(nom(x))}"></option>`).join("")}</datalist></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-val">Validez (días)</label><input id="p-val" data-p="validez" inputmode="numeric" value="${esc(p.validez)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div>
    <div class="ancho"><label for="p-tit">Título del trabajo</label><input id="p-tit" data-p="titulo" value="${esc(p.titulo)}"></div><div class="ancho"><label for="p-obj">El objetivo</label><textarea id="p-obj" data-p="objetivo">${esc(p.objetivo)}</textarea></div></div></section>
   <section class="card barra" style="margin-top:18px"><h2>Qué incluye</h2><textarea data-p="incluye" aria-label="Qué incluye" style="min-height:130px">${esc(p.incluye)}</textarea></section>
   <section class="card barra" style="margin-top:18px"><h2>Etapas</h2><textarea data-p="etapas" aria-label="Etapas">${esc(p.etapas)}</textarea></section>
@@ -1761,6 +1817,18 @@ function vPres(id){
   <section class="card barra" style="margin-top:18px"><h2>Condiciones</h2><div class="grid" style="margin-top:12px"><div class="ancho"><label for="p-pago">Forma de pago</label><input id="p-pago" data-p="pago" value="${esc(p.pago)}"></div><div class="ancho"><label for="p-plazo">Plazo de ejecución</label><input id="p-plazo" data-p="plazo" value="${esc(p.plazo)}"></div><div class="ancho"><label for="p-no">No incluye</label><textarea id="p-no" data-p="noIncluye">${esc(p.noIncluye)}</textarea></div></div></section>
   <div class="sticky no-print"><a class="btn pri" href="#presdoc/${p.id}">Guardar y ver documento</a></div>`;
   const ef=()=>p.opciones.forEach((o,i)=>{const e=document.getElementById("ef"+i);if(e)e.textContent=num(o.precio)?"Pagando en efectivo: "+fmt(precioEf(o,p)):""});ef();
+  const buscarCliente=V.querySelector("#p-cid");
+  if(buscarCliente){
+    const normalizar=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
+    const aplicarCliente=()=>{const nombre=normalizar(buscarCliente.value);const elegido=D.clientes.find(x=>normalizar(nom(x))===nombre);
+      if(elegido){if(p.cid!==elegido.id){p.cid=elegido.id;guardar();render()}return}
+      if(!nombre){buscarCliente.value=nom(cli(p.cid));return}
+      buscarCliente.setCustomValidity("Seleccioná un cliente de las sugerencias");
+    };
+    buscarCliente.addEventListener("input",()=>buscarCliente.setCustomValidity(""));
+    buscarCliente.addEventListener("change",aplicarCliente);
+    buscarCliente.addEventListener("blur",()=>{if(!D.clientes.some(x=>normalizar(nom(x))===normalizar(buscarCliente.value)))buscarCliente.value=nom(cli(p.cid));buscarCliente.setCustomValidity("")});
+  }
   V.oninput=e=>{const t=e.target;if(ruta().r!=="pres")return;
     if(t.dataset.p)p[t.dataset.p]=t.value;else if(t.dataset.o)p.opciones[t.dataset.o][t.dataset.k]=t.value;else if(t.dataset.reco!==undefined)p.opciones.forEach((o,i)=>o.reco=i==t.dataset.reco);
     guardar();ef()};
@@ -2313,6 +2381,7 @@ function acc(a,id){
     const d={id:uid(),cid:t.cid,fecha:h,sitio:t.sitio||t.tipo,carga:"",resp:"",items:{},med:{},concl:"",tid:t.id};
     D.diag.push(d);t.did=d.id;log(c,"Diagnóstico iniciado: "+d.sitio);if(["nueva","visita"].includes(c.etapa)){log(c,"Etapa: "+etapaN(c.etapa)+" → "+etapaN("diag"));c.etapa="diag"}
     guardar();location.hash="#diag/"+d.id}
+  else if(a==="pres-config-num"){pedir("Numeración de próximos presupuestos",[{k:"n",l:"Número del próximo presupuesto",t:"number",v:D.cfg.prox}],r=>{const n=parseInt(r.n,10);if(!Number.isSafeInteger(n)||n<1){aviso("Ingresá un número válido");return}D.cfg.prox=n;guardar();render();aviso("El próximo presupuesto será "+numPres(n))},"Guardar numeración")}
   else if(a==="borrarpres"){if(confirm("¿Borrar este presupuesto?")){D.pres=D.pres.filter(x=>x.id!==id);D.cobros=D.cobros.filter(x=>x.pid!==id);guardar();location.hash="#presupuestos"}}
   else if(a==="pres-enviar"){const p=pre(id);p.estado="enviado";p.fechaEnv=h;const c=cli(p.cid);log(c,"Presupuesto "+p.num+" enviado");if(["nueva","visita","diag"].includes(c.etapa))c.etapa="presu";acts(c).push({id:uid(),tipo:"Llamar",f:addDias(h,3),t:"Preguntar si vio el presupuesto "+p.num});guardar();render()}
   else if(a==="pres-rechazar"){const p=pre(id);p.estado="rechazado";const c=cli(p.cid);log(c,"Presupuesto "+p.num+" rechazado");c.acts=acts(c).filter(a=>!(a.t||"").includes(p.num));guardar();render()}
@@ -2361,15 +2430,7 @@ document.getElementById("f-import").onchange=e=>{const f=e.target.files[0];if(!f
 const numPres=n=>PREF+"-"+String(n).padStart(3,"0");
 /* Renumera todos los presupuestos (por fecha) desde el número elegido; los nuevos siguen a partir del último.
    También actualiza el número donde aparece escrito: historial, actividades, cobros. */
-document.getElementById("b-num").onclick=()=>{
-  const orden=D.pres.slice().sort((x,y)=>x.fecha<y.fecha?-1:x.fecha>y.fecha?1:x.num<y.num?-1:1),ini=orden.length?(parseInt(String(orden[0].num).replace(/\D/g,""),10)||1):D.cfg.prox;
-  pedir("Numeración de presupuestos",[{k:"n",l:"Empezar desde el número",t:"number",v:ini}],r=>{
-    const n=parseInt(r.n,10);if(!(n>0))return;
-    const cambios=orden.map((x,i)=>[x.num,numPres(n+i)]).filter(c=>c[0]!==c[1]);
-    if(cambios.length){let j=JSON.stringify(D);const re=v=>new RegExp(v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?!\\d)","g");
-      cambios.forEach((c,i)=>j=j.replace(re(c[0]),"\u0000"+i+"\u0000"));cambios.forEach((c,i)=>j=j.split("\u0000"+i+"\u0000").join(c[1]));D=norm(JSON.parse(j))}
-    D.cfg.prox=n+orden.length;guardar();render();
-    aviso(orden.length?"Presupuestos "+numPres(n)+" a "+numPres(n+orden.length-1)+". El próximo será "+numPres(D.cfg.prox):"El próximo será "+numPres(D.cfg.prox))},"Renumerar")};
+document.getElementById("b-num").onclick=()=>{pedir("Numeración de próximos presupuestos",[{k:"n",l:"Número del próximo presupuesto",t:"number",v:D.cfg.prox}],r=>{const n=parseInt(r.n,10);if(!Number.isSafeInteger(n)||n<1){aviso("Ingresá un número válido");return}D.cfg.prox=n;guardar();render();aviso("El próximo presupuesto será "+numPres(n))},"Guardar numeración")};
 document.getElementById("b-csv").onclick=()=>{
   const cab=["Nombre","Empresa","Teléfono","Mail","Rubro","Origen","Zona","CUIT","Vino por","Etapa","Último trabajo","Próximo mantenimiento","Saldo pendiente","Facturado","Notas"];
   const q=s=>{s=String(s==null?"":s);return /[",;\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
@@ -2422,6 +2483,12 @@ function entrarNube(){
 (function(){
   const bar=document.getElementById("barra-sup"),q=document.getElementById("q-global"),res=document.getElementById("q-res");
   const bc=document.getElementById("b-crear"),mc=document.getElementById("menu-crear");
+  const searchBox=q.closest(".busca");
+  const cerrarMovil=()=>{searchBox.classList.remove("busca-abierta");q.value="";q.blur()};
+  searchBox.addEventListener("click",e=>{if(innerWidth>900||e.target===q||e.target.closest(".q-res")||e.target.closest(".busca-mic"))return;
+    if(searchBox.classList.contains("busca-abierta")){cerrarMovil();res.hidden=true}else{searchBox.classList.add("busca-abierta");q.focus()}});
+  document.addEventListener("click",e=>{if(innerWidth<=900&&searchBox.classList.contains("busca-abierta")&&!searchBox.contains(e.target)){cerrarMovil();res.hidden=true}});
+
   const n=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
   let items=[],sel=-1;
   const indice=()=>{const o=[];
@@ -2437,9 +2504,9 @@ function entrarNube(){
     const ps=t.split(/\s+/);items=indice().filter(r=>ps.every(p=>r.k.includes(p))).slice(0,8);sel=items.length?0:-1;pintar()});
   q.addEventListener("keydown",e=>{
     if(e.key==="ArrowDown"||e.key==="ArrowUp"){if(!items.length)return;e.preventDefault();sel=(sel+(e.key==="ArrowDown"?1:-1)+items.length)%items.length;pintar()}
-    else if(e.key==="Enter"&&items[sel]){location.hash=items[sel].h;q.value="";q.blur();cerrarRes()}
+    else if(e.key==="Enter"&&items[sel]){location.hash=items[sel].h;q.value="";q.blur();cerrarRes();cerrarMovil()}
     else if(e.key==="Escape"){q.value="";cerrarRes();q.blur()}});
-  res.addEventListener("click",e=>{if(e.target.closest("a")){q.value="";cerrarRes()}});
+  res.addEventListener("click",e=>{if(e.target.closest("a")){q.value="";cerrarRes();cerrarMovil()}});
   document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName)&&!bar.hidden){e.preventDefault();q.focus()}});
   const cerrarMc=()=>{mc.hidden=true;bc.setAttribute("aria-expanded","false")};
   bc.onclick=e=>{e.stopPropagation();if(!mc.hidden){cerrarMc();return}
@@ -2449,6 +2516,8 @@ function entrarNube(){
   mc.addEventListener("click",()=>cerrarMc());
   document.addEventListener("click",e=>{if(!mc.hidden&&!mc.contains(e.target))cerrarMc();if(!res.hidden&&!res.contains(e.target)&&e.target!==q)cerrarRes()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!mc.hidden){cerrarMc();bc.focus()}});
+  const actualizarPresFab=()=>{document.body.classList.toggle("en-presupuestos",location.hash==="#presupuestos"||location.hash.startsWith("#pres/"))};
+  addEventListener("hashchange",actualizarPresFab);actualizarPresFab();
   window.barraSup=r=>{bar.hidden=bc.hidden=(r==="tablero");cerrarMc();cerrarRes()};
 })();
 /* Rótulos de columna en cada celda, para la vista de tarjetas en el celular */
