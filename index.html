@@ -1965,8 +1965,7 @@ function vProy(id){
     <td><button class="btn chico peligro" data-a="proy-delfila" data-id="${p.id}" data-i="${i}" aria-label="Quitar fila">Quitar</button></td></tr>`).join("")}</tbody>
     <tfoot><tr><td colspan="2"></td><td><b>Total Proyecto</b></td><td><b id="y-tc"></b></td><td><b id="y-ts"></b></td><td colspan="2"></td></tr></tfoot></table></div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="proy-addfila" data-id="${p.id}">+ Agregar fila</button></div>
-   <p class="calc" id="y-gan" style="margin-top:10px"></p>
-   <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input style="width:auto" type="checkbox" data-ycosto="1"${p.verCosto?" checked":""}> Mostrar la columna Costo en el documento del cliente</label></section>
+   <p class="calc" id="y-gan" style="margin-top:10px"></p></section>
   <section class="card barra" style="margin-top:18px"><h2>Nota</h2><textarea data-y="nota" data-bar aria-label="Nota">${esc(p.nota||"")}</textarea></section>
   <div class="sticky no-print"><a class="btn pri" href="#proydoc/${p.id}">Guardar y ver documento</a></div>`;
   const tot=()=>{document.getElementById("y-tc").textContent=fmt(totCot(p));document.getElementById("y-ts").textContent=fmt(totCos(p));
@@ -1974,11 +1973,11 @@ function vProy(id){
   V.oninput=e=>{const t=e.target;if(ruta().r!=="proy")return;
     if(t.dataset.y)p[t.dataset.y]=t.value;else if(t.dataset.fi!==undefined)p.filas[t.dataset.fi][t.dataset.fk]=t.value;
     guardar();tot()};
-  V.onchange=e=>{const t=e.target;if(t.dataset.ycosto){p.verCosto=t.checked;guardar()}else if(t.dataset.y==="cid")render()};
+  V.onchange=e=>{const t=e.target;if(t.dataset.y==="cid")render()};
 }
 function vProyDoc(id){
   const p=D.proy.find(x=>x.id===id);if(!p){location.hash="#proyectos";return}
-  const c=cli(p.cid),vc=!!p.verCosto,fl=p.filas.filter(r=>r.t||r.m||r.pv||num(r.cot)||num(r.cos)||r.n),br=s=>mdPlano(s).replace(/\n/g,"<br>");
+  const c=cli(p.cid),vc=true,fl=p.filas.filter(r=>r.t||r.m||r.pv||num(r.cot)||num(r.cos)||r.n),br=s=>mdPlano(s).replace(/\n/g,"<br>");
   V.innerHTML=`<div class="cab no-print"><div><p><a href="#proy/${p.id}"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Editar proyecto</a></p></div><div class="tools" style="margin:0"><button class="btn chico neg" id="i-print" type="button">Imprimir / guardar PDF</button></div></div>
   <article class="doc a4"><div class="a4-barra"></div>
    <div class="a4-cab"><div><h1>PROYECTO</h1><div class="a4-fn"><div><small>FECHA</small><b>${fecha(p.fecha)}</b></div></div></div>
