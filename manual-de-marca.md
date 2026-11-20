@@ -121,7 +121,7 @@ Están definidos como variables en `index.html` (`:root`). Si se rehace el siste
 - Descripciones de dos renglones como máximo en las listas.
 
 ### Celular
-- Menú ☰ y encabezado en dos filas.
+- Menú ☰ y encabezado en una sola línea: ☰, volver, título, WhatsApp si lo hay, ⋮ (con el resto de los botones de la pantalla), buscar y crear. Solo baja a una segunda fila lo que no es un botón (filtros y pestañas de vista).
 - Las tablas se convierten en tarjetas.
 - Diálogos con X para cerrar.
 - Buscador y filtro uno debajo del otro, a todo el ancho.

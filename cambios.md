@@ -1,5 +1,15 @@
 # Registro de cambios
 
+## 19 y 20/11/2026
+- **Proyectos** (Más → Proyectos y botón Crear): estimación global con Tarea, Material, Proveedor, Cotización, Costo y Notas. Total Proyecto suma la Cotización. Documento A4 con la columna Costo siempre visible. El cliente se busca escribiendo y cada proyecto nuevo queda en la Bitácora y en el historial del cliente.
+- **Clientes:** al escribir en la lista, el cursor pasa al buscador, ordena por coincidencia y Backspace borra todo.
+- **Ficha del cliente:** datos fijos a la izquierda, cuatro cifras (saldo, facturado, lo próximo, presupuestos esperando), botón + Nuevo, Enviar mensaje y pestañas Resumen, Trabajos y presupuestos, Cobros, Proyectos y Técnico (solo las que tienen datos).
+- **Clic secundario** en las filas de Presupuestos, Clientes y Proyectos: Ver, Editar, Borrar, con el estilo de marca.
+- **Presupuesto:** campo Trabajo editable (con sugerencias de tipos).
+- **Celular:** documento A4 sin cortarse; encabezado en una sola línea con menú ⋮.
+- **Impresión:** franja amarilla arriba y abajo como parte del documento (nunca tapa texto), esquinas redondeadas y el contenido más pegado arriba.
+- Se unió con los cambios del 17/11 de GitHub (presupuestos desde el N° 36, importes compactos).
+
 Cambios hechos en la sesión del 28 al 29/10/2026. Todo está en `index.html`, salvo lo que se indica.
 
 ## Commits de esta sesión

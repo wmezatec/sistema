@@ -125,10 +125,13 @@ textarea{min-height:76px;resize:vertical}
 .fc-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
 .fc-etapa{width:auto;min-width:170px}
 .fc-nuevo{position:relative}
-.fc-menu{position:absolute;left:0;top:calc(100% + 6px);z-index:30;min-width:190px;background:#fff;border:1px solid #c9cbc4;border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:grid}
+.fc-menu{position:absolute;left:0;top:calc(100% + 6px);z-index:30;min-width:200px;background:var(--carbon);border-radius:18px;padding:8px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);display:grid;gap:2px}
 .fc-menu[hidden]{display:none}
-.fc-menu button{border:0;background:none;text-align:left;font:inherit;font-weight:600;padding:.6em .8em;border-radius:10px;cursor:pointer;color:var(--tinta)}
-.fc-menu button:hover{background:#f0f1ec}
+.fc-menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;text-align:left;font:inherit;font-weight:600;padding:.65em .9em;min-height:42px;border-radius:12px;cursor:pointer;color:#e4e4de;position:relative}
+.fc-menu button .ic{width:18px;height:18px;flex:none}
+.fc-menu button:hover,.fc-menu button:focus-visible{background:rgba(255,255,255,.1);color:#fff;box-shadow:inset 4px 0 0 var(--naranja);outline:0}
+.menu-ctx{position:fixed;z-index:200;min-width:180px}
+.menu-ctx .ctx-pel{color:#ff9d8f}.menu-ctx .ctx-pel:hover{background:rgba(194,59,44,.25);color:#fff;box-shadow:inset 4px 0 0 var(--rojo)}
 .fc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
 .fc-st{background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 1px 0 #d9dbd4;display:grid;gap:2px}
 .fc-st b{font-size:1.15rem}.fc-st small{color:var(--tinta-suave);font-weight:600}.fc-st.rojo b{color:var(--rojo)}
@@ -408,15 +411,31 @@ textarea[data-mk="d"]{min-height:42px}textarea[data-cbib]{min-height:120px}texta
 .tot-ed .res{display:grid;gap:4px;text-align:right;font-size:1rem}.tot-ed .res b{margin-left:.6em}
 .tot-ed .res .gr{font-size:1.25rem;font-weight:800}
 .doc.a4{page:a4;width:min(210mm,100%);min-height:297mm;max-width:none;padding:18mm 16mm 22mm;border-radius:0;position:relative}
-.a4-barra{position:absolute;left:0;right:0;top:0;height:7mm;background:#FFB300;-webkit-print-color-adjust:exact;print-color-adjust:exact}.a4-barra.pie{top:auto;bottom:0;height:5mm}
+.a4-barra{position:absolute;left:0;right:0;top:0;height:7mm;border-radius:0 0 14px 14px;background:#FFB300;-webkit-print-color-adjust:exact;print-color-adjust:exact}.a4-barra.pie{top:auto;bottom:0;height:5mm;border-radius:14px 14px 0 0}
 .a4-cab{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-top:4mm}
 .a4-cab h1{font-size:2.3rem;letter-spacing:.01em;margin-bottom:14px}
 .a4-fn{display:flex;gap:36px}.a4-fn small,.a4-cli small{display:block;font-size:.72rem;letter-spacing:.06em;color:#666;font-weight:700}.a4-fn b{font-size:1.2rem}
 .a4-emisor{display:grid;gap:2px;font-size:.92rem;justify-items:start}.a4-emisor b{font-size:1rem}
 .a4-logo{background:var(--carbon);border-radius:10px;padding:10px 16px;margin-bottom:8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.a4-logo img{display:block;width:88px}
+/* Documentos A4 en el celular: se achican márgenes, el emisor baja debajo del título y la tabla entra en pantalla */
+@media screen and (max-width:700px){
+  .doc.a4{padding:22px 14px 30px;min-height:0;font-size:.92rem;overflow:hidden}
+  .a4-barra{height:10px}.a4-barra.pie{height:8px}
+  .a4-cab{flex-direction:column;gap:14px;margin-top:6px}
+  .a4-cab h1{font-size:1.7rem;margin-bottom:10px}
+  .a4-fn{gap:26px}.a4-fn b{font-size:1.05rem}
+  .a4-emisor{grid-template-columns:auto 1fr;column-gap:12px;align-items:center;width:100%}
+  .a4-emisor .a4-logo{grid-row:span 4;margin:0;padding:8px 12px}.a4-logo img{width:64px}
+  .a4-cli{margin:16px 0 14px}
+  .doc .pd-t{font-size:.82rem;width:100%}.doc .pd-t th{padding:8px 8px;font-size:.7rem}.doc .pd-t td{padding:9px 8px;overflow-wrap:anywhere}
+  .pd-tot{width:100%}.pd-tot .gr{font-size:1.1rem}
+  .pd-cond{font-size:.85rem}
+}
+.doc .pd-t{border-collapse:separate;border-spacing:0}.doc .pd-t th+th,.doc .pd-t td+td{border-left:0}.doc .pd-t th:first-child{border-radius:12px 0 0 12px}.doc .pd-t th:last-child{border-radius:0 12px 12px 0}
 .a4-cli{margin:22px 0 18px;display:grid;gap:2px}.a4-cli b{font-size:1.05rem}.a4-cli span{color:#555}
 /* Barras del membrete: se dibujan en el MARGEN de cada hoja (fuera del área de texto), así nunca tapan renglones, sea cual sea el papel */
-@page a4{size:A4;margin:16mm 16mm 18mm;@top-left-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-left{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-center{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-right{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@top-right-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) top/100% 7mm no-repeat}@bottom-left-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-left{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-center{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-right-corner{content:"";-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}@bottom-right{content:"Página " counter(page) " de " counter(pages);font-size:8pt;color:#888;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(#FFB300,#FFB300) bottom/100% 5mm no-repeat}}
+@page a4:first{margin-top:0;margin-bottom:23mm}
+@page a4{size:A4;margin:16mm 0 7mm;@bottom-right{content:"Página " counter(page) " de " counter(pages);font-size:8pt;color:#888;padding-bottom:1mm;padding-right:16mm}}
 .pd-datos{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:18px}
 .pd-datos small{display:block;color:#666;text-transform:uppercase;letter-spacing:.04em;font-size:.72rem}.pd-datos b{font-size:1.05rem}
 .doc .pd-t th{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:var(--carbon);color:#fff;padding:9px 12px;font-size:.78rem;letter-spacing:.06em}.doc .pd-t td{padding:12px;font-size:1rem}
@@ -578,8 +597,14 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
   .app{display:block}main{padding:0}
   .doc{box-shadow:none;padding:0;max-width:none}
   /* Presupuesto en A4: sigue en varias hojas con márgenes y nada se corta a la mitad. Las barras las pone @page a4 en el margen */
-  .doc.a4{padding:0;min-height:0;width:auto;border-radius:0}
-  .doc.a4 .a4-barra{display:none}
+  .doc.a4{padding:0 16mm;min-height:273mm;width:auto;border-radius:0;display:flex;flex-direction:column}
+  /* Franja amarilla arriba de la primera hoja, pegada al borde (sale sobre el margen de la página) */
+  .doc.a4 .a4-barra{display:block!important;position:static;flex:none;margin:0 -16mm 7mm;height:7mm;border-radius:0 0 14px 14px;background:#FFB300!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc.a4 .a4-barra.pie{display:block!important;margin:auto -16mm 0;height:6mm;border-radius:14px 14px 0 0}
+  .doc.a4 .pd-cond{margin-bottom:8mm}
+  .doc.a4 .a4-barra{break-inside:avoid;break-before:avoid}
+  html,body,.app,.col,main,#vista{background:#fff!important;padding:0!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:0!important}
+  .doc.a4 .a4-cab{margin-top:0}
   .doc.a4 thead{display:table-header-group}
   .doc.a4 tr,.doc.a4 .pd-tot,.doc.a4 .pd-cond,.doc.a4 .pd-cond li,.doc.a4 .a4-cab,.doc.a4 .a4-cli,.doc.a4 .pd-nota,.doc.a4 .a4-emisor{break-inside:avoid}
   .doc.a4 .pd-cond h3{break-after:avoid}
@@ -671,6 +696,20 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 @media (max-width:900px){
   .barra-ctx .tools{flex-wrap:nowrap;gap:6px}
   .barra-ctx .seg{flex-wrap:nowrap}
+}
+/* (ver plegarCab) */
+/* Celular: botón ⋮ y su menú con el branding */
+.bacc{display:none}
+@media (max-width:900px){
+  .barra-ctx>.bacc{display:inline-flex;order:2!important;flex:none;width:36px;height:36px!important;min-height:36px!important;padding:0!important;justify-content:center;border-radius:50%;background:#fff;color:var(--tinta);box-shadow:none}
+  .barra-ctx>.en-fila1{order:2!important;flex:none!important;margin:0!important;width:auto;overflow:visible!important}
+  .bacc .ic{fill:currentColor;stroke:none;width:20px;height:20px}
+  .menu-acc{position:fixed;right:10px;z-index:60;min-width:210px;max-width:calc(100vw - 20px);background:var(--carbon);border-radius:18px;padding:8px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);display:grid;gap:2px}
+  .menu-acc[hidden]{display:none}
+  .menu-acc .btn{display:flex!important;align-items:center;gap:10px;width:100%;height:auto!important;min-height:44px!important;padding:.6em .9em!important;border-radius:12px!important;background:none!important;color:#e4e4de!important;box-shadow:none!important;font-size:1rem!important;font-weight:600;text-align:left;justify-content:flex-start;white-space:normal}
+  .menu-acc .btn:hover,.menu-acc .btn:focus-visible{background:rgba(255,255,255,.1)!important;color:#fff!important;box-shadow:inset 4px 0 0 var(--naranja)!important;outline:0}
+  .menu-acc .btn.peligro{color:#ff9d8f!important}
+  .menu-acc .btn .ic{width:18px;height:18px;flex:none}
 }
 /* Celular v2: encabezado en dos filas (fila 1: ☰, título, buscar, crear; fila 2: botones de la pantalla).
    En horizontal, una sola fila. Reglas de Vercel aplicadas: min-width:0 en hijos flex, recorte con "…", sin scroll horizontal, safe-area */
@@ -865,6 +904,9 @@ body.con-filtros .barra-sup>.busca,body.con-filtros #b-crear{display:none!import
 <symbol id="i-tab" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 7h8M8 11h3M13 11h3M8 15h3M13 15h3"/></symbol>
 <symbol id="i-salir" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></symbol>
 <symbol id="i-proy" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 10h16M4 15h16M10 5v14"/></symbol>
+<symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-basura" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+<symbol id="i-mas3" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></symbol>
 <symbol id="i-precio" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
 <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
 <symbol id="i-wsp" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 2.8 2.7 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8c-1-.4-1.8-1.2-2.2-2.2l.8-1-1-1.9z"/></symbol>
@@ -1262,6 +1304,24 @@ function ajustarHdr(){requestAnimationFrame(()=>{const b=document.getElementById
 addEventListener("resize",ajustarHdr);
 function montarCab(){const cabs=[...V.querySelectorAll(":scope > .cab, :scope > .hoy-cab")],fil=V.querySelector(":scope > .ctx-filtros"),bc=document.getElementById("barra-ctx");if((!cabs.length&&!fil)||!bc)return;
   bc.hidden=false;if(cabs.length){bc.append(...cabs[0].children);cabs.forEach(x=>x.remove())}if(fil)bc.append(fil)}
+/* Celular: el encabezado queda en una sola línea. Los botones propios de cada pantalla pasan a un menú ⋮ (salvo WhatsApp, que queda a mano) */
+function plegarCab(){
+  const ma=document.getElementById("menu-acc");if(ma)ma.remove();
+  const bc=document.getElementById("barra-ctx");if(!bc||bc.hidden||!matchMedia("(max-width:900px)").matches)return;
+  const cand=[...bc.querySelectorAll(".btn")].filter(b=>!b.matches('[href*="wa.me"],[href*="whatsapp"],[aria-label="WhatsApp"]')&&!b.closest(".seg,.ctx-filtros,.ctx-tit,.busca")&&!b.dataset.keep);
+  if(!cand.length)return;
+  const m=document.createElement("div");m.id="menu-acc";m.className="menu-acc";m.setAttribute("role","menu");m.hidden=true;
+  cand.forEach(b=>{if(!b.textContent.trim()){const t=b.getAttribute("title")||b.getAttribute("aria-label")||"";if(t){const sp=document.createElement("span");sp.textContent=t;b.append(sp)}}m.append(b)});
+  document.body.append(m);
+  [...bc.children].forEach(c=>{if(!/(^|\s)(tools|hoy-bt|cab-ic)(\s|$)/.test(c.className))return;
+    const q=c.querySelectorAll(".btn, .seg, select, input");
+    if(!q.length)c.style.display="none";else if(!c.querySelector(".seg, select, input"))c.classList.add("en-fila1")});
+  const bt=document.createElement("button");bt.type="button";bt.id="b-acc";bt.className="btn bacc";bt.setAttribute("aria-label","Acciones");bt.setAttribute("aria-haspopup","menu");bt.setAttribute("aria-expanded","false");
+  bt.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-mas3"/></svg>';
+  const cierra=()=>{m.hidden=true;bt.setAttribute("aria-expanded","false")};
+  bt.onclick=e=>{e.stopPropagation();const ab=m.hidden;m.hidden=!ab;bt.setAttribute("aria-expanded",String(ab));if(ab){const r=bt.getBoundingClientRect();m.style.top=(r.bottom+6)+"px";document.addEventListener("click",cierra,{once:true})}};
+  m.addEventListener("click",()=>setTimeout(cierra,0));
+  bc.append(bt)}
 function render(){
   clearInterval(tabTimer);
   document.body.classList.remove("con-filtros");
@@ -1279,7 +1339,7 @@ function render(){
   set("c-clientes",D.clientes.length);set("c-colab",D.colabs.length);set("c-diag",D.diag.length);set("c-trab",D.trab.filter(t=>t.estado==="agendado").length);
   set("c-pres",D.pres.filter(p=>["borrador","enviado"].includes(p.estado)).length);set("c-cobros",venc||D.cobros.filter(pendiente).length,venc);cuentaMas();
   V.classList.toggle("tablero", q.r === "tablero");if(window.barraSup)barraSup(q.r);
-  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,bitacora:vBitacora,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,proyectos:vProyectos,proy:vProy,proydoc:vProyDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();ajustarHdr();
+  ({panel:vPanel,calendario:vCal,pipeline:vPipeline,clientes:vClientes,cliente:vCliente,colaboradores:vColabs,colab:vColab,feedback:vFeedback,bitacora:vBitacora,diagnosticos:vDiagnosticos,diag:vDiag,informe:vInforme,presupuestos:vPresupuestos,pres:vPres,presdoc:vPresDoc,proyectos:vProyectos,proy:vProy,proydoc:vProyDoc,cobros:vCobros,mensajes:vMensajes,ot:vOT,remito:vRemito,precios:vPrecios,finanzas:vFin,tableros:vTableros,tablero:vTablero,trabajos:vTrabajos}[q.r]||vPanel)(q.id);montarCab();plegarCab();ajustarHdr();
   if(!["calendario"].includes(q.r))window.scrollTo(0,0);
 }
 const vacioInicial=()=>`<div class="vacio"><p><b>Todavía no cargaste nada.</b></p><button class="btn pri" data-a="nuevo">Cargar primer cliente</button> <button class="btn claro" data-a="ejemplo">Ver con datos de ejemplo</button></div>`;
@@ -1390,7 +1450,7 @@ function vClientes(){
       return n.startsWith(q)||m.startsWith(q)?3:(" "+n+" "+m).includes(" "+q)?2:t.includes(q)?1:0};
     const l=D.clientes.filter(c=>pts(c)>=(q?1:0)&&(!fe||(fe==="_saldo"?saldo(c.id)>0:fe==="_mant"?mantVencido(c.id):fe.startsWith("k:")?c.colab===fe.slice(2):c.etapa===fe))).sort((a,b)=>(pts(b)-pts(a))||nom(a).localeCompare(nom(b)));
     const filas=l.map(c=>{const u=ultimoTrab(c.id),m=proxMant(c.id),s=saldo(c.id);
-      return `<tr data-go="#cliente/${c.id}"><td><a href="#cliente/${c.id}">${esc(nomCorto(c))}</a><br><small>${esc(c.empresa?c.nombre:"")}</small></td><td>${esc(c.rubro)}</td><td>${esc(colabN(c))}</td><td><span class="etq">${etapaN(c.etapa)}</span></td>
+      return `<tr data-go="#cliente/${c.id}" data-ctx="cli:${c.id}"><td><a href="#cliente/${c.id}">${esc(nomCorto(c))}</a><br><small>${esc(c.empresa?c.nombre:"")}</small></td><td>${esc(c.rubro)}</td><td>${esc(colabN(c))}</td><td><span class="etq">${etapaN(c.etapa)}</span></td>
       <td>${u?fecha(u.fecha)+"<br><small>"+esc(u.tipo)+"</small>":"—"}</td><td>${m?`<span class="${!m.agendado&&m.f<h?"vence":""}">${fecha(m.f)}</span>${m.agendado?"<br><small>agendado</small>":""}`:"—"}</td>
       <td class="num ${s&&D.cobros.some(x=>x.cid===c.id&&pendiente(x)&&x.vence<h)?"vence":""}">${s?fmt(s):"—"}</td><td class="num">${facturado(c.id)?fmt(facturado(c.id)):"—"}</td></tr>`}).join("")||`<tr><td colspan="8">${D.clientes.length?'<div class="vacio">No hay clientes con ese filtro.</div>':vacioInicial()}</td></tr>`;
     V.querySelector("#lc-w").innerHTML=innerWidth<=700
@@ -1794,7 +1854,7 @@ const encDoc=(t,f)=>`<div class="enc"><div><span class="enc-logo"><img src="logo
 /* ---- Presupuestos ---- */
 function vPresupuestos(){
   V.innerHTML=`<div class="cab"><div><h1>Presupuestos</h1></div></div>
-  <div class="tabla-w"><table class="t"><thead><tr><th>N°</th><th>Cliente</th><th>Trabajo</th><th>Fecha</th><th>Vence</th><th class="num">Monto</th><th>Estado</th></tr></thead><tbody>${D.pres.slice().sort((a,b)=>a.num<b.num?1:-1).map(p=>`<tr data-go="#presdoc/${p.id}" style="cursor:pointer"><td><a href="#presdoc/${p.id}">${p.num}</a></td><td>${esc(nomCorto(cli(p.cid)))}</td><td>${esc(p.titulo||"")}</td><td>${fecha(p.fecha)}</td><td class="${p.estado==="enviado"&&vencePres(p)<hoy()?"vence":""}">${p.estado==="enviado"?fecha(vencePres(p)):"—"}</td><td class="num">${fmt(montoPres(p))}</td><td><span class="etq ${p.estado==="aceptado"?"ok":p.estado==="enviado"?"az":""}">${EST_PRES[p.estado]}</span></td></tr>`).join("")||`<tr><td colspan="7"><div class="vacio">Todavía no hay presupuestos. Creá uno desde la ficha de un cliente o desde un diagnóstico.</div></td></tr>`}</tbody></table></div>`;
+  <div class="tabla-w"><table class="t"><thead><tr><th>N°</th><th>Cliente</th><th>Trabajo</th><th>Fecha</th><th>Vence</th><th class="num">Monto</th><th>Estado</th></tr></thead><tbody>${D.pres.slice().sort((a,b)=>a.num<b.num?1:-1).map(p=>`<tr data-go="#presdoc/${p.id}" data-ctx="pres:${p.id}" style="cursor:pointer"><td><a href="#presdoc/${p.id}">${p.num}</a></td><td>${esc(nomCorto(cli(p.cid)))}</td><td>${esc(p.titulo||"")}</td><td>${fecha(p.fecha)}</td><td class="${p.estado==="enviado"&&vencePres(p)<hoy()?"vence":""}">${p.estado==="enviado"?fecha(vencePres(p)):"—"}</td><td class="num">${fmt(montoPres(p))}</td><td><span class="etq ${p.estado==="aceptado"?"ok":p.estado==="enviado"?"az":""}">${EST_PRES[p.estado]}</span></td></tr>`).join("")||`<tr><td colspan="7"><div class="vacio">Todavía no hay presupuestos. Creá uno desde la ficha de un cliente o desde un diagnóstico.</div></td></tr>`}</tbody></table></div>`;
 }
 function nuevoPres(cid,diagId,tid){
   while(D.pres.some(x=>x.num===PREF+"-"+String(D.cfg.prox).padStart(3,"0")))D.cfg.prox++;
@@ -1812,7 +1872,7 @@ function vPresS(p){
   if((p.materiales||[]).some(r=>/\n/.test(r.d||""))){p.materiales=p.materiales.flatMap(r=>{const ls=String(r.d||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);return ls.length>1?ls.map((d,k)=>({d,m:k?"":r.m})):[r]});guardar()}
   const c=cli(p.cid),f=n=>fmt(n),bib=bibCond(),sel=condSelDe(p);
   V.innerHTML=`<div class="cab"><div><p><a href="#presupuestos"><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Presupuestos</a></p><h1>Presupuesto ${p.num}</h1><p>${esc(nom(c))}</p></div><div class="tools" style="margin:0"><a class="btn pri" href="#presdoc/${p.id}">Ver documento</a>${p.estado==="borrador"?`<button class="btn claro" data-a="pres-enviar" data-id="${p.id}">Marcar como enviado</button>`:""}${p.estado==="enviado"?`<button class="btn wsp" data-a="pres-aceptar" data-id="${p.id}">Aceptado</button><button class="btn peligro chico" data-a="pres-rechazar" data-id="${p.id}">Rechazado</button>`:""}<button aria-label="Borrar" title="Borrar" class="btn peligro chico ico-eliminar" data-a="borrarpres" data-id="${p.id}"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button></div></div>
-  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><input id="p-cid" class="cliente-autocomplete" data-cliente-buscar="1" list="pres-clientes" autocomplete="off" placeholder="Escribí para buscar un cliente" value="${esc(nom(cli(p.cid)))}"><datalist id="pres-clientes">${D.clientes.slice().sort((a,b)=>nom(a).localeCompare(nom(b))).map(x=>`<option value="${esc(nom(x))}"></option>`).join("")}</datalist></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div></div></section>
+  <section class="card barra"><div class="grid"><div><label for="p-cid">Cliente</label><input id="p-cid" class="cliente-autocomplete" data-cliente-buscar="1" list="pres-clientes" autocomplete="off" placeholder="Escribí para buscar un cliente" value="${esc(nom(cli(p.cid)))}"><datalist id="pres-clientes">${D.clientes.slice().sort((a,b)=>nom(a).localeCompare(nom(b))).map(x=>`<option value="${esc(nom(x))}"></option>`).join("")}</datalist></div><div><label for="p-num">N°</label><input id="p-num" data-p="num" value="${esc(p.num)}"></div><div><label for="p-fecha">Fecha</label><input id="p-fecha" type="date" data-p="fecha" value="${esc(p.fecha)}"></div><div><label for="p-est">Estado</label><select id="p-est" data-p="estado">${Object.keys(EST_PRES).map(k=>`<option value="${k}"${k===p.estado?" selected":""}>${EST_PRES[k]}</option>`).join("")}</select></div><div><label for="p-tit">Trabajo</label><input id="p-tit" data-p="titulo" list="p-tit-l" autocomplete="off" value="${esc(p.titulo||"")}" placeholder="Instalación, Reparación…"><datalist id="p-tit-l">${TIPOS_TRAB.map(t=>`<option value="${t}">`).join("")}</datalist></div></div></section>
   <section class="card barra pres-items" style="margin-top:18px"><h2>Presupuesto</h2><div class="rens">${p.items.map((r,i)=>`<div class="ren"><textarea data-ri="${i}" data-rk="d" aria-label="Descripción" data-md>${esc(r.d)}</textarea><div class="monto"><label class="sr" for="m${i}">Importe</label><div class="precio-pesos"><span aria-hidden="true">$</span><input id="m${i}" data-ri="${i}" data-rk="m" inputmode="numeric" data-dinero value="${esc(r.m)}"></div></div>${p.items.length>1?`<button title="Quitar" class="btn chico peligro ico-eliminar" data-a="pres-delren" data-id="${p.id}" data-i="${i}" aria-label="Quitar renglón"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></button>`:""}</div>`).join("")}</div>
    <div class="tools" style="margin-top:12px"><button class="btn chico claro" data-a="pres-addren" data-id="${p.id}">+ Agregar renglón</button><button class="btn chico claro" data-a="pres-delista" data-id="${p.id}">+ Desde la lista de precios</button></div>
    <div class="tot-ed"><div><label for="p-desc">Descuento (%)</label><input id="p-desc" data-p="desc" inputmode="numeric" data-pct value="${esc(p.desc||0)}"></div><div class="res"><span>Subtotal <b id="t-sub"></b></span><span id="t-dd">Descuento <b id="t-desc"></b></span><span class="gr">Total <b id="t-tot"></b></span></div></div></section>
@@ -1949,7 +2009,7 @@ function nuevoProy(cid,cv,tv){
 const totCot=p=>(p.filas||[]).reduce((s,r)=>s+num(r.cot),0), totCos=p=>(p.filas||[]).reduce((s,r)=>s+num(r.cos),0);
 function vProyectos(){
   V.innerHTML=`<div class="cab"><div><h1>Proyectos</h1><p>Estimación global para que el cliente sepa cuánto invertir</p></div><button class="btn pri" data-a="nuevoproy">+ Nuevo proyecto</button></div>
-  <div class="tabla-w"><table class="t"><thead><tr><th>Cliente</th><th>Proyecto</th><th>Fecha</th><th class="num">Total</th></tr></thead><tbody>${D.proy.slice().sort((a,b)=>a.fecha<b.fecha?1:-1).map(p=>`<tr data-go="#proy/${p.id}" style="cursor:pointer"><td>${esc(nomCorto(cli(p.cid)))}</td><td><a href="#proy/${p.id}">${esc(p.titulo||"(sin título)")}</a></td><td>${fecha(p.fecha)}</td><td class="num">${fmt(totCot(p))}</td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Todavía no hay proyectos. Creá uno con "+ Nuevo proyecto".</div></td></tr>`}</tbody></table></div>`;
+  <div class="tabla-w"><table class="t"><thead><tr><th>Cliente</th><th>Proyecto</th><th>Fecha</th><th class="num">Total</th></tr></thead><tbody>${D.proy.slice().sort((a,b)=>a.fecha<b.fecha?1:-1).map(p=>`<tr data-go="#proydoc/${p.id}" data-ctx="proy:${p.id}" style="cursor:pointer"><td>${esc(nomCorto(cli(p.cid)))}</td><td><a href="#proy/${p.id}">${esc(p.titulo||"(sin título)")}</a></td><td>${fecha(p.fecha)}</td><td class="num">${fmt(totCot(p))}</td></tr>`).join("")||`<tr><td colspan="4"><div class="vacio">Todavía no hay proyectos. Creá uno con "+ Nuevo proyecto".</div></td></tr>`}</tbody></table></div>`;
 }
 function vProy(id){
   const p=D.proy.find(x=>x.id===id);if(!p){location.hash="#proyectos";return}
@@ -2330,6 +2390,17 @@ document.addEventListener("click",e=>{
   const m=e.target.closest("[data-finmes]");if(m){const n=+m.dataset.finmes;FIN.m=n===0?mesHoy():addMes(FIN.m,n);vFin()}});
 document.getElementById("b-ej").onclick=borrarEjemplos;
 document.addEventListener("click",e=>{const m=e.target.closest("[data-tabmodo]");if(m&&ruta().r==="tablero"){tabModo=m.dataset.tabmodo;vTablero(ruta().id)}});
+/* Clic secundario sobre una fila: Ver, Editar, Borrar */
+const CTX={pres:[["Ver","#presdoc/"],["Editar","#pres/"],["Borrar",0,"borrarpres"]],proy:[["Ver","#proydoc/"],["Editar","#proy/"],["Borrar",0,"borrarproy"]],cli:[["Ver","#cliente/"],["Editar",0,"editar"],["Borrar",0,"borrar"]]};
+function cierraCtx(){const m=document.getElementById("menu-ctx");if(m)m.remove()}
+document.addEventListener("contextmenu",e=>{const tr=e.target.closest("tr[data-ctx]");if(!tr)return;
+  const [k,id]=tr.dataset.ctx.split(":"),it=CTX[k];if(!it)return;e.preventDefault();cierraCtx();
+  const m=document.createElement("div");m.id="menu-ctx";m.className="fc-menu menu-ctx";m.setAttribute("role","menu");
+  m.innerHTML=it.map((x,i)=>`<button type="button" role="menuitem" data-i="${i}"${x[2]==="borrarpres"||x[2]==="borrarproy"||x[2]==="borrar"?' class="ctx-pel"':""}><svg class="ic" aria-hidden="true"><use href="#${["i-ojo","i-lapiz","i-basura"][i]}"/></svg>${x[0]}</button>`).join("");
+  m.style.left=Math.min(e.clientX,innerWidth-200)+"px";m.style.top=Math.min(e.clientY,innerHeight-150)+"px";
+  m.onclick=ev=>{const b=ev.target.closest("[data-i]");if(!b)return;const x=it[+b.dataset.i];cierraCtx();if(x[1])location.hash=x[1]+id;else acc(x[2],id)};
+  document.body.appendChild(m)});
+document.addEventListener("click",cierraCtx);document.addEventListener("keydown",e=>{if(e.key==="Escape")cierraCtx()});addEventListener("scroll",cierraCtx,true);
 function acc(a,id){
   const h=hoy();
   if(a==="nuevo"){abrirCliente();const cb=window.event&&window.event.target&&window.event.target.closest("[data-colab]");if(cb)fc.colab.value=cb.dataset.colab}
